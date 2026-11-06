@@ -16,6 +16,11 @@ export const routing = defineRouting({
     "/about": { en: "/about", es: "/nosotros", fr: "/a-propos" },
     "/programs": { en: "/programs", es: "/programas", fr: "/programmes" },
     "/stories": { en: "/stories", es: "/historias", fr: "/temoignages" },
+    "/stories/[slug]": {
+      en: "/stories/[slug]",
+      es: "/historias/[slug]",
+      fr: "/temoignages/[slug]",
+    },
     "/get-involved": { en: "/get-involved", es: "/participa", fr: "/s-impliquer" },
     "/contact": { en: "/contact", es: "/contacto", fr: "/contact" },
     "/transparency": { en: "/transparency", es: "/transparencia", fr: "/transparence" },
@@ -31,3 +36,6 @@ export const routing = defineRouting({
 
 export type Locale = (typeof routing.locales)[number];
 export type AppPathname = keyof typeof routing.pathnames;
+
+/** Pathnames without dynamic segments, usable as a plain `href` string. */
+export type StaticPathname = Exclude<AppPathname, `${string}[${string}`>;

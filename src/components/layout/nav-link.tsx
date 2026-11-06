@@ -3,11 +3,11 @@
 import type { ComponentProps } from "react";
 
 import { Link, usePathname } from "@/i18n/navigation";
-import type { AppPathname } from "@/i18n/routing";
+import type { StaticPathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 type NavLinkProps = Omit<ComponentProps<typeof Link>, "href"> & {
-  href: AppPathname;
+  href: StaticPathname;
 };
 
 export const NavLink = ({ href, className, ...props }: NavLinkProps) => {

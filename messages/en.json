@@ -212,6 +212,126 @@
       "description": "Helps veterans train for and settle into life after service."
     }
   },
+  "About": {
+    "_reviewed": true,
+    "title": "About {orgName}",
+    "lead": "We're an independent, volunteer-run group raising money for Air Force veterans and their families.",
+    "missionHeading": "Why we exist",
+    "missionBody1": "Leaving the Air Force, or living alongside someone who serves, can bring costs nobody plans for: a repair that can't wait, childcare during a deployment, the last course before a new career.",
+    "missionBody2": "We raise money for those moments and get it where it's needed, quickly and without fuss. Everyone who works on {orgName} is a volunteer.",
+    "principlesHeading": "How we work",
+    "principles": {
+      "volunteers": {
+        "title": "Run by volunteers",
+        "body": "No one is paid to run {orgName}. Veterans, spouses and neighbors give their time, so more of every gift reaches the people it's for."
+      },
+      "choice": {
+        "title": "You choose where it goes",
+        "body": "Every gift goes to the fund you pick, or to wherever the need is greatest if you leave that to us."
+      },
+      "open": {
+        "title": "We show our work",
+        "body": "We'll publish what we raise and how it's spent once our first annual report is ready."
+      }
+    },
+    "teamHeading": "Who runs it",
+    "teamLead": "A small board and a group of volunteer leads. We'll introduce them here soon.",
+    "roles": {
+      "chair": "Board chair",
+      "treasurer": "Treasurer",
+      "volunteers": "Volunteer coordinator",
+      "outreach": "Veteran and family outreach"
+    },
+    "nameToCome": "Name to come",
+    "independenceHeading": "Independent, not official",
+    "independenceBody1": "{orgName} is not part of the U.S. Air Force, the U.S. Space Force or the Department of Defense, and isn't endorsed by them.",
+    "independenceBody2": "Many of us served or have family who did. We started {orgName} to help in ways that official programs can't always reach quickly.",
+    "ctaHeading": "Stand with them",
+    "ctaBody": "Give once or monthly, or give your time."
+  },
+  "Programs": {
+    "_reviewed": true,
+    "title": "Programs",
+    "lead": "Four funds, each paying for a specific kind of help. Here's what each one covers and how help reaches people.",
+    "howHeading": "How help reaches people",
+    "steps": {
+      "ask": {
+        "title": "A veteran or family gets in touch",
+        "body": "Through our contact form, a phone call, or someone who knows us."
+      },
+      "review": {
+        "title": "A volunteer reviews the request",
+        "body": "They talk it through, check the details and work out which fund fits."
+      },
+      "pay": {
+        "title": "We pay the bill directly",
+        "body": "Where we can, money goes straight to the landlord, utility, repair shop or school."
+      }
+    },
+    "fundsHeading": "What each fund pays for",
+    "coversLabel": "What it pays for",
+    "covers": {
+      "general": {
+        "item1": "Whichever fund is most stretched this month",
+        "item2": "Requests that don't fit neatly into one fund",
+        "item3": "New needs we haven't planned for"
+      },
+      "emergency": {
+        "item1": "Rent or mortgage payments after a sudden loss of income",
+        "item2": "Overdue utility bills",
+        "item3": "Car repairs that keep someone getting to work"
+      },
+      "families": {
+        "item1": "Childcare during deployments and hospital stays",
+        "item2": "Travel to be with a family member who's ill",
+        "item3": "Help after the loss of a service member or veteran"
+      },
+      "transition": {
+        "item1": "Course fees, exam fees and certifications",
+        "item2": "Tools and equipment for a new trade",
+        "item3": "Help turning military experience into a civilian résumé"
+      }
+    },
+    "needHelpHeading": "Need help?",
+    "needHelpBody": "If you're an Air Force veteran or family member facing a cost you can't cover, tell us what's going on. A volunteer will read your message.",
+    "needHelpCta": "Ask for help"
+  },
+  "Stories": {
+    "_reviewed": true,
+    "title": "Stories",
+    "lead": "What a gift makes possible, in the words of the people it helped.",
+    "sampleBadge": "Sample story",
+    "sampleNotice": "This is a sample story written to show how this page will look. Real stories, shared with permission, will replace it.",
+    "readStory": "Read {name}'s story",
+    "giveToFund": "Give to {fund}",
+    "backToStories": "All stories",
+    "moreStories": "More stories",
+    "publishedOn": "Published {date}",
+    "featuredHeading": "In their words",
+    "items": {
+      "kept-on-the-road": {
+        "name": "Dana",
+        "role": "Air Force veteran, former aircraft maintainer",
+        "title": "The car repair that kept a new job",
+        "summary": "When her transmission failed three weeks into a new job, the emergency fund paid the repair shop and Dana kept working.",
+        "quote": "I'd done everything right and it still came down to one repair bill. That grant meant I could keep showing up."
+      },
+      "holding-the-fort": {
+        "name": "Marisol",
+        "role": "Air Force spouse, mother of two",
+        "title": "Help at home during a long deployment",
+        "summary": "With her husband deployed and her daughter in hospital, Marisol got two weeks of childcare so she could be at the bedside.",
+        "quote": "Someone else who understood military life took one thing off my list. That was everything that week."
+      },
+      "second-takeoff": {
+        "name": "Terrence",
+        "role": "Air Force veteran, 20 years in logistics",
+        "title": "The last step to a second career",
+        "summary": "An education grant covered Terrence's final course and licensing exam. He passed first time and now works in heating and air conditioning.",
+        "quote": "Twenty years of logistics didn't come with a license. The grant covered the last course and the exam."
+      }
+    }
+  },
   "WaysIn": {
     "_reviewed": true,
     "heading": "Find your way in",

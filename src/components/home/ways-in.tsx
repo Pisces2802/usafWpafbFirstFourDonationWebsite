@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { SectionHeading } from "@/components/home/section-heading";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-import type { AppPathname } from "@/i18n/routing";
+import type { StaticPathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 const ITEMS = ["item1", "item2", "item3"] as const;
@@ -20,7 +20,7 @@ const AUDIENCES = [
   { id: "volunteers", href: "/get-involved", isDonate: false, isSequence: false },
 ] as const satisfies readonly {
   id: string;
-  href: AppPathname;
+  href: StaticPathname;
   isDonate: boolean;
   isSequence: boolean;
 }[];

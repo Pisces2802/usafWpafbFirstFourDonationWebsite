@@ -212,6 +212,126 @@
       "description": "Aide les anciens combattants à se former et à s'adapter à la vie civile."
     }
   },
+  "About": {
+    "_reviewed": false,
+    "title": "À propos de {orgName}",
+    "lead": "Nous sommes un groupe bénévole indépendant qui collecte des fonds pour les anciens combattants de l'Air Force et leurs familles.",
+    "missionHeading": "Pourquoi nous existons",
+    "missionBody1": "Quitter l'Air Force, ou vivre aux côtés de quelqu'un qui sert, peut entraîner des dépenses que personne ne prévoit : une réparation urgente, une garde d'enfants pendant un déploiement, le dernier cours avant un nouveau métier.",
+    "missionBody2": "Nous collectons des fonds pour ces moments et les faisons arriver là où il faut, vite et simplement. Toutes les personnes qui font vivre {orgName} sont bénévoles.",
+    "principlesHeading": "Notre façon de faire",
+    "principles": {
+      "volunteers": {
+        "title": "Géré par des bénévoles",
+        "body": "Personne n'est payé pour faire tourner {orgName}. Anciens combattants, conjoints et voisins donnent de leur temps, pour qu'une plus grande part de chaque don arrive à destination."
+      },
+      "choice": {
+        "title": "Vous choisissez l'affectation",
+        "body": "Chaque don va au fonds que vous choisissez, ou là où le besoin est le plus grand si vous nous laissez décider."
+      },
+      "open": {
+        "title": "Nous rendons des comptes",
+        "body": "Nous publierons ce que nous collectons et comment c'est dépensé dès que notre premier rapport annuel sera prêt."
+      }
+    },
+    "teamHeading": "Qui le dirige",
+    "teamLead": "Un petit conseil et un groupe de responsables bénévoles. Nous les présenterons ici bientôt.",
+    "roles": {
+      "chair": "Présidence du conseil",
+      "treasurer": "Trésorerie",
+      "volunteers": "Coordination des bénévoles",
+      "outreach": "Relations avec les anciens combattants et les familles"
+    },
+    "nameToCome": "Nom à venir",
+    "independenceHeading": "Indépendants, pas officiels",
+    "independenceBody1": "{orgName} ne fait pas partie de l'U.S. Air Force, de l'U.S. Space Force ni du Département de la Défense, et n'est pas soutenu par eux.",
+    "independenceBody2": "Beaucoup d'entre nous ont servi ou ont un proche qui l'a fait. Nous avons créé {orgName} pour aider là où les programmes officiels n'arrivent pas toujours à temps.",
+    "ctaHeading": "Soutenez-les",
+    "ctaBody": "Donnez une fois ou chaque mois, ou donnez de votre temps."
+  },
+  "Programs": {
+    "_reviewed": false,
+    "title": "Programmes",
+    "lead": "Quatre fonds, chacun pour un type d'aide précis. Voici ce que chacun couvre et comment l'aide arrive.",
+    "howHeading": "Comment l'aide arrive",
+    "steps": {
+      "ask": {
+        "title": "Un ancien combattant ou une famille nous contacte",
+        "body": "Par le formulaire de contact, par téléphone ou par quelqu'un qui nous connaît."
+      },
+      "review": {
+        "title": "Un bénévole étudie la demande",
+        "body": "Il en discute, vérifie les détails et détermine quel fonds convient."
+      },
+      "pay": {
+        "title": "Nous payons directement",
+        "body": "Quand c'est possible, l'argent va directement au propriétaire, au fournisseur d'énergie, au garage ou à l'école."
+      }
+    },
+    "fundsHeading": "Ce que couvre chaque fonds",
+    "coversLabel": "Ce qu'il couvre",
+    "covers": {
+      "general": {
+        "item1": "Le fonds le plus sollicité du mois",
+        "item2": "Les demandes qui ne relèvent pas d'un seul fonds",
+        "item3": "Les besoins nouveaux que nous n'avions pas prévus"
+      },
+      "emergency": {
+        "item1": "Loyer ou prêt immobilier après une perte soudaine de revenus",
+        "item2": "Factures d'énergie en retard",
+        "item3": "Réparations de voiture pour pouvoir continuer à travailler"
+      },
+      "families": {
+        "item1": "Garde d'enfants pendant les déploiements et les hospitalisations",
+        "item2": "Déplacements pour être auprès d'un proche malade",
+        "item3": "Soutien après la perte d'un militaire ou d'un ancien combattant"
+      },
+      "transition": {
+        "item1": "Frais de cours, d'examen et de certification",
+        "item2": "Outils et équipement pour un nouveau métier",
+        "item3": "Aide pour traduire l'expérience militaire en CV civil"
+      }
+    },
+    "needHelpHeading": "Besoin d'aide ?",
+    "needHelpBody": "Si vous êtes un ancien combattant de l'Air Force ou un proche et que vous faites face à une dépense impossible à couvrir, dites-nous ce qui se passe. Un bénévole lira votre message.",
+    "needHelpCta": "Demander de l'aide"
+  },
+  "Stories": {
+    "_reviewed": false,
+    "title": "Témoignages",
+    "lead": "Ce qu'un don rend possible, raconté par les personnes qu'il a aidées.",
+    "sampleBadge": "Témoignage fictif",
+    "sampleNotice": "Ce témoignage fictif a été écrit pour montrer à quoi ressemblera cette page. De vrais témoignages, partagés avec autorisation, le remplaceront.",
+    "readStory": "Lire le témoignage de {name}",
+    "giveToFund": "Donner à « {fund} »",
+    "backToStories": "Tous les témoignages",
+    "moreStories": "Autres témoignages",
+    "publishedOn": "Publié le {date}",
+    "featuredHeading": "Avec leurs mots",
+    "items": {
+      "kept-on-the-road": {
+        "name": "Dana",
+        "role": "Ancienne de l'Air Force, ex-mécanicienne aéronautique",
+        "title": "La réparation qui a sauvé un nouvel emploi",
+        "summary": "Quand sa transmission a lâché trois semaines après ses débuts dans un nouvel emploi, le fonds d'urgence a payé le garage et Dana a pu continuer à travailler.",
+        "quote": "J'avais tout fait comme il faut, et tout dépendait quand même d'une facture de réparation. Cette aide m'a permis de continuer à travailler."
+      },
+      "holding-the-fort": {
+        "name": "Marisol",
+        "role": "Conjointe d'un militaire de l'Air Force, mère de deux enfants",
+        "title": "De l'aide à la maison pendant un long déploiement",
+        "summary": "Son mari déployé et sa fille hospitalisée, Marisol a bénéficié de deux semaines de garde d'enfants pour rester à son chevet.",
+        "quote": "Quelqu'un qui comprenait la vie militaire m'a enlevé une chose de la liste. Cette semaine-là, c'était énorme."
+      },
+      "second-takeoff": {
+        "name": "Terrence",
+        "role": "Ancien de l'Air Force, 20 ans dans la logistique",
+        "title": "La dernière étape vers un second métier",
+        "summary": "Une aide à la formation a couvert le dernier cours et l'examen de licence de Terrence. Il a réussi du premier coup et travaille aujourd'hui dans le chauffage et la climatisation.",
+        "quote": "Vingt ans de logistique ne donnent pas droit à une licence. L'aide a couvert le dernier cours et l'examen."
+      }
+    }
+  },
   "WaysIn": {
     "_reviewed": false,
     "heading": "Trouvez votre place",
