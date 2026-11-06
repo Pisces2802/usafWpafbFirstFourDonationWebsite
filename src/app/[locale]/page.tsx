@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/hero/hero-section";
+import { FeaturedStory } from "@/components/home/featured-story";
 import { FundsSection } from "@/components/home/funds-section";
 import { ImpactStats } from "@/components/home/impact-stats";
 import { PartnerLogos } from "@/components/home/partner-logos";
@@ -11,7 +12,7 @@ import { buildPageMetadata } from "@/lib/metadata";
 
 export const generateMetadata = async ({ params }: PageProps<"/[locale]">) => {
   const { locale } = await params;
-  return buildPageMetadata({ locale: locale as Locale, pathname: "/" });
+  return buildPageMetadata({ locale: locale as Locale, href: "/" });
 };
 
 const HomePage = () => (
@@ -20,6 +21,7 @@ const HomePage = () => (
     <QuickGiveBar isTaxDeductible={env.NEXT_PUBLIC_TAX_DEDUCTIBLE} />
     <ImpactStats />
     <FundsSection />
+    <FeaturedStory />
     <WaysIn />
     <PartnerLogos />
     <VolunteerBand />

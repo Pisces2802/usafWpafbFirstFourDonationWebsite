@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import { buttonVariants } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { Link } from "@/i18n/navigation";
-import type { AppPathname, Locale } from "@/i18n/routing";
-import { buildPageMetadata } from "@/lib/metadata";
+import type { StaticPathname } from "@/i18n/routing";
+import { getPageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 
 export type PlaceholderKey =
@@ -57,13 +57,8 @@ export const PlaceholderPage = async ({ titleKey }: PlaceholderPageProps) => {
   );
 };
 
-export const placeholderMetadata = async (
+export const placeholderMetadata = (
   params: Promise<{ locale: string }>,
   titleKey: PlaceholderKey,
-  pathname: AppPathname,
-): Promise<Metadata> => {
-  const { locale } = await params;
-  const t = await getTranslations({ locale: locale as Locale, namespace: "Pages" });
-
-  return buildPageMetadata({ locale: locale as Locale, pathname, title: t(titleKey) });
-};
+  href: StaticPathname,
+): Promise<Metadata> => getPageMetadata(params, { titleKey, href });

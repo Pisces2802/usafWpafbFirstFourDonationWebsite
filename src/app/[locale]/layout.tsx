@@ -1,17 +1,17 @@
 import "../globals.css";
 
-import { getTranslations } from "next-intl/server";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { Archivo, Public_Sans } from "next/font/google";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
+import { StickyDonateBar } from "@/components/layout/sticky-donate-bar";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { StickyDonateBar } from "@/components/layout/sticky-donate-bar";
 import { siteConfig } from "@/config/site";
-import { env } from "@/env";
 import { routing } from "@/i18n/routing";
+import { env } from "@/env";
 
 const archivo = Archivo({
   subsets: ["latin", "latin-ext"],

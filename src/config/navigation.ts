@@ -1,7 +1,7 @@
-import type { AppPathname } from "@/i18n/routing";
+import type { StaticPathname } from "@/i18n/routing";
 
 export type NavItem = {
-  href: AppPathname;
+  href: StaticPathname;
   labelKey:
     | "about"
     | "programs"

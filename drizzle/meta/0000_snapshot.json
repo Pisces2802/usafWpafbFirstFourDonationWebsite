@@ -46,9 +46,7 @@
         "campaigns_slug_unique": {
           "name": "campaigns_slug_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
+          "columns": ["slug"]
         }
       },
       "policies": {},
@@ -227,12 +225,8 @@
           "name": "donations_donor_id_donors_id_fk",
           "tableFrom": "donations",
           "tableTo": "donors",
-          "columnsFrom": [
-            "donor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["donor_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -240,12 +234,8 @@
           "name": "donations_campaign_id_campaigns_id_fk",
           "tableFrom": "donations",
           "tableTo": "campaigns",
-          "columnsFrom": [
-            "campaign_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["campaign_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -253,12 +243,8 @@
           "name": "donations_fund_id_funds_id_fk",
           "tableFrom": "donations",
           "tableTo": "funds",
-          "columnsFrom": [
-            "fund_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["fund_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -268,16 +254,12 @@
         "donations_stripePaymentIntentId_unique": {
           "name": "donations_stripePaymentIntentId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_payment_intent_id"
-          ]
+          "columns": ["stripe_payment_intent_id"]
         },
         "donations_stripeInvoiceId_unique": {
           "name": "donations_stripeInvoiceId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_invoice_id"
-          ]
+          "columns": ["stripe_invoice_id"]
         }
       },
       "policies": {},
@@ -346,16 +328,12 @@
         "donors_email_unique": {
           "name": "donors_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "donors_stripeCustomerId_unique": {
           "name": "donors_stripeCustomerId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_customer_id"
-          ]
+          "columns": ["stripe_customer_id"]
         }
       },
       "policies": {},
@@ -400,9 +378,7 @@
         "funds_slug_unique": {
           "name": "funds_slug_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
+          "columns": ["slug"]
         }
       },
       "policies": {},
@@ -509,27 +485,17 @@
     "public.donation_status": {
       "name": "donation_status",
       "schema": "public",
-      "values": [
-        "succeeded",
-        "refunded",
-        "failed"
-      ]
+      "values": ["succeeded", "refunded", "failed"]
     },
     "public.frequency": {
       "name": "frequency",
       "schema": "public",
-      "values": [
-        "one_time",
-        "monthly"
-      ]
+      "values": ["one_time", "monthly"]
     },
     "public.tribute_type": {
       "name": "tribute_type",
       "schema": "public",
-      "values": [
-        "honour",
-        "memory"
-      ]
+      "values": ["honour", "memory"]
     }
   },
   "schemas": {},
