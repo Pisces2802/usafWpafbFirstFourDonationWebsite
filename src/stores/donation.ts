@@ -19,12 +19,15 @@ export type DonationState = {
   coverFees: boolean;
   tribute: Tribute;
   donor: Donor;
+  /** Campaign slug from a deep link, credited on the gift. */
+  campaign: string | null;
   setFrequency: (f: Frequency) => void;
   setAmount: (cents: number, isCustom?: boolean) => void;
   setFund: (id: FundId) => void;
   toggleCoverFees: () => void;
   setTribute: (t: Tribute) => void;
   setDonor: (d: Partial<Donor>) => void;
+  setCampaign: (slug: string | null) => void;
   reset: () => void;
 };
 
@@ -36,6 +39,7 @@ const initialState = {
   coverFees: false,
   tribute: null as Tribute,
   donor: { firstName: "", lastName: "", email: "" },
+  campaign: null as string | null,
 };
 
 export const useDonationStore = create<DonationState>()(
@@ -53,13 +57,14 @@ export const useDonationStore = create<DonationState>()(
       toggleCoverFees: () => set((state) => ({ coverFees: !state.coverFees })),
       setTribute: (tribute) => set({ tribute }),
       setDonor: (donor) => set((state) => ({ donor: { ...state.donor, ...donor } })),
+      setCampaign: (campaign) => set({ campaign }),
       reset: () => set(initialState),
     }),
     {
       name: "donation",
       storage: createJSONStorage(() => sessionStorage),
       skipHydration: true,
-      partialize: ({ frequency, amountCents, isCustom, fundId, coverFees, tribute, donor }) => ({
+      partialize: ({
         frequency,
         amountCents,
         isCustom,
@@ -67,6 +72,16 @@ export const useDonationStore = create<DonationState>()(
         coverFees,
         tribute,
         donor,
+        campaign,
+      }) => ({
+        frequency,
+        amountCents,
+        isCustom,
+        fundId,
+        coverFees,
+        tribute,
+        donor,
+        campaign,
       }),
     },
   ),

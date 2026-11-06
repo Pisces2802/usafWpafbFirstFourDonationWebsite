@@ -18,7 +18,8 @@ export type PlaceholderKey =
   | "privacy"
   | "donorPrivacy"
   | "terms"
-  | "donate";
+  | "donate"
+  | "thankYou";
 
 type PlaceholderPageProps = {
   titleKey: PlaceholderKey;
