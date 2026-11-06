@@ -1,0 +1,22 @@
+{
+  "_note": "Every media asset shipped on the site needs an entry: where it came from, who owns it, and proof of rights/releases. See HANDOFF.md section 4.3.",
+  "assets": [
+    {
+      "path": "src/assets/hero-poster.jpg",
+      "description": "Placeholder hero poster: illustrated runway at dusk. No people, no official marks.",
+      "source": "Generated in-house by scripts/generate-hero-poster.mjs",
+      "licence": "Original work, owned by the organisation",
+      "releases": "Not applicable (no identifiable people)",
+      "placeholder": true
+    },
+    {
+      "path": "public/assets/hero-1080.webm, public/assets/hero-720.webm",
+      "description": "Hero loop. Observed content: Air Force Basic Military Training footage (trainees in uniform and PT gear, squadron guidon \"737\", burned-in titles such as \"WEEK 4: BECOMING A COMPLETE AIRMAN\"). Identifiable faces throughout.",
+      "source": "TBD: supplied by the team; appears to be U.S. government footage",
+      "licence": "TBD: government footage usage terms must be checked clip by clip before launch (HANDOFF 4.3)",
+      "releases": "TBD: identifiable people on screen; uniformed personnel can read as endorsement",
+      "technical": "174s long (spec 12-20s loop); 1080 file 28.9 MB, 720 file 15.7 MB (spec <= 5 MB); webm only, no mp4 fallback",
+      "placeholder": true
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "Metadata": {
+    "_reviewed": true,
+    "title": "{orgName} | Support Air Force veterans",
+    "description": "Give once or monthly to support Air Force veterans and their families."
+  },
+  "Common": {
+    "_reviewed": true,
+    "skipToContent": "Skip to main content",
+    "close": "Close",
+    "homeLink": "{orgName} home",
+    "donate": "Donate",
+    "donateNow": "Donate now"
+  },
+  "Header": {
+    "_reviewed": true,
+    "mainNavLabel": "Main",
+    "openMenu": "Open menu",
+    "menuTitle": "Menu"
+  },
+  "Pages": {
+    "_reviewed": true,
+    "about": "About",
+    "programs": "Programs",
+    "stories": "Stories",
+    "getInvolved": "Get involved",
+    "contact": "Contact",
+    "transparency": "Transparency",
+    "privacy": "Privacy policy",
+    "donorPrivacy": "Donor privacy",
+    "terms": "Terms of use",
+    "donate": "Donate",
+    "placeholder": "We're still writing this page. In the meantime, you can make a gift or get in touch.",
+    "transparencyPlaceholder": "Annual report coming {year}."
+  },
+  "Home": {
+    "_reviewed": true,
+    "heroTitle": "Every airman needs a wingman. Be one.",
+    "heroLead": "We're an independent, volunteer-run group raising money for Air Force veterans and their families.",
+    "pauseVideo": "Pause background video",
+    "playVideo": "Play background video",
+    "volunteer": "Volunteer"
+  },
+  "Footer": {
+    "_reviewed": true,
+    "exploreHeading": "Explore",
+    "legalHeading": "Legal",
+    "languageHeading": "Language",
+    "taxStatus": "{orgName} is a 501(c)(3) nonprofit organisation. EIN {ein}.",
+    "disclaimer": "{orgName} is an independent volunteer organisation and is not affiliated with or endorsed by the U.S. Air Force, the U.S. Space Force, or the Department of Defense."
+  },
+  "LocaleSwitcher": {
+    "_reviewed": true,
+    "label": "Language",
+    "current": "Language: {language}",
+    "locale": "{locale, select, en {English} es {Español} fr {Français} other {Unknown}}"
+  },
+  "NotFound": {
+    "_reviewed": true,
+    "title": "We couldn't find that page",
+    "description": "The link may be out of date or the page may have moved.",
+    "backHome": "Go to the home page"
+  },
+  "QuickGive": {
+    "_reviewed": true,
+    "heading": "Make a gift",
+    "frequencyLegend": "How often",
+    "oneTime": "One-time",
+    "monthly": "Monthly",
+    "amountLegend": "Amount",
+    "customLabel": "Other amount",
+    "customPlaceholder": "Other",
+    "fundLabel": "Goes to",
+    "give": "{frequency, select, monthly {Give {amount} a month} other {Give {amount}}}",
+    "giveNoAmount": "Give",
+    "errorInvalid": "Enter an amount in dollars, like 40.",
+    "errorMin": "The smallest gift we can take online is {min}.",
+    "errorMax": "For gifts over {max}, please contact us and we'll help you give.",
+    "notesLabel": "About your gift",
+    "secureCheckout": "Secure checkout",
+    "cancelAnytime": "Cancel a monthly gift anytime",
+    "taxDeductible": "Tax-deductible to the extent allowed by law"
+  },
+  "Funds": {
+    "_reviewed": true,
+    "heading": "Where your gift goes",
+    "lead": "Choose a fund when you give, or let us put your gift where it's needed most.",
+    "giveToFund": "Give to this fund",
+    "giveToFundLabel": "Give to {fund}",
+    "general": {
+      "name": "Where it's needed most",
+      "description": "Lets us put your gift to work wherever the need is greatest right now."
+    },
+    "emergency": {
+      "name": "Emergency assistance",
+      "description": "Helps veterans and their families cover urgent costs like rent, utilities and car repairs."
+    },
+    "families": {
+      "name": "Family support",
+      "description": "Supports spouses and children through deployments, illness and loss."
+    },
+    "transition": {
+      "name": "Education and transition",
+      "description": "Helps veterans train for and settle into life after service."
+    }
+  },
+  "WaysIn": {
+    "_reviewed": true,
+    "heading": "Find your way in",
+    "tabsLabel": "Choose what describes you",
+    "donors": {
+      "tab": "Donors",
+      "title": "Give once or every month",
+      "body": "Monthly gifts give us steady support we can plan around. One-time gifts go to work right away.",
+      "cta": "Make a gift",
+      "listHeading": "How it works",
+      "item1": "Pick an amount and how often you'd like to give.",
+      "item2": "Pay by card, Apple Pay or Google Pay.",
+      "item3": "Get your receipt by email."
+    },
+    "veterans": {
+      "tab": "Veterans & families",
+      "title": "Find support",
+      "body": "If you or your family need help, tell us what's going on and we'll point you to the right support.",
+      "cta": "Contact us",
+      "listHeading": "What happens next",
+      "item1": "Tell us a little about what's going on.",
+      "item2": "A volunteer reads your message.",
+      "item3": "We reply by email with next steps, or the right organisation to contact."
+    },
+    "companies": {
+      "tab": "Companies",
+      "title": "Partner with us",
+      "body": "Sponsor a program, match your employees' gifts, or get your team involved.",
+      "cta": "Talk to us about partnering",
+      "listHeading": "Ways to partner",
+      "item1": "Sponsor a fund or an event.",
+      "item2": "Match your employees' gifts.",
+      "item3": "Volunteer together as a team."
+    },
+    "volunteers": {
+      "tab": "Volunteers",
+      "title": "Give your time",
+      "body": "From events to mentoring, there's a way to help that fits your schedule.",
+      "cta": "Volunteer with us",
+      "listHeading": "Ways to help",
+      "item1": "Help run fundraising events.",
+      "item2": "Lend a professional skill, like design, writing or finance.",
+      "item3": "Spread the word in your unit or community."
+    },
+    "lead": "Whether you want to give, need support or want to help, start here."
+  },
+  "Stats": {
+    "_reviewed": true,
+    "heading": "Impact at a glance",
+    "veteransHelped": "{count, plural, one {veteran helped} other {veterans helped}}",
+    "familiesSupported": "{count, plural, one {family supported} other {families supported}}",
+    "volunteerHours": "{count, plural, one {volunteer hour} other {volunteer hours}}"
+  },
+  "Partners": {
+    "_reviewed": true,
+    "heading": "Our partners"
+  },
+  "VolunteerBand": {
+    "_reviewed": true,
+    "title": "Can't give right now? Give your time.",
+    "body": "Volunteers run everything we do. Tell us what you're good at and we'll find a fit.",
+    "cta": "Become a volunteer"
+  }
+}

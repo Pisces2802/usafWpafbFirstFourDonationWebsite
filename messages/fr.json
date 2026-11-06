@@ -1,0 +1,170 @@
+{
+  "Metadata": {
+    "_reviewed": false,
+    "title": "{orgName} | Soutenez les anciens combattants de l'Air Force",
+    "description": "Donnez une fois ou chaque mois pour soutenir les anciens combattants de l'Air Force et leurs familles."
+  },
+  "Common": {
+    "_reviewed": false,
+    "skipToContent": "Aller au contenu principal",
+    "close": "Fermer",
+    "homeLink": "Accueil de {orgName}",
+    "donate": "Faire un don",
+    "donateNow": "Donner maintenant"
+  },
+  "Header": {
+    "_reviewed": false,
+    "mainNavLabel": "Principale",
+    "openMenu": "Ouvrir le menu",
+    "menuTitle": "Menu"
+  },
+  "Pages": {
+    "_reviewed": false,
+    "about": "À propos",
+    "programs": "Programmes",
+    "stories": "Témoignages",
+    "getInvolved": "S'impliquer",
+    "contact": "Contact",
+    "transparency": "Transparence",
+    "privacy": "Politique de confidentialité",
+    "donorPrivacy": "Confidentialité des donateurs",
+    "terms": "Conditions d'utilisation",
+    "donate": "Faire un don",
+    "placeholder": "Cette page est en cours de rédaction. En attendant, vous pouvez faire un don ou nous écrire.",
+    "transparencyPlaceholder": "Rapport annuel prévu en {year}."
+  },
+  "Home": {
+    "_reviewed": false,
+    "heroTitle": "Chaque aviateur a besoin d'un ailier. Soyez le sien.",
+    "heroLead": "Nous sommes un groupe indépendant de bénévoles qui collecte des fonds pour les anciens combattants de l'Air Force et leurs familles.",
+    "pauseVideo": "Mettre la vidéo d'arrière-plan en pause",
+    "playVideo": "Lire la vidéo d'arrière-plan",
+    "volunteer": "Devenir bénévole"
+  },
+  "Footer": {
+    "_reviewed": false,
+    "exploreHeading": "Explorer",
+    "legalHeading": "Mentions légales",
+    "languageHeading": "Langue",
+    "taxStatus": "{orgName} est un organisme sans but lucratif 501(c)(3). EIN {ein}.",
+    "disclaimer": "{orgName} est un organisme bénévole indépendant, sans lien avec l'U.S. Air Force, l'U.S. Space Force ou le Département de la Défense, et qui n'est pas soutenu par ceux-ci."
+  },
+  "LocaleSwitcher": {
+    "_reviewed": false,
+    "label": "Langue",
+    "current": "Langue : {language}",
+    "locale": "{locale, select, en {English} es {Español} fr {Français} other {Inconnu}}"
+  },
+  "NotFound": {
+    "_reviewed": false,
+    "title": "Page introuvable",
+    "description": "Le lien est peut-être périmé ou la page a été déplacée.",
+    "backHome": "Retour à l'accueil"
+  },
+  "QuickGive": {
+    "_reviewed": false,
+    "heading": "Faire un don",
+    "frequencyLegend": "Fréquence",
+    "oneTime": "Unique",
+    "monthly": "Mensuel",
+    "amountLegend": "Montant",
+    "customLabel": "Autre montant",
+    "customPlaceholder": "Autre",
+    "fundLabel": "Destination",
+    "give": "{frequency, select, monthly {Donner {amount} par mois} other {Donner {amount}}}",
+    "giveNoAmount": "Donner",
+    "errorInvalid": "Saisissez un montant en dollars, par exemple 40.",
+    "errorMin": "Le don minimum en ligne est de {min}.",
+    "errorMax": "Pour un don supérieur à {max}, écrivez-nous et nous vous aiderons.",
+    "notesLabel": "À propos de votre don",
+    "secureCheckout": "Paiement sécurisé",
+    "cancelAnytime": "Annulez votre don mensuel à tout moment",
+    "taxDeductible": "Déductible d'impôt dans les limites prévues par la loi"
+  },
+  "Funds": {
+    "_reviewed": false,
+    "heading": "À quoi sert votre don",
+    "lead": "Choisissez un fonds au moment de donner, ou laissez-nous affecter votre don là où les besoins sont les plus grands.",
+    "giveToFund": "Soutenir ce fonds",
+    "giveToFundLabel": "Soutenir : {fund}",
+    "general": {
+      "name": "Là où les besoins sont les plus grands",
+      "description": "Nous permet d'affecter votre don là où les besoins sont les plus urgents."
+    },
+    "emergency": {
+      "name": "Aide d'urgence",
+      "description": "Aide les anciens combattants et leurs familles à payer des dépenses urgentes comme le loyer, les factures ou une réparation de voiture."
+    },
+    "families": {
+      "name": "Soutien aux familles",
+      "description": "Soutient les conjoints et les enfants pendant les déploiements, la maladie et le deuil."
+    },
+    "transition": {
+      "name": "Formation et transition",
+      "description": "Aide les anciens combattants à se former et à s'adapter à la vie civile."
+    }
+  },
+  "WaysIn": {
+    "_reviewed": false,
+    "heading": "Trouvez votre place",
+    "tabsLabel": "Choisissez ce qui vous décrit",
+    "donors": {
+      "tab": "Donateurs",
+      "title": "Donnez une fois ou chaque mois",
+      "body": "Les dons mensuels nous offrent un soutien régulier sur lequel nous pouvons compter. Les dons uniques sont utilisés immédiatement.",
+      "cta": "Faire un don",
+      "listHeading": "Comment ça marche",
+      "item1": "Choisissez un montant et la fréquence de votre don.",
+      "item2": "Payez par carte, Apple Pay ou Google Pay.",
+      "item3": "Recevez votre reçu par courriel."
+    },
+    "veterans": {
+      "tab": "Anciens combattants et familles",
+      "title": "Trouver de l'aide",
+      "body": "Si vous ou votre famille avez besoin d'aide, dites-nous ce qui se passe et nous vous orienterons vers le bon soutien.",
+      "cta": "Nous contacter",
+      "listHeading": "Et ensuite ?",
+      "item1": "Expliquez-nous brièvement votre situation.",
+      "item2": "Un bénévole lit votre message.",
+      "item3": "Nous vous répondons par courriel avec les prochaines étapes ou le bon organisme à contacter."
+    },
+    "companies": {
+      "tab": "Entreprises",
+      "title": "Devenez partenaire",
+      "body": "Parrainez un programme, doublez les dons de vos employés ou mobilisez votre équipe.",
+      "cta": "Parlons d'un partenariat",
+      "listHeading": "Façons de collaborer",
+      "item1": "Parrainez un fonds ou un événement.",
+      "item2": "Doublez les dons de vos employés.",
+      "item3": "Faites du bénévolat en équipe."
+    },
+    "volunteers": {
+      "tab": "Bénévoles",
+      "title": "Donnez de votre temps",
+      "body": "Des événements au mentorat, il existe une façon d'aider qui s'adapte à votre emploi du temps.",
+      "cta": "Devenir bénévole",
+      "listHeading": "Façons d'aider",
+      "item1": "Aidez à organiser des collectes de fonds.",
+      "item2": "Mettez à profit une compétence professionnelle : design, rédaction ou finances.",
+      "item3": "Faites passer le mot dans votre unité ou votre communauté."
+    },
+    "lead": "Que vous souhaitiez donner, ayez besoin de soutien ou vouliez aider, commencez ici."
+  },
+  "Stats": {
+    "_reviewed": false,
+    "heading": "Notre impact",
+    "veteransHelped": "{count, plural, one {ancien combattant aidé} other {anciens combattants aidés}}",
+    "familiesSupported": "{count, plural, one {famille soutenue} other {familles soutenues}}",
+    "volunteerHours": "{count, plural, one {heure de bénévolat} other {heures de bénévolat}}"
+  },
+  "Partners": {
+    "_reviewed": false,
+    "heading": "Nos partenaires"
+  },
+  "VolunteerBand": {
+    "_reviewed": false,
+    "title": "Vous ne pouvez pas donner maintenant ? Donnez de votre temps.",
+    "body": "Ce sont des bénévoles qui font tout ce que nous faisons. Dites-nous ce que vous savez faire et nous trouverons une place pour vous.",
+    "cta": "Devenir bénévole"
+  }
+}

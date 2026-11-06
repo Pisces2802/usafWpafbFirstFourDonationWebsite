@@ -1,26 +1,239 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (@media (prefers-color-scheme: dark));
 
 @theme inline {
+  --color-ultramarine: var(--ultramarine);
+  --color-night: var(--night);
+  --color-taxiway: var(--taxiway);
+  --color-concrete: var(--concrete);
+  --color-cloud: var(--cloud);
+  --color-signal: var(--signal);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Type scale from the handoff: 16 / 20 / 25 / 31 / 39 / 61 / 96px. */
+@theme {
+  --text-base: 1rem;
+  --text-base--line-height: 1.6;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.5;
+  --text-2xl: 1.5625rem;
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 1.9375rem;
+  --text-3xl--line-height: 1.15;
+  --text-4xl: 2.4375rem;
+  --text-4xl--line-height: 1.05;
+  --text-5xl: 3.8125rem;
+  --text-5xl--line-height: 0.95;
+  --text-6xl: 6rem;
+  --text-6xl--line-height: 0.92;
+  --text-hero: clamp(3rem, 8vw, 7.5rem);
+  --text-hero--line-height: 0.92;
+
+  /* Motion: one orchestrated hero moment on load; everything else is short feedback. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-hero-rise: hero-rise 700ms var(--ease-out-expo) both;
+  --animate-hero-rise-lead: hero-rise 700ms var(--ease-out-expo) 120ms both;
+  --animate-hero-rise-actions: hero-rise 700ms var(--ease-out-expo) 220ms both;
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+  }
+}
+
+:root {
+  --ultramarine: #00308f;
+  --night: #0e1c36;
+  --taxiway: #f2b705;
+  --concrete: #d9dcd6;
+  --cloud: #f7f8fa;
+  --signal: #c8102e;
+
+  --background: var(--cloud);
+  --foreground: var(--night);
+  --card: #ffffff;
+  --card-foreground: var(--night);
+  --popover: #ffffff;
+  --popover-foreground: var(--night);
+  --primary: var(--ultramarine);
+  --primary-foreground: #ffffff;
+  --secondary: #eceee9;
+  --secondary-foreground: var(--night);
+  --muted: #eceee9;
+  --muted-foreground: #4a5568;
+  --accent: #e6ebf5;
+  --accent-foreground: var(--night);
+  --destructive: var(--signal);
+  --border: var(--concrete);
+  --input: #b9bdb5;
+  --ring: var(--ultramarine);
+  --chart-1: var(--ultramarine);
+  --chart-2: var(--taxiway);
+  --chart-3: #4a6fb5;
+  --chart-4: #8a8f86;
+  --chart-5: var(--night);
+  --radius: 0.375rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: var(--night);
+  --sidebar-primary: var(--ultramarine);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e6ebf5;
+  --sidebar-accent-foreground: var(--night);
+  --sidebar-border: var(--concrete);
+  --sidebar-ring: var(--ultramarine);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0a1429;
+    --foreground: var(--cloud);
+    --card: var(--night);
+    --card-foreground: var(--cloud);
+    --popover: var(--night);
+    --popover-foreground: var(--cloud);
+    --primary: #9db8ff;
+    --primary-foreground: var(--night);
+    --secondary: #1a2b4d;
+    --secondary-foreground: var(--cloud);
+    --muted: #1a2b4d;
+    --muted-foreground: #aab4c5;
+    --accent: #1a2b4d;
+    --accent-foreground: var(--cloud);
+    --destructive: #ff6b7f;
+    --border: rgb(255 255 255 / 12%);
+    --input: rgb(255 255 255 / 20%);
+    --ring: var(--taxiway);
+    --chart-1: #9db8ff;
+    --chart-2: var(--taxiway);
+    --chart-3: #4a6fb5;
+    --chart-4: #8a8f86;
+    --chart-5: var(--cloud);
+    --sidebar: var(--night);
+    --sidebar-foreground: var(--cloud);
+    --sidebar-primary: #9db8ff;
+    --sidebar-primary-foreground: var(--night);
+    --sidebar-accent: #1a2b4d;
+    --sidebar-accent-foreground: var(--cloud);
+    --sidebar-border: rgb(255 255 255 / 12%);
+    --sidebar-ring: var(--taxiway);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Sections that are dark in both themes (hero, footer). */
+.surface-night {
+  --background: var(--night);
+  --foreground: #ffffff;
+  --muted-foreground: #c3cad6;
+  --border: rgb(255 255 255 / 16%);
+  --ring: var(--taxiway);
+  background-color: var(--night);
+  color: #ffffff;
+}
+
+/* Underline that fades in rather than snapping on; used for text links in nav and footer. */
+@utility link-underline {
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.35em;
+  transition: text-decoration-color 160ms ease-out;
+  &:hover {
+    text-decoration-color: currentColor;
+  }
+}
+
+@utility font-condensed {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 62%;
+}
+
+@utility headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 62%;
+  line-height: 0.92;
+  text-wrap: balance;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+  :focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  p {
+    max-width: 75ch;
+  }
 }

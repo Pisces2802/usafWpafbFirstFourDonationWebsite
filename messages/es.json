@@ -1,0 +1,170 @@
+{
+  "Metadata": {
+    "_reviewed": false,
+    "title": "{orgName} | Apoya a los veteranos de la Fuerza Aérea",
+    "description": "Dona una vez o cada mes para apoyar a los veteranos de la Fuerza Aérea y a sus familias."
+  },
+  "Common": {
+    "_reviewed": false,
+    "skipToContent": "Saltar al contenido principal",
+    "close": "Cerrar",
+    "homeLink": "Inicio de {orgName}",
+    "donate": "Donar",
+    "donateNow": "Dona ahora"
+  },
+  "Header": {
+    "_reviewed": false,
+    "mainNavLabel": "Principal",
+    "openMenu": "Abrir menú",
+    "menuTitle": "Menú"
+  },
+  "Pages": {
+    "_reviewed": false,
+    "about": "Nosotros",
+    "programs": "Programas",
+    "stories": "Historias",
+    "getInvolved": "Participa",
+    "contact": "Contacto",
+    "transparency": "Transparencia",
+    "privacy": "Política de privacidad",
+    "donorPrivacy": "Privacidad de donantes",
+    "terms": "Términos de uso",
+    "donate": "Donar",
+    "placeholder": "Todavía estamos escribiendo esta página. Mientras tanto, puedes hacer una donación o escribirnos.",
+    "transparencyPlaceholder": "Informe anual disponible en {year}."
+  },
+  "Home": {
+    "_reviewed": false,
+    "heroTitle": "Todo aviador necesita un compañero de ala. Sé uno.",
+    "heroLead": "Somos un grupo independiente de voluntarios que recauda fondos para los veteranos de la Fuerza Aérea y sus familias.",
+    "pauseVideo": "Pausar el video de fondo",
+    "playVideo": "Reproducir el video de fondo",
+    "volunteer": "Hazte voluntario"
+  },
+  "Footer": {
+    "_reviewed": false,
+    "exploreHeading": "Explorar",
+    "legalHeading": "Legal",
+    "languageHeading": "Idioma",
+    "taxStatus": "{orgName} es una organización sin fines de lucro 501(c)(3). EIN {ein}.",
+    "disclaimer": "{orgName} es una organización de voluntarios independiente y no está afiliada ni respaldada por la Fuerza Aérea de los EE. UU., la Fuerza Espacial de los EE. UU. ni el Departamento de Defensa."
+  },
+  "LocaleSwitcher": {
+    "_reviewed": false,
+    "label": "Idioma",
+    "current": "Idioma: {language}",
+    "locale": "{locale, select, en {English} es {Español} fr {Français} other {Desconocido}}"
+  },
+  "NotFound": {
+    "_reviewed": false,
+    "title": "No encontramos esa página",
+    "description": "Es posible que el enlace esté desactualizado o que la página se haya movido.",
+    "backHome": "Ir a la página de inicio"
+  },
+  "QuickGive": {
+    "_reviewed": false,
+    "heading": "Haz una donación",
+    "frequencyLegend": "Frecuencia",
+    "oneTime": "Única",
+    "monthly": "Mensual",
+    "amountLegend": "Monto",
+    "customLabel": "Otro monto",
+    "customPlaceholder": "Otro",
+    "fundLabel": "Destino",
+    "give": "{frequency, select, monthly {Dona {amount} al mes} other {Dona {amount}}}",
+    "giveNoAmount": "Donar",
+    "errorInvalid": "Escribe un monto en dólares, por ejemplo 40.",
+    "errorMin": "La donación mínima en línea es de {min}.",
+    "errorMax": "Para donaciones de más de {max}, escríbenos y te ayudaremos a donar.",
+    "notesLabel": "Sobre tu donación",
+    "secureCheckout": "Pago seguro",
+    "cancelAnytime": "Cancela tu donación mensual cuando quieras",
+    "taxDeductible": "Deducible de impuestos en la medida permitida por la ley"
+  },
+  "Funds": {
+    "_reviewed": false,
+    "heading": "A dónde va tu donación",
+    "lead": "Elige un fondo al donar o deja que usemos tu donación donde más se necesite.",
+    "giveToFund": "Dona a este fondo",
+    "giveToFundLabel": "Dona a {fund}",
+    "general": {
+      "name": "Donde más se necesite",
+      "description": "Nos permite usar tu donación donde la necesidad sea mayor en este momento."
+    },
+    "emergency": {
+      "name": "Asistencia de emergencia",
+      "description": "Ayuda a los veteranos y a sus familias a cubrir gastos urgentes como el alquiler, los servicios o la reparación del auto."
+    },
+    "families": {
+      "name": "Apoyo familiar",
+      "description": "Apoya a cónyuges e hijos durante despliegues, enfermedades y pérdidas."
+    },
+    "transition": {
+      "name": "Educación y transición",
+      "description": "Ayuda a los veteranos a capacitarse y adaptarse a la vida después del servicio."
+    }
+  },
+  "WaysIn": {
+    "_reviewed": false,
+    "heading": "Encuentra tu forma de participar",
+    "tabsLabel": "Elige lo que te describe",
+    "donors": {
+      "tab": "Donantes",
+      "title": "Dona una vez o cada mes",
+      "body": "Las donaciones mensuales nos dan un apoyo estable con el que podemos planificar. Las donaciones únicas se usan de inmediato.",
+      "cta": "Haz una donación",
+      "listHeading": "Cómo funciona",
+      "item1": "Elige un monto y la frecuencia de tu donación.",
+      "item2": "Paga con tarjeta, Apple Pay o Google Pay.",
+      "item3": "Recibe tu comprobante por correo electrónico."
+    },
+    "veterans": {
+      "tab": "Veteranos y familias",
+      "title": "Encuentra apoyo",
+      "body": "Si tú o tu familia necesitan ayuda, cuéntanos qué está pasando y te orientaremos hacia el apoyo adecuado.",
+      "cta": "Contáctanos",
+      "listHeading": "Qué pasa después",
+      "item1": "Cuéntanos un poco sobre lo que está pasando.",
+      "item2": "Un voluntario lee tu mensaje.",
+      "item3": "Te respondemos por correo con los próximos pasos o la organización adecuada."
+    },
+    "companies": {
+      "tab": "Empresas",
+      "title": "Colabora con nosotros",
+      "body": "Patrocina un programa, iguala las donaciones de tus empleados o involucra a tu equipo.",
+      "cta": "Hablemos de una alianza",
+      "listHeading": "Formas de colaborar",
+      "item1": "Patrocina un fondo o un evento.",
+      "item2": "Iguala las donaciones de tus empleados.",
+      "item3": "Hagan voluntariado en equipo."
+    },
+    "volunteers": {
+      "tab": "Voluntarios",
+      "title": "Dona tu tiempo",
+      "body": "Desde eventos hasta mentorías, hay una forma de ayudar que se adapta a tu horario.",
+      "cta": "Hazte voluntario",
+      "listHeading": "Formas de ayudar",
+      "item1": "Ayuda a organizar eventos de recaudación.",
+      "item2": "Aporta una habilidad profesional, como diseño, redacción o finanzas.",
+      "item3": "Corre la voz en tu unidad o comunidad."
+    },
+    "lead": "Ya sea que quieras donar, necesites apoyo o quieras ayudar, empieza aquí."
+  },
+  "Stats": {
+    "_reviewed": false,
+    "heading": "Nuestro impacto",
+    "veteransHelped": "{count, plural, one {veterano ayudado} other {veteranos ayudados}}",
+    "familiesSupported": "{count, plural, one {familia apoyada} other {familias apoyadas}}",
+    "volunteerHours": "{count, plural, one {hora de voluntariado} other {horas de voluntariado}}"
+  },
+  "Partners": {
+    "_reviewed": false,
+    "heading": "Nuestros aliados"
+  },
+  "VolunteerBand": {
+    "_reviewed": false,
+    "title": "¿No puedes donar ahora? Dona tu tiempo.",
+    "body": "Los voluntarios hacen posible todo lo que hacemos. Cuéntanos en qué eres bueno y encontraremos un lugar para ti.",
+    "cta": "Hazte voluntario"
+  }
+}
