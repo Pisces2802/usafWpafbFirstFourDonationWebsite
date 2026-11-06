@@ -10,15 +10,18 @@ type PageMetadataInput = {
   description?: string;
 };
 
-/** Builds per-page metadata with a localised canonical URL and hreflang alternates (incl. x-default). */
+/**
+ * Builds per-page metadata with a localised canonical URL and hreflang alternates (incl. x-default).
+ * Title and description are only set when given, so pages without them keep the layout's defaults.
+ */
 export const buildPageMetadata = ({
   locale,
   pathname,
   title,
   description,
 }: PageMetadataInput): Metadata => ({
-  title,
-  description,
+  ...(title && { title }),
+  ...(description && { description }),
   alternates: {
     canonical: getPathname({ href: pathname, locale }),
     languages: {
