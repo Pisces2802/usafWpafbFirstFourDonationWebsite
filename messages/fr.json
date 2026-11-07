@@ -1,8 +1,8 @@
 {
   "Metadata": {
     "_reviewed": false,
-    "title": "{orgName} | Soutenez les anciens combattants de l'Air Force",
-    "description": "Donnez une fois ou chaque mois pour soutenir les anciens combattants de l'Air Force et leurs familles."
+    "title": "{orgName} | Par des aviateurs, pour des aviateurs",
+    "description": "Soutenez les aviateurs de grade E-⁠1 à E-⁠4 qui organisent, les uns pour les autres, des événements de cohésion, du développement professionnel et des projets solidaires."
   },
   "Common": {
     "_reviewed": false,
@@ -37,7 +37,7 @@
   "Home": {
     "_reviewed": false,
     "heroTitle": "Chaque aviateur a besoin d'un ailier. Soyez le sien.",
-    "heroLead": "Nous sommes un groupe indépendant de bénévoles qui collecte des fonds pour les anciens combattants de l'Air Force et leurs familles.",
+    "heroLead": "Nous sommes des aviateurs de grade E-⁠1 à E-⁠4 qui organisons, les uns pour les autres, des événements de cohésion, du développement professionnel et des projets solidaires. Votre don les finance.",
     "pauseVideo": "Mettre la vidéo d'arrière-plan en pause",
     "playVideo": "Lire la vidéo d'arrière-plan",
     "volunteer": "Devenir bénévole"
@@ -48,7 +48,7 @@
     "legalHeading": "Mentions légales",
     "languageHeading": "Langue",
     "taxStatus": "{orgName} est un organisme sans but lucratif 501(c)(3). EIN {ein}.",
-    "disclaimer": "{orgName} est un organisme bénévole indépendant, sans lien avec l'U.S. Air Force, l'U.S. Space Force ou le Département de la Défense, et qui n'est pas soutenu par ceux-ci."
+    "disclaimer": "{orgName} est une organisation privée. Elle ne fait pas partie du Département de la Défense ni d'aucune de ses composantes et n'a aucun statut gouvernemental. Elle n'est pas soutenue par l'U.S. Air Force."
   },
   "LocaleSwitcher": {
     "_reviewed": false,
@@ -85,7 +85,7 @@
   "Donate": {
     "_reviewed": false,
     "title": "Faire un don",
-    "lead": "Votre don aide les anciens combattants de l'Air Force et leurs familles. Cela prend environ deux minutes.",
+    "lead": "Votre don finance des événements de cohésion, du développement professionnel et des projets solidaires menés par de jeunes aviateurs. Cela prend environ deux minutes.",
     "stepGift": "Votre don",
     "fundLegend": "Affectation",
     "coverFees": "{frequency, select, monthly {Ajouter {fee} par mois pour couvrir les frais de carte, afin que {orgName} reçoive la totalité des {amount}.} other {Ajouter {fee} pour couvrir les frais de carte, afin que {orgName} reçoive la totalité des {amount}.}}",
@@ -156,8 +156,8 @@
     "copiedNote": "Collez-le dans un message ou une publication.",
     "copyFailed": "Copiez ce lien pour le partager : {url}",
     "emailFriend": "Envoyer par e-mail",
-    "emailSubject": "{orgName} soutient les anciens combattants de l'Air Force",
-    "emailBody": "Je viens de faire un don à {orgName}, un groupe bénévole qui soutient les anciens combattants de l'Air Force et leurs familles. Jetez-y un œil : {url}",
+    "emailSubject": "{orgName} soutient les jeunes aviateurs",
+    "emailBody": "Je viens de faire un don à {orgName}, un groupe mené par de jeunes aviateurs pour s'entraider. Jetez un œil : {url}",
     "backHome": "Retour à l'accueil",
     "notFoundTitle": "Nous ne trouvons pas ce don",
     "notFoundBody": "Si vous venez de donner, vérifiez vos e-mails pour trouver le reçu. Si quelque chose ne va pas, <link>écrivez-nous</link> et nous réglerons ça."
@@ -180,51 +180,47 @@
     "feeNote": "Comprend {fee} ajoutés pour couvrir les frais de carte.",
     "tributeNote": "{type, select, memory {À la mémoire de {name}.} other {En l'honneur de {name}.}}",
     "taxNote": "{orgName} est un organisme sans but lucratif 501(c)(3), EIN {ein}. Aucun bien ni service n'a été fourni en échange de ce don. Conservez ce reçu pour votre déclaration d'impôts.",
-    "plainNote": "Votre don va aux anciens combattants de l'Air Force et à leurs familles. Merci de les soutenir.",
+    "plainNote": "Votre don soutient des événements de cohésion, du développement professionnel et des projets solidaires menés par de jeunes aviateurs. Merci de les soutenir.",
     "monthlyNote": "Ce don est renouvelé chaque mois. Pour le modifier ou l'annuler, écrivez-nous.",
     "contactLink": "Contacter {orgName}",
     "tributeSubject": "{type, select, memory {Un don à la mémoire de {honoree}} other {Un don en l'honneur de {honoree}}}",
     "tributeBody": "{type, select, memory {{donor} a fait un don à {orgName} à la mémoire de {honoree}.} other {{donor} a fait un don à {orgName} en l'honneur de {honoree}.}}",
-    "tributeAbout": "{orgName} est un groupe bénévole indépendant qui collecte des fonds pour les anciens combattants de l'Air Force et leurs familles.",
+    "tributeAbout": "{orgName} est dirigée par des aviateurs de grade E-⁠1 à E-⁠4 pour améliorer le moral et le bien-être, former des leaders et servir la communauté.",
     "tributeWhy": "Vous recevez cet e-mail parce que {donor} nous a demandé de vous prévenir. Nous ne vous écrirons plus au sujet de ce don.",
     "aboutLink": "Découvrir {orgName}"
   },
   "Funds": {
     "_reviewed": false,
     "heading": "À quoi sert votre don",
-    "lead": "Choisissez un fonds au moment de donner, ou laissez-nous affecter votre don là où les besoins sont les plus grands.",
+    "lead": "Choisissez ce que finance votre don, ou laissez nos membres l'affecter là où il est le plus utile.",
     "giveToFund": "Soutenir ce fonds",
     "giveToFundLabel": "Soutenir : {fund}",
     "general": {
       "name": "Là où les besoins sont les plus grands",
-      "description": "Nous permet d'affecter votre don là où les besoins sont les plus urgents."
+      "description": "Permet à nos membres d'affecter votre don au projet qui en a besoin en premier."
     },
-    "emergency": {
-      "name": "Aide d'urgence",
-      "description": "Aide les anciens combattants et leurs familles à payer des dépenses urgentes comme le loyer, les factures ou une réparation de voiture."
+    "morale": {
+      "name": "Moral et événements",
+      "description": "Finance les barbecues, soirées jeux et sorties qui rapprochent les aviateurs, surtout ceux qui viennent d'arriver sur la base."
     },
-    "families": {
-      "name": "Soutien aux familles",
-      "description": "Soutient les conjoints et les enfants pendant les déploiements, la maladie et le deuil."
+    "development": {
+      "name": "Développement professionnel",
+      "description": "Aide les jeunes aviateurs à développer leur leadership grâce à des ateliers, du mentorat, des groupes d'étude et des journées de formation."
     },
-    "transition": {
-      "name": "Formation et transition",
-      "description": "Aide les anciens combattants à se former et à s'adapter à la vie civile."
+    "community": {
+      "name": "Projets solidaires",
+      "description": "Achète la peinture, les outils et le matériel que les aviateurs utilisent pour améliorer la base et la communauté locale."
     }
   },
   "About": {
     "_reviewed": false,
     "title": "À propos de {orgName}",
-    "lead": "Nous sommes un groupe bénévole indépendant qui collecte des fonds pour les anciens combattants de l'Air Force et leurs familles.",
+    "lead": "Une organisation du rang des aviateurs, dirigée par des aviateurs, pour les aviateurs de grade E-⁠1 à E-⁠4.",
     "missionHeading": "Pourquoi nous existons",
-    "missionBody1": "Quitter l'Air Force, ou vivre aux côtés de quelqu'un qui sert, peut entraîner des dépenses que personne ne prévoit : une réparation urgente, une garde d'enfants pendant un déploiement, le dernier cours avant un nouveau métier.",
-    "missionBody2": "Nous collectons des fonds pour ces moments et les faisons arriver là où il faut, vite et simplement. Toutes les personnes qui font vivre {orgName} sont bénévoles.",
+    "missionBody1": "Les aviateurs du rang forment la plus grande partie des effectifs, et sont souvent les derniers arrivés sur la base : loin de chez eux, en début de carrière, encore en train de trouver leur place.",
+    "missionBody2": "{orgName} leur offre un cadre pour améliorer le moral et le bien-être, grandir en tant que leaders et agir sur la base comme dans la communauté. Ce sont les aviateurs du rang qui planifient et mènent tout.",
     "principlesHeading": "Notre façon de faire",
     "principles": {
-      "volunteers": {
-        "title": "Géré par des bénévoles",
-        "body": "Personne n'est payé pour faire tourner {orgName}. Anciens combattants, conjoints et voisins donnent de leur temps, pour qu'une plus grande part de chaque don arrive à destination."
-      },
       "choice": {
         "title": "Vous choisissez l'affectation",
         "body": "Chaque don va au fonds que vous choisissez, ou là où le besoin est le plus grand si vous nous laissez décider."
@@ -232,74 +228,97 @@
       "open": {
         "title": "Nous rendons des comptes",
         "body": "Nous publierons ce que nous collectons et comment c'est dépensé dès que notre premier rapport annuel sera prêt."
+      },
+      "airmen": {
+        "title": "Dirigé par des aviateurs",
+        "body": "Les membres de grade E-⁠1 à E-⁠4 choisissent les projets, les planifient et les réalisent. Personne n'est payé pour diriger {orgName}."
       }
     },
     "teamHeading": "Qui le dirige",
-    "teamLead": "Un petit conseil et un groupe de responsables bénévoles. Nous les présenterons ici bientôt.",
-    "roles": {
-      "chair": "Présidence du conseil",
-      "treasurer": "Trésorerie",
-      "volunteers": "Coordination des bénévoles",
-      "outreach": "Relations avec les anciens combattants et les familles"
-    },
+    "teamLead": "Des responsables élus par les membres. Nous vous les présenterons bientôt.",
     "nameToCome": "Nom à venir",
-    "independenceHeading": "Indépendants, pas officiels",
-    "independenceBody1": "{orgName} ne fait pas partie de l'U.S. Air Force, de l'U.S. Space Force ni du Département de la Défense, et n'est pas soutenu par eux.",
-    "independenceBody2": "Beaucoup d'entre nous ont servi ou ont un proche qui l'a fait. Nous avons créé {orgName} pour aider là où les programmes officiels n'arrivent pas toujours à temps.",
-    "ctaHeading": "Soutenez-les",
-    "ctaBody": "Donnez une fois ou chaque mois, ou donnez de votre temps."
+    "independenceHeading": "Une organisation privée",
+    "independenceBody1": "{orgName} est une organisation privée. Elle ne fait pas partie du Département de la Défense ni d'aucune de ses composantes et n'a aucun statut gouvernemental.",
+    "independenceBody2": "Nos membres servent dans l'Air Force, mais {orgName} ne parle qu'en son propre nom, et les dons qu'elle reçoit ne sont pas des dons à l'Air Force.",
+    "ctaHeading": "Soutenez les aviateurs qui font tout cela",
+    "ctaBody": "Donnez une fois ou chaque mois, ou prêtez main-forte à un projet.",
+    "areasHeading": "Ce que nous faisons",
+    "areas": {
+      "morale": {
+        "title": "Moral",
+        "body": "Des événements, activités et projets qui créent des amitiés et renforcent la cohésion des unités."
+      },
+      "welfare": {
+        "title": "Bien-être",
+        "body": "Un espace où les aviateurs font remonter leurs préoccupations sur la vie quotidienne et cherchent ensemble des solutions."
+      },
+      "growth": {
+        "title": "Développement professionnel",
+        "body": "Des occasions de diriger, de prendre des responsabilités et d'apprendre auprès de mentors dès le début de carrière."
+      },
+      "community": {
+        "title": "Communauté",
+        "body": "Du bénévolat pour des projets sur la base et aux alentours, de la rénovation de locaux à l'aide aux voisins."
+      }
+    },
+    "roles": {
+      "president": "Présidence",
+      "vicePresident": "Vice-présidence",
+      "secretary": "Secrétariat",
+      "treasurer": "Trésorerie"
+    }
   },
   "Programs": {
     "_reviewed": false,
     "title": "Programmes",
-    "lead": "Quatre fonds, chacun pour un type d'aide précis. Voici ce que chacun couvre et comment l'aide arrive.",
-    "howHeading": "Comment l'aide arrive",
-    "steps": {
-      "ask": {
-        "title": "Un ancien combattant ou une famille nous contacte",
-        "body": "Par le formulaire de contact, par téléphone ou par quelqu'un qui nous connaît."
-      },
-      "review": {
-        "title": "Un bénévole étudie la demande",
-        "body": "Il en discute, vérifie les détails et détermine quel fonds convient."
-      },
-      "pay": {
-        "title": "Nous payons directement",
-        "body": "Quand c'est possible, l'argent va directement au propriétaire, au fournisseur d'énergie, au garage ou à l'école."
-      }
-    },
+    "lead": "Trois fonds, chacun pour une partie différente de notre mission. Voici ce que chacun finance et comment un projet prend forme.",
+    "howHeading": "Comment un projet prend forme",
     "fundsHeading": "Ce que couvre chaque fonds",
     "coversLabel": "Ce qu'il couvre",
-    "covers": {
-      "general": {
-        "item1": "Le fonds le plus sollicité du mois",
-        "item2": "Les demandes qui ne relèvent pas d'un seul fonds",
-        "item3": "Les besoins nouveaux que nous n'avions pas prévus"
+    "steps": {
+      "idea": {
+        "title": "Un aviateur propose une idée",
+        "body": "Lors d'une réunion ou auprès de n'importe quel responsable. Chaque membre peut faire une proposition."
       },
-      "emergency": {
-        "item1": "Loyer ou prêt immobilier après une perte soudaine de revenus",
-        "item2": "Factures d'énergie en retard",
-        "item3": "Réparations de voiture pour pouvoir continuer à travailler"
+      "plan": {
+        "title": "Les membres l'organisent ensemble",
+        "body": "Nous votons, établissons un budget et choisissons qui le pilote."
       },
-      "families": {
-        "item1": "Garde d'enfants pendant les déploiements et les hospitalisations",
-        "item2": "Déplacements pour être auprès d'un proche malade",
-        "item3": "Soutien après la perte d'un militaire ou d'un ancien combattant"
-      },
-      "transition": {
-        "item1": "Frais de cours, d'examen et de certification",
-        "item2": "Outils et équipement pour un nouveau métier",
-        "item3": "Aide pour traduire l'expérience militaire en CV civil"
+      "run": {
+        "title": "Les aviateurs le réalisent",
+        "body": "Vos dons paient le matériel et les billets. Les membres font le travail et rendent compte."
       }
     },
-    "needHelpHeading": "Besoin d'aide ?",
-    "needHelpBody": "Si vous êtes un ancien combattant de l'Air Force ou un proche et que vous faites face à une dépense impossible à couvrir, dites-nous ce qui se passe. Un bénévole lira votre message.",
-    "needHelpCta": "Demander de l'aide"
+    "covers": {
+      "general": {
+        "item1": "Le projet à court de fonds ce mois-ci",
+        "item2": "Les idées qui ne relèvent pas d'un seul fonds",
+        "item3": "Les nouveaux besoins soulevés par les membres en cours d'année"
+      },
+      "morale": {
+        "item1": "Barbecues aux dortoirs, soirées jeux et repas de fête",
+        "item2": "Sorties de groupe et billets pour des événements locaux",
+        "item3": "Événements d'accueil pour les aviateurs qui arrivent sur la base"
+      },
+      "development": {
+        "item1": "Ateliers de leadership et journées de développement professionnel",
+        "item2": "Matériel d'étude pour les formations et les examens d'avancement",
+        "item3": "Séances de mentorat avec des sous-officiers expérimentés"
+      },
+      "community": {
+        "item1": "Peinture, mobilier et outils pour rénover des locaux de la base",
+        "item2": "Matériel pour des projets bénévoles locaux",
+        "item3": "Collectes au profit de la communauté locale"
+      }
+    },
+    "joinHeading": "Vous êtes aviateur de grade E-⁠1 à E-⁠4 ?",
+    "joinBody": "Vous faites déjà partie du rang. Venez à une réunion, proposez une idée ou dites-nous ce qui améliorerait la vie sur la base.",
+    "joinCta": "Écrivez-nous"
   },
   "Stories": {
     "_reviewed": false,
     "title": "Témoignages",
-    "lead": "Ce qu'un don rend possible, raconté par les personnes qu'il a aidées.",
+    "lead": "Ce que votre soutien rend possible, raconté par les aviateurs qui y étaient.",
     "sampleBadge": "Témoignage fictif",
     "sampleNotice": "Ce témoignage fictif a été écrit pour montrer à quoi ressemblera cette page. De vrais témoignages, partagés avec autorisation, le remplaceront.",
     "readStory": "Lire le témoignage de {name}",
@@ -309,26 +328,26 @@
     "publishedOn": "Publié le {date}",
     "featuredHeading": "Avec leurs mots",
     "items": {
-      "kept-on-the-road": {
-        "name": "Dana",
-        "role": "Ancienne de l'Air Force, ex-mécanicienne aéronautique",
-        "title": "La réparation qui a sauvé un nouvel emploi",
-        "summary": "Quand sa transmission a lâché trois semaines après ses débuts dans un nouvel emploi, le fonds d'urgence a payé le garage et Dana a pu continuer à travailler.",
-        "quote": "J'avais tout fait comme il faut, et tout dépendait quand même d'une facture de réparation. Cette aide m'a permis de continuer à travailler."
+      "dorm-cookout": {
+        "name": "Jaylen",
+        "role": "Aviateur de première classe, maintenance aéronautique",
+        "title": "Le barbecue qui a fait des dortoirs un vrai chez-soi",
+        "summary": "Trois mois après le début de sa première affectation, Jaylen ne connaissait personne en dehors de son atelier. Un barbecue financé par le fonds moral a tout changé.",
+        "quote": "Je connaissais mes collègues. Après cette soirée, je connaissais mes voisins."
       },
-      "holding-the-fort": {
-        "name": "Marisol",
-        "role": "Conjointe d'un militaire de l'Air Force, mère de deux enfants",
-        "title": "De l'aide à la maison pendant un long déploiement",
-        "summary": "Son mari déployé et sa fille hospitalisée, Marisol a bénéficié de deux semaines de garde d'enfants pour rester à son chevet.",
-        "quote": "Quelqu'un qui comprenait la vie militaire m'a enlevé une chose de la liste. Cette semaine-là, c'était énorme."
+      "study-hall": {
+        "name": "Keisha",
+        "role": "Aviatrice senior, ressources humaines",
+        "title": "Un groupe d'étude et une salle pleine de mentors",
+        "summary": "Keisha a lancé un groupe d'étude hebdomadaire pour les aviateurs qui préparaient leurs examens d'avancement. Le fonds de développement professionnel a payé les livres, et des sous-officiers expérimentés sont venus aider.",
+        "quote": "Animer le groupe m'a appris autant que les livres."
       },
-      "second-takeoff": {
-        "name": "Terrence",
-        "role": "Ancien de l'Air Force, 20 ans dans la logistique",
-        "title": "La dernière étape vers un second métier",
-        "summary": "Une aide à la formation a couvert le dernier cours et l'examen de licence de Terrence. Il a réussi du premier coup et travaille aujourd'hui dans le chauffage et la climatisation.",
-        "quote": "Vingt ans de logistique ne donnent pas droit à une licence. L'aide a couvert le dernier cours et l'examen."
+      "day-room-rebuild": {
+        "name": "Marcus",
+        "role": "Aviateur, forces de sécurité",
+        "title": "La rénovation de la salle commune",
+        "summary": "Vingt aviateurs ont passé deux week-ends à transformer une salle commune défraîchie en un lieu que tout le monde utilise. Le fonds solidaire a acheté la peinture et le mobilier.",
+        "quote": "On passe devant cette salle tous les jours. Maintenant, elle est à nous, parce qu'on l'a construite."
       }
     }
   },
@@ -346,44 +365,44 @@
       "item2": "Payez par carte, Apple Pay ou Google Pay.",
       "item3": "Recevez votre reçu par courriel."
     },
-    "veterans": {
-      "tab": "Anciens combattants et familles",
-      "title": "Trouver de l'aide",
-      "body": "Si vous ou votre famille avez besoin d'aide, dites-nous ce qui se passe et nous vous orienterons vers le bon soutien.",
-      "cta": "Nous contacter",
-      "listHeading": "Et ensuite ?",
-      "item1": "Expliquez-nous brièvement votre situation.",
-      "item2": "Un bénévole lit votre message.",
-      "item3": "Nous vous répondons par courriel avec les prochaines étapes ou le bon organisme à contacter."
-    },
     "companies": {
       "tab": "Entreprises",
       "title": "Devenez partenaire",
-      "body": "Parrainez un programme, doublez les dons de vos employés ou mobilisez votre équipe.",
+      "body": "Les entreprises locales peuvent parrainer un événement, donner du matériel ou mobiliser leurs équipes.",
       "cta": "Parlons d'un partenariat",
       "listHeading": "Façons de collaborer",
-      "item1": "Parrainez un fonds ou un événement.",
-      "item2": "Doublez les dons de vos employés.",
+      "item1": "Parrainez un événement ou un projet.",
+      "item2": "Donnez du matériel ou des services.",
       "item3": "Faites du bénévolat en équipe."
     },
     "volunteers": {
       "tab": "Bénévoles",
       "title": "Donnez de votre temps",
-      "body": "Des événements au mentorat, il existe une façon d'aider qui s'adapte à votre emploi du temps.",
+      "body": "Des barbecues aux chantiers de rénovation, il y a une façon d'aider qui correspond à votre emploi du temps.",
       "cta": "Devenir bénévole",
       "listHeading": "Façons d'aider",
-      "item1": "Aidez à organiser des collectes de fonds.",
-      "item2": "Mettez à profit une compétence professionnelle : design, rédaction ou finances.",
+      "item1": "Aidez à organiser des événements.",
+      "item2": "Apportez une compétence : menuiserie, graphisme ou mentorat.",
       "item3": "Faites passer le mot dans votre unité ou votre communauté."
     },
-    "lead": "Que vous souhaitiez donner, ayez besoin de soutien ou vouliez aider, commencez ici."
+    "lead": "Que vous souhaitiez donner, que vous soyez aviateur du rang ou que vous vouliez aider, commencez ici.",
+    "airmen": {
+      "tab": "Aviateurs E-⁠1 à E-⁠4",
+      "title": "Participez",
+      "body": "Si vous êtes aviateur de grade E-⁠1 à E-⁠4, vous êtes déjà des nôtres. Proposez une idée ou rejoignez un projet.",
+      "cta": "Nous contacter",
+      "listHeading": "Pour commencer",
+      "item1": "Envoyez-nous un message ou venez à une réunion.",
+      "item2": "Dites-nous ce que vous aimeriez faire ou changer.",
+      "item3": "Rejoignez un projet, ou pilotez-en un."
+    }
   },
   "Stats": {
     "_reviewed": false,
     "heading": "Notre impact",
-    "veteransHelped": "{count, plural, one {ancien combattant aidé} other {anciens combattants aidés}}",
-    "familiesSupported": "{count, plural, one {famille soutenue} other {familles soutenues}}",
-    "volunteerHours": "{count, plural, one {heure de bénévolat} other {heures de bénévolat}}"
+    "volunteerHours": "{count, plural, one {heure de bénévolat} other {heures de bénévolat}}",
+    "airmenReached": "{count, plural, one {aviateur touché} other {aviateurs touchés}}",
+    "eventsHeld": "{count, plural, one {événement organisé} other {événements organisés}}"
   },
   "Partners": {
     "_reviewed": false,
@@ -392,7 +411,7 @@
   "VolunteerBand": {
     "_reviewed": false,
     "title": "Vous ne pouvez pas donner maintenant ? Donnez de votre temps.",
-    "body": "Ce sont des bénévoles qui font tout ce que nous faisons. Dites-nous ce que vous savez faire et nous trouverons une place pour vous.",
+    "body": "Les aviateurs mènent tout ce que nous faisons. Dites-nous ce que vous savez faire et nous vous trouverons une place.",
     "cta": "Devenir bénévole"
   }
 }

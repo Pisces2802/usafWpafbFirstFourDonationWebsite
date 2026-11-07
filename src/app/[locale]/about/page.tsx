@@ -6,8 +6,9 @@ import { PageHeader } from "@/components/layout/page-header";
 import { siteConfig } from "@/config/site";
 import { getPageMetadata } from "@/lib/metadata";
 
-const PRINCIPLES = ["volunteers", "choice", "open"] as const;
-const ROLES = ["chair", "treasurer", "volunteers", "outreach"] as const;
+const AREAS = ["morale", "welfare", "growth", "community"] as const;
+const PRINCIPLES = ["airmen", "choice", "open"] as const;
+const ROLES = ["president", "vicePresident", "secretary", "treasurer"] as const;
 
 export const generateMetadata = ({ params }: PageProps<"/[locale]/about">) =>
   getPageMetadata(params, {
@@ -35,6 +36,23 @@ const AboutPage = async () => {
           <p>{t("missionBody1")}</p>
           <p>{t("missionBody2", { orgName })}</p>
         </div>
+      </section>
+
+      <section
+        aria-labelledby="areas-heading"
+        className="mx-auto w-full max-w-7xl px-4 pb-16 sm:px-8 lg:pb-24"
+      >
+        <h2 id="areas-heading" className="headline text-4xl md:text-5xl">
+          {t("areasHeading")}
+        </h2>
+        <ul className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+          {AREAS.map((key) => (
+            <li key={key} className="border-primary border-l-4 pl-5">
+              <h3 className="font-condensed text-2xl leading-tight">{t(`areas.${key}.title`)}</h3>
+              <p className="text-muted-foreground mt-2 text-lg">{t(`areas.${key}.body`)}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section aria-labelledby="principles-heading" className="bg-muted/60 border-y">

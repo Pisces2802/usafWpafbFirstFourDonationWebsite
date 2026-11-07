@@ -1,8 +1,8 @@
 {
   "Metadata": {
     "_reviewed": true,
-    "title": "{orgName} | Support Air Force veterans",
-    "description": "Give once or monthly to support Air Force veterans and their families."
+    "title": "{orgName} | By Airmen, for Airmen",
+    "description": "Support the junior enlisted Airmen, E-⁠1 to E-⁠4, who run morale events, professional growth and community projects for each other."
   },
   "Common": {
     "_reviewed": true,
@@ -36,8 +36,8 @@
   },
   "Home": {
     "_reviewed": true,
-    "heroTitle": "Every airman needs a wingman. Be one.",
-    "heroLead": "We're an independent, volunteer-run group raising money for Air Force veterans and their families.",
+    "heroTitle": "Every Airman needs a wingman. Be one.",
+    "heroLead": "We're Airmen in the ranks E-⁠1 to E-⁠4, running morale events, professional development and community projects for each other. Your gift pays for them.",
     "pauseVideo": "Pause background video",
     "playVideo": "Play background video",
     "volunteer": "Volunteer"
@@ -48,7 +48,7 @@
     "legalHeading": "Legal",
     "languageHeading": "Language",
     "taxStatus": "{orgName} is a 501(c)(3) nonprofit organisation. EIN {ein}.",
-    "disclaimer": "{orgName} is an independent volunteer organisation and is not affiliated with or endorsed by the U.S. Air Force, the U.S. Space Force, or the Department of Defense."
+    "disclaimer": "{orgName} is a private organization. It is not part of the Department of Defense or any of its components and has no governmental status. It is not endorsed by the U.S. Air Force."
   },
   "LocaleSwitcher": {
     "_reviewed": true,
@@ -85,7 +85,7 @@
   "Donate": {
     "_reviewed": true,
     "title": "Make a gift",
-    "lead": "Your gift helps Air Force veterans and their families. It takes about two minutes.",
+    "lead": "Your gift pays for morale events, professional growth and community projects run by junior enlisted Airmen. It takes about two minutes.",
     "stepGift": "Your gift",
     "fundLegend": "Where it goes",
     "coverFees": "{frequency, select, monthly {Add {fee} a month to cover card fees, so {orgName} receives the full {amount}.} other {Add {fee} to cover card fees, so {orgName} receives the full {amount}.}}",
@@ -156,8 +156,8 @@
     "copiedNote": "Paste it into a message or post.",
     "copyFailed": "Copy this link to share it: {url}",
     "emailFriend": "Email a friend",
-    "emailSubject": "{orgName} supports Air Force veterans",
-    "emailBody": "I just gave to {orgName}, a volunteer-run group supporting Air Force veterans and their families. Have a look: {url}",
+    "emailSubject": "{orgName} supports junior enlisted Airmen",
+    "emailBody": "I just gave to {orgName}, a group run by junior enlisted Airmen for each other. Have a look: {url}",
     "backHome": "Back to home",
     "notFoundTitle": "We couldn't find that gift",
     "notFoundBody": "If you just gave, check your email for a receipt. If something looks wrong, <link>contact us</link> and we'll sort it out."
@@ -180,51 +180,47 @@
     "feeNote": "Includes {fee} you added to cover card fees.",
     "tributeNote": "{type, select, memory {Given in memory of {name}.} other {Given in honor of {name}.}}",
     "taxNote": "{orgName} is a 501(c)(3) nonprofit organization, EIN {ein}. No goods or services were provided in exchange for this gift. Please keep this receipt for your tax records.",
-    "plainNote": "Your gift goes to Air Force veterans and their families. Thank you for standing with them.",
+    "plainNote": "Your gift supports morale events, professional growth and community projects run by junior enlisted Airmen. Thank you for backing them.",
     "monthlyNote": "This gift repeats each month. To change or cancel it, contact us.",
     "contactLink": "Contact {orgName}",
     "tributeSubject": "{type, select, memory {A gift in memory of {honoree}} other {A gift in honor of {honoree}}}",
     "tributeBody": "{type, select, memory {{donor} made a gift to {orgName} in memory of {honoree}.} other {{donor} made a gift to {orgName} in honor of {honoree}.}}",
-    "tributeAbout": "{orgName} is an independent, volunteer-run group raising money for Air Force veterans and their families.",
+    "tributeAbout": "{orgName} is run by junior enlisted Airmen, E-⁠1 to E-⁠4, to improve morale and welfare, build leaders and serve the community.",
     "tributeWhy": "You're getting this email because {donor} asked us to let you know. We won't email you again about this gift.",
     "aboutLink": "Learn about {orgName}"
   },
   "Funds": {
     "_reviewed": true,
     "heading": "Where your gift goes",
-    "lead": "Choose a fund when you give, or let us put your gift where it's needed most.",
+    "lead": "Choose what your gift pays for, or let our members put it where it's needed most.",
     "giveToFund": "Give to this fund",
     "giveToFundLabel": "Give to {fund}",
     "general": {
       "name": "Where it's needed most",
-      "description": "Lets us put your gift to work wherever the need is greatest right now."
+      "description": "Lets our members put your gift toward whichever project needs it next."
     },
-    "emergency": {
-      "name": "Emergency assistance",
-      "description": "Helps veterans and their families cover urgent costs like rent, utilities and car repairs."
+    "morale": {
+      "name": "Morale and events",
+      "description": "Pays for the cookouts, game nights and trips that bring Airmen together, especially those new to the base."
     },
-    "families": {
-      "name": "Family support",
-      "description": "Supports spouses and children through deployments, illness and loss."
+    "development": {
+      "name": "Professional growth",
+      "description": "Helps junior Airmen build leadership skills through workshops, mentoring, study groups and professional development days."
     },
-    "transition": {
-      "name": "Education and transition",
-      "description": "Helps veterans train for and settle into life after service."
+    "community": {
+      "name": "Community projects",
+      "description": "Buys the paint, tools and supplies Airmen use to improve the base and the local community."
     }
   },
   "About": {
     "_reviewed": true,
     "title": "About {orgName}",
-    "lead": "We're an independent, volunteer-run group raising money for Air Force veterans and their families.",
+    "lead": "An Airman-tier organization, run by Airmen for Airmen in the ranks E-⁠1 to E-⁠4.",
     "missionHeading": "Why we exist",
-    "missionBody1": "Leaving the Air Force, or living alongside someone who serves, can bring costs nobody plans for: a repair that can't wait, childcare during a deployment, the last course before a new career.",
-    "missionBody2": "We raise money for those moments and get it where it's needed, quickly and without fuss. Everyone who works on {orgName} is a volunteer.",
+    "missionBody1": "Junior enlisted Airmen are the largest part of the force, and often the newest to the base: far from home, early in their careers, still finding their people.",
+    "missionBody2": "{orgName} gives them a place to improve morale and welfare, grow as leaders, and make a difference on base and in the community. Airmen in the tier plan and run all of it.",
     "principlesHeading": "How we work",
     "principles": {
-      "volunteers": {
-        "title": "Run by volunteers",
-        "body": "No one is paid to run {orgName}. Veterans, spouses and neighbors give their time, so more of every gift reaches the people it's for."
-      },
       "choice": {
         "title": "You choose where it goes",
         "body": "Every gift goes to the fund you pick, or to wherever the need is greatest if you leave that to us."
@@ -232,74 +228,97 @@
       "open": {
         "title": "We show our work",
         "body": "We'll publish what we raise and how it's spent once our first annual report is ready."
+      },
+      "airmen": {
+        "title": "Run by Airmen",
+        "body": "Members in the E-⁠1 to E-⁠4 tier choose the projects, plan them and carry them out. Nobody is paid to run {orgName}."
       }
     },
     "teamHeading": "Who runs it",
-    "teamLead": "A small board and a group of volunteer leads. We'll introduce them here soon.",
-    "roles": {
-      "chair": "Board chair",
-      "treasurer": "Treasurer",
-      "volunteers": "Volunteer coordinator",
-      "outreach": "Veteran and family outreach"
-    },
+    "teamLead": "Officers elected by the members. We'll introduce them here soon.",
     "nameToCome": "Name to come",
-    "independenceHeading": "Independent, not official",
-    "independenceBody1": "{orgName} is not part of the U.S. Air Force, the U.S. Space Force or the Department of Defense, and isn't endorsed by them.",
-    "independenceBody2": "Many of us served or have family who did. We started {orgName} to help in ways that official programs can't always reach quickly.",
-    "ctaHeading": "Stand with them",
-    "ctaBody": "Give once or monthly, or give your time."
+    "independenceHeading": "A private organization",
+    "independenceBody1": "{orgName} is a private organization. It is not part of the Department of Defense or any of its components and has no governmental status.",
+    "independenceBody2": "Our members serve in the Air Force, but {orgName} speaks only for itself, and gifts to it are not gifts to the Air Force.",
+    "ctaHeading": "Back the Airmen who make it happen",
+    "ctaBody": "Give once or monthly, or lend a hand on a project.",
+    "areasHeading": "What we do",
+    "areas": {
+      "morale": {
+        "title": "Morale",
+        "body": "Events, activities and projects that build friendships and strengthen unit cohesion."
+      },
+      "welfare": {
+        "title": "Welfare",
+        "body": "A forum where Airmen raise concerns about daily life and work together on solutions."
+      },
+      "growth": {
+        "title": "Professional growth",
+        "body": "Chances to lead, take on responsibility and learn from mentors early in a career."
+      },
+      "community": {
+        "title": "Community",
+        "body": "Volunteering on base and local projects, from refurbishing facilities to helping neighbors."
+      }
+    },
+    "roles": {
+      "president": "President",
+      "vicePresident": "Vice president",
+      "secretary": "Secretary",
+      "treasurer": "Treasurer"
+    }
   },
   "Programs": {
     "_reviewed": true,
     "title": "Programs",
-    "lead": "Four funds, each paying for a specific kind of help. Here's what each one covers and how help reaches people.",
-    "howHeading": "How help reaches people",
-    "steps": {
-      "ask": {
-        "title": "A veteran or family gets in touch",
-        "body": "Through our contact form, a phone call, or someone who knows us."
-      },
-      "review": {
-        "title": "A volunteer reviews the request",
-        "body": "They talk it through, check the details and work out which fund fits."
-      },
-      "pay": {
-        "title": "We pay the bill directly",
-        "body": "Where we can, money goes straight to the landlord, utility, repair shop or school."
-      }
-    },
+    "lead": "Three funds, each paying for a different part of our mission. Here's what each one covers and how a project comes together.",
+    "howHeading": "How a project comes together",
     "fundsHeading": "What each fund pays for",
     "coversLabel": "What it pays for",
-    "covers": {
-      "general": {
-        "item1": "Whichever fund is most stretched this month",
-        "item2": "Requests that don't fit neatly into one fund",
-        "item3": "New needs we haven't planned for"
+    "steps": {
+      "idea": {
+        "title": "An Airman brings an idea",
+        "body": "At a meeting, or by talking to any officer. Every member can suggest something."
       },
-      "emergency": {
-        "item1": "Rent or mortgage payments after a sudden loss of income",
-        "item2": "Overdue utility bills",
-        "item3": "Car repairs that keep someone getting to work"
+      "plan": {
+        "title": "Members plan it together",
+        "body": "We vote on it, work out a budget and choose who leads it."
       },
-      "families": {
-        "item1": "Childcare during deployments and hospital stays",
-        "item2": "Travel to be with a family member who's ill",
-        "item3": "Help after the loss of a service member or veteran"
-      },
-      "transition": {
-        "item1": "Course fees, exam fees and certifications",
-        "item2": "Tools and equipment for a new trade",
-        "item3": "Help turning military experience into a civilian résumé"
+      "run": {
+        "title": "Airmen make it happen",
+        "body": "Your gifts pay for supplies and tickets. Members do the work and report back."
       }
     },
-    "needHelpHeading": "Need help?",
-    "needHelpBody": "If you're an Air Force veteran or family member facing a cost you can't cover, tell us what's going on. A volunteer will read your message.",
-    "needHelpCta": "Ask for help"
+    "covers": {
+      "general": {
+        "item1": "Whichever project is short this month",
+        "item2": "Ideas that don't fit neatly into one fund",
+        "item3": "New needs members raise during the year"
+      },
+      "morale": {
+        "item1": "Dorm cookouts, game nights and holiday meals",
+        "item2": "Group trips and tickets to local events",
+        "item3": "Welcome events for Airmen new to the base"
+      },
+      "development": {
+        "item1": "Leadership workshops and professional development days",
+        "item2": "Study materials for courses and promotion testing",
+        "item3": "Mentoring sessions with senior enlisted leaders"
+      },
+      "community": {
+        "item1": "Paint, furniture and tools for refurbishing base facilities",
+        "item2": "Supplies for local volunteer projects",
+        "item3": "Donation drives for the local community"
+      }
+    },
+    "joinHeading": "Are you an Airman, E-⁠1 to E-⁠4?",
+    "joinBody": "You're already part of the tier. Come to a meeting, bring an idea, or tell us what would make life on base better.",
+    "joinCta": "Get in touch"
   },
   "Stories": {
     "_reviewed": true,
     "title": "Stories",
-    "lead": "What a gift makes possible, in the words of the people it helped.",
+    "lead": "What your support makes possible, told by the Airmen who were there.",
     "sampleBadge": "Sample story",
     "sampleNotice": "This is a sample story written to show how this page will look. Real stories, shared with permission, will replace it.",
     "readStory": "Read {name}'s story",
@@ -309,26 +328,26 @@
     "publishedOn": "Published {date}",
     "featuredHeading": "In their words",
     "items": {
-      "kept-on-the-road": {
-        "name": "Dana",
-        "role": "Air Force veteran, former aircraft maintainer",
-        "title": "The car repair that kept a new job",
-        "summary": "When her transmission failed three weeks into a new job, the emergency fund paid the repair shop and Dana kept working.",
-        "quote": "I'd done everything right and it still came down to one repair bill. That grant meant I could keep showing up."
+      "dorm-cookout": {
+        "name": "Jaylen",
+        "role": "Airman First Class, aircraft maintenance",
+        "title": "The cookout that made the dorms feel like home",
+        "summary": "Three months into his first assignment, Jaylen hadn't met anyone outside his shop. A dorm cookout paid for by the morale fund changed that.",
+        "quote": "I knew the people I worked with. After that night, I knew my neighbors."
       },
-      "holding-the-fort": {
-        "name": "Marisol",
-        "role": "Air Force spouse, mother of two",
-        "title": "Help at home during a long deployment",
-        "summary": "With her husband deployed and her daughter in hospital, Marisol got two weeks of childcare so she could be at the bedside.",
-        "quote": "Someone else who understood military life took one thing off my list. That was everything that week."
+      "study-hall": {
+        "name": "Keisha",
+        "role": "Senior Airman, personnel",
+        "title": "A study group and a room full of mentors",
+        "summary": "Keisha started a weekly study group for Airmen preparing for promotion testing. The professional growth fund paid for the books, and senior NCOs came to help.",
+        "quote": "Leading the group taught me as much as the books did."
       },
-      "second-takeoff": {
-        "name": "Terrence",
-        "role": "Air Force veteran, 20 years in logistics",
-        "title": "The last step to a second career",
-        "summary": "An education grant covered Terrence's final course and licensing exam. He passed first time and now works in heating and air conditioning.",
-        "quote": "Twenty years of logistics didn't come with a license. The grant covered the last course and the exam."
+      "day-room-rebuild": {
+        "name": "Marcus",
+        "role": "Airman, security forces",
+        "title": "Rebuilding the dorm day room",
+        "summary": "Twenty Airmen spent two weekends turning a tired dorm day room into a space people actually use. The community fund bought the paint and furniture.",
+        "quote": "We walk past that room every day. Now it's ours, because we built it."
       }
     }
   },
@@ -346,44 +365,44 @@
       "item2": "Pay by card, Apple Pay or Google Pay.",
       "item3": "Get your receipt by email."
     },
-    "veterans": {
-      "tab": "Veterans & families",
-      "title": "Find support",
-      "body": "If you or your family need help, tell us what's going on and we'll point you to the right support.",
-      "cta": "Contact us",
-      "listHeading": "What happens next",
-      "item1": "Tell us a little about what's going on.",
-      "item2": "A volunteer reads your message.",
-      "item3": "We reply by email with next steps, or the right organisation to contact."
-    },
     "companies": {
       "tab": "Companies",
       "title": "Partner with us",
-      "body": "Sponsor a program, match your employees' gifts, or get your team involved.",
+      "body": "Local businesses can sponsor an event, donate supplies, or get their team involved.",
       "cta": "Talk to us about partnering",
       "listHeading": "Ways to partner",
-      "item1": "Sponsor a fund or an event.",
-      "item2": "Match your employees' gifts.",
+      "item1": "Sponsor an event or a project.",
+      "item2": "Donate supplies or services.",
       "item3": "Volunteer together as a team."
     },
     "volunteers": {
       "tab": "Volunteers",
       "title": "Give your time",
-      "body": "From events to mentoring, there's a way to help that fits your schedule.",
+      "body": "From cookouts to building projects, there's a way to help that fits your schedule.",
       "cta": "Volunteer with us",
       "listHeading": "Ways to help",
-      "item1": "Help run fundraising events.",
-      "item2": "Lend a professional skill, like design, writing or finance.",
+      "item1": "Help run events.",
+      "item2": "Lend a skill, like carpentry, design or mentoring.",
       "item3": "Spread the word in your unit or community."
     },
-    "lead": "Whether you want to give, need support or want to help, start here."
+    "lead": "Whether you want to give, you're in the Airman tier, or you want to help, start here.",
+    "airmen": {
+      "tab": "Airmen E-⁠1 to E-⁠4",
+      "title": "Get involved",
+      "body": "If you're in the Airman tier, you're already one of us. Bring an idea or join a project.",
+      "cta": "Contact us",
+      "listHeading": "How to start",
+      "item1": "Send us a message or come to a meeting.",
+      "item2": "Tell us what you'd like to do or change.",
+      "item3": "Join a project, or lead one."
+    }
   },
   "Stats": {
     "_reviewed": true,
     "heading": "Impact at a glance",
-    "veteransHelped": "{count, plural, one {veteran helped} other {veterans helped}}",
-    "familiesSupported": "{count, plural, one {family supported} other {families supported}}",
-    "volunteerHours": "{count, plural, one {volunteer hour} other {volunteer hours}}"
+    "volunteerHours": "{count, plural, one {volunteer hour} other {volunteer hours}}",
+    "airmenReached": "{count, plural, one {Airman reached} other {Airmen reached}}",
+    "eventsHeld": "{count, plural, one {event held} other {events held}}"
   },
   "Partners": {
     "_reviewed": true,
@@ -392,7 +411,7 @@
   "VolunteerBand": {
     "_reviewed": true,
     "title": "Can't give right now? Give your time.",
-    "body": "Volunteers run everything we do. Tell us what you're good at and we'll find a fit.",
+    "body": "Airmen run everything we do. Tell us what you're good at and we'll find a fit.",
     "cta": "Become a volunteer"
   }
 }

@@ -1,7 +1,7 @@
 import type { StaticImageData } from "next/image";
 
 export type ImpactStat = {
-  id: "veteransHelped" | "familiesSupported" | "volunteerHours";
+  id: "airmenReached" | "eventsHeld" | "volunteerHours";
   value: number;
 };
 

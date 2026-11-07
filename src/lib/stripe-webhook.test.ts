@@ -10,7 +10,7 @@ import * as schema from "@/db/schema";
 import { applyWebhookPlan, planWebhookEvent } from "@/lib/stripe-webhook";
 
 const metadata = {
-  fundId: "emergency",
+  fundId: "morale",
   amountCents: "7500",
   coverFees: "true",
   feeCoveredCents: "255",
@@ -81,7 +81,7 @@ describe("planWebhookEvent", () => {
         donorEmail: "sam@example.com",
         locale: "fr",
         frequency: "one_time",
-        fundId: "emergency",
+        fundId: "morale",
         amountCents: 7500,
         feeCoveredCents: 255,
         cardLast4: "4242",
@@ -154,7 +154,7 @@ describe("applyWebhookPlan", () => {
       stripeCustomerId: "cus_1",
       locale: "fr",
     });
-    expect(fund.slug).toBe("emergency");
+    expect(fund.slug).toBe("morale");
     expect(donation).toMatchObject({
       donorId: donor.id,
       fundId: fund.id,

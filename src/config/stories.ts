@@ -20,43 +20,43 @@ export type Story = {
  */
 export const stories = [
   {
-    slug: "kept-on-the-road",
-    fundId: "emergency",
+    slug: "dorm-cookout",
+    fundId: "morale",
     publishedAt: "2026-09-14",
     isSample: true,
     body: {
-      en: () => import("../../content/stories/en/kept-on-the-road.mdx"),
-      es: () => import("../../content/stories/es/kept-on-the-road.mdx"),
-      fr: () => import("../../content/stories/fr/kept-on-the-road.mdx"),
+      en: () => import("../../content/stories/en/dorm-cookout.mdx"),
+      es: () => import("../../content/stories/es/dorm-cookout.mdx"),
+      fr: () => import("../../content/stories/fr/dorm-cookout.mdx"),
     },
   },
   {
-    slug: "holding-the-fort",
-    fundId: "families",
+    slug: "study-hall",
+    fundId: "development",
     publishedAt: "2026-08-03",
     isSample: true,
     body: {
-      en: () => import("../../content/stories/en/holding-the-fort.mdx"),
-      es: () => import("../../content/stories/es/holding-the-fort.mdx"),
-      fr: () => import("../../content/stories/fr/holding-the-fort.mdx"),
+      en: () => import("../../content/stories/en/study-hall.mdx"),
+      es: () => import("../../content/stories/es/study-hall.mdx"),
+      fr: () => import("../../content/stories/fr/study-hall.mdx"),
     },
   },
   {
-    slug: "second-takeoff",
-    fundId: "transition",
+    slug: "day-room-rebuild",
+    fundId: "community",
     publishedAt: "2026-06-21",
     isSample: true,
     body: {
-      en: () => import("../../content/stories/en/second-takeoff.mdx"),
-      es: () => import("../../content/stories/es/second-takeoff.mdx"),
-      fr: () => import("../../content/stories/fr/second-takeoff.mdx"),
+      en: () => import("../../content/stories/en/day-room-rebuild.mdx"),
+      es: () => import("../../content/stories/es/day-room-rebuild.mdx"),
+      fr: () => import("../../content/stories/fr/day-room-rebuild.mdx"),
     },
   },
 ] as const satisfies readonly Story[];
 
 export type StorySlug = (typeof stories)[number]["slug"];
 
-export const featuredStorySlug: StorySlug = "kept-on-the-road";
+export const featuredStorySlug: StorySlug = "dorm-cookout";
 
 export const getStory = (slug: string): StoryEntry | null =>
   stories.find((story) => story.slug === slug) ?? null;

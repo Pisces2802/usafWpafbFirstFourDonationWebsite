@@ -15,7 +15,7 @@ const ITEMS = ["item1", "item2", "item3"] as const;
 /** `isSequence` marks lists that are real steps in order, so they render as numbered steps. */
 const AUDIENCES = [
   { id: "donors", href: "/donate", isDonate: true, isSequence: true },
-  { id: "veterans", href: "/contact", isDonate: false, isSequence: true },
+  { id: "airmen", href: "/contact", isDonate: false, isSequence: true },
   { id: "companies", href: "/get-involved", isDonate: false, isSequence: false },
   { id: "volunteers", href: "/get-involved", isDonate: false, isSequence: false },
 ] as const satisfies readonly {

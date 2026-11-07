@@ -1,8 +1,8 @@
 {
   "Metadata": {
     "_reviewed": false,
-    "title": "{orgName} | Apoya a los veteranos de la Fuerza Aérea",
-    "description": "Dona una vez o cada mes para apoyar a los veteranos de la Fuerza Aérea y a sus familias."
+    "title": "{orgName} | De aviadores, para aviadores",
+    "description": "Apoya a los aviadores de rango E-⁠1 a E-⁠4 que organizan eventos de moral, crecimiento profesional y proyectos comunitarios unos para otros."
   },
   "Common": {
     "_reviewed": false,
@@ -37,7 +37,7 @@
   "Home": {
     "_reviewed": false,
     "heroTitle": "Todo aviador necesita un compañero de ala. Sé uno.",
-    "heroLead": "Somos un grupo independiente de voluntarios que recauda fondos para los veteranos de la Fuerza Aérea y sus familias.",
+    "heroLead": "Somos aviadores de rango E-⁠1 a E-⁠4 que organizamos eventos de moral, desarrollo profesional y proyectos comunitarios unos para otros. Tu donación los hace posibles.",
     "pauseVideo": "Pausar el video de fondo",
     "playVideo": "Reproducir el video de fondo",
     "volunteer": "Hazte voluntario"
@@ -48,7 +48,7 @@
     "legalHeading": "Legal",
     "languageHeading": "Idioma",
     "taxStatus": "{orgName} es una organización sin fines de lucro 501(c)(3). EIN {ein}.",
-    "disclaimer": "{orgName} es una organización de voluntarios independiente y no está afiliada ni respaldada por la Fuerza Aérea de los EE. UU., la Fuerza Espacial de los EE. UU. ni el Departamento de Defensa."
+    "disclaimer": "{orgName} es una organización privada. No forma parte del Departamento de Defensa ni de ninguno de sus componentes y no tiene carácter gubernamental. No cuenta con el respaldo de la Fuerza Aérea de los EE. UU."
   },
   "LocaleSwitcher": {
     "_reviewed": false,
@@ -85,7 +85,7 @@
   "Donate": {
     "_reviewed": false,
     "title": "Haz una donación",
-    "lead": "Tu donación ayuda a veteranos de la Fuerza Aérea y a sus familias. Toma unos dos minutos.",
+    "lead": "Tu donación paga eventos de moral, crecimiento profesional y proyectos comunitarios dirigidos por aviadores de rango inicial. Toma unos dos minutos.",
     "stepGift": "Tu donación",
     "fundLegend": "Destino",
     "coverFees": "{frequency, select, monthly {Agrega {fee} al mes para cubrir las comisiones de la tarjeta y que {orgName} reciba los {amount} completos.} other {Agrega {fee} para cubrir las comisiones de la tarjeta y que {orgName} reciba los {amount} completos.}}",
@@ -156,8 +156,8 @@
     "copiedNote": "Pégalo en un mensaje o una publicación.",
     "copyFailed": "Copia este enlace para compartirlo: {url}",
     "emailFriend": "Enviar por correo",
-    "emailSubject": "{orgName} apoya a los veteranos de la Fuerza Aérea",
-    "emailBody": "Acabo de donar a {orgName}, un grupo de voluntarios que apoya a veteranos de la Fuerza Aérea y a sus familias. Échale un vistazo: {url}",
+    "emailSubject": "{orgName} apoya a los aviadores de rango inicial",
+    "emailBody": "Acabo de donar a {orgName}, un grupo dirigido por aviadores de rango inicial para apoyarse entre sí. Échale un vistazo: {url}",
     "backHome": "Volver al inicio",
     "notFoundTitle": "No encontramos esa donación",
     "notFoundBody": "Si acabas de donar, revisa tu correo para ver el recibo. Si algo no se ve bien, <link>escríbenos</link> y lo resolvemos."
@@ -180,51 +180,47 @@
     "feeNote": "Incluye {fee} que agregaste para cubrir las comisiones de la tarjeta.",
     "tributeNote": "{type, select, memory {En memoria de {name}.} other {En honor de {name}.}}",
     "taxNote": "{orgName} es una organización sin fines de lucro 501(c)(3), EIN {ein}. No se entregaron bienes ni servicios a cambio de esta donación. Conserva este recibo para tu declaración de impuestos.",
-    "plainNote": "Tu donación llega a veteranos de la Fuerza Aérea y a sus familias. Gracias por apoyarlos.",
+    "plainNote": "Tu donación apoya eventos de moral, crecimiento profesional y proyectos comunitarios dirigidos por aviadores de rango inicial. Gracias por respaldarlos.",
     "monthlyNote": "Esta donación se repite cada mes. Para cambiarla o cancelarla, escríbenos.",
     "contactLink": "Contactar a {orgName}",
     "tributeSubject": "{type, select, memory {Una donación en memoria de {honoree}} other {Una donación en honor de {honoree}}}",
     "tributeBody": "{type, select, memory {{donor} hizo una donación a {orgName} en memoria de {honoree}.} other {{donor} hizo una donación a {orgName} en honor de {honoree}.}}",
-    "tributeAbout": "{orgName} es un grupo independiente de voluntarios que recauda fondos para veteranos de la Fuerza Aérea y sus familias.",
+    "tributeAbout": "{orgName} está dirigida por aviadores de rango E-⁠1 a E-⁠4 para mejorar la moral y el bienestar, formar líderes y servir a la comunidad.",
     "tributeWhy": "Recibes este correo porque {donor} nos pidió avisarte. No te volveremos a escribir sobre esta donación.",
     "aboutLink": "Conoce {orgName}"
   },
   "Funds": {
     "_reviewed": false,
     "heading": "A dónde va tu donación",
-    "lead": "Elige un fondo al donar o deja que usemos tu donación donde más se necesite.",
+    "lead": "Elige qué paga tu donación, o deja que nuestros miembros la destinen a donde más se necesite.",
     "giveToFund": "Dona a este fondo",
     "giveToFundLabel": "Dona a {fund}",
     "general": {
       "name": "Donde más se necesite",
-      "description": "Nos permite usar tu donación donde la necesidad sea mayor en este momento."
+      "description": "Permite que nuestros miembros destinen tu donación al proyecto que la necesite primero."
     },
-    "emergency": {
-      "name": "Asistencia de emergencia",
-      "description": "Ayuda a los veteranos y a sus familias a cubrir gastos urgentes como el alquiler, los servicios o la reparación del auto."
+    "morale": {
+      "name": "Moral y eventos",
+      "description": "Paga parrilladas, noches de juegos y salidas que unen a los aviadores, sobre todo a quienes acaban de llegar a la base."
     },
-    "families": {
-      "name": "Apoyo familiar",
-      "description": "Apoya a cónyuges e hijos durante despliegues, enfermedades y pérdidas."
+    "development": {
+      "name": "Crecimiento profesional",
+      "description": "Ayuda a los aviadores jóvenes a desarrollar su liderazgo con talleres, mentorías, grupos de estudio y jornadas de desarrollo profesional."
     },
-    "transition": {
-      "name": "Educación y transición",
-      "description": "Ayuda a los veteranos a capacitarse y adaptarse a la vida después del servicio."
+    "community": {
+      "name": "Proyectos comunitarios",
+      "description": "Compra la pintura, las herramientas y los materiales que los aviadores usan para mejorar la base y la comunidad local."
     }
   },
   "About": {
     "_reviewed": false,
     "title": "Sobre {orgName}",
-    "lead": "Somos un grupo independiente de voluntarios que recauda fondos para veteranos de la Fuerza Aérea y sus familias.",
+    "lead": "Una organización del nivel de aviadores, dirigida por aviadores, para aviadores de rango E-⁠1 a E-⁠4.",
     "missionHeading": "Por qué existimos",
-    "missionBody1": "Dejar la Fuerza Aérea, o vivir junto a alguien que sirve, puede traer gastos que nadie planea: una reparación que no puede esperar, cuidado infantil durante un despliegue, el último curso antes de una nueva carrera.",
-    "missionBody2": "Recaudamos fondos para esos momentos y los hacemos llegar donde se necesitan, rápido y sin complicaciones. Todas las personas que trabajan en {orgName} son voluntarias.",
+    "missionBody1": "Los aviadores de rango inicial son la mayor parte de la fuerza, y a menudo los más nuevos en la base: lejos de casa, al principio de su carrera, todavía buscando a su gente.",
+    "missionBody2": "{orgName} les da un espacio para mejorar la moral y el bienestar, crecer como líderes y marcar la diferencia en la base y en la comunidad. Los aviadores del nivel lo planean y lo dirigen todo.",
     "principlesHeading": "Cómo trabajamos",
     "principles": {
-      "volunteers": {
-        "title": "Dirigido por voluntarios",
-        "body": "Nadie cobra por dirigir {orgName}. Veteranos, parejas y vecinos donan su tiempo, para que más de cada donación llegue a quien la necesita."
-      },
       "choice": {
         "title": "Tú eliges el destino",
         "body": "Cada donación va al fondo que elijas, o a donde más se necesite si nos dejas decidir."
@@ -232,74 +228,97 @@
       "open": {
         "title": "Rendimos cuentas",
         "body": "Publicaremos cuánto recaudamos y en qué se gasta cuando esté listo nuestro primer informe anual."
+      },
+      "airmen": {
+        "title": "Dirigido por aviadores",
+        "body": "Los miembros de rango E-⁠1 a E-⁠4 eligen los proyectos, los planean y los llevan a cabo. Nadie cobra por dirigir {orgName}."
       }
     },
     "teamHeading": "Quién lo dirige",
-    "teamLead": "Una pequeña junta y un grupo de líderes voluntarios. Pronto los presentaremos aquí.",
-    "roles": {
-      "chair": "Presidencia de la junta",
-      "treasurer": "Tesorería",
-      "volunteers": "Coordinación de voluntariado",
-      "outreach": "Contacto con veteranos y familias"
-    },
+    "teamLead": "Oficiales elegidos por los miembros. Pronto los presentaremos aquí.",
     "nameToCome": "Nombre por confirmar",
-    "independenceHeading": "Independientes, no oficiales",
-    "independenceBody1": "{orgName} no forma parte de la Fuerza Aérea de los EE. UU., la Fuerza Espacial de los EE. UU. ni el Departamento de Defensa, y no cuenta con su respaldo.",
-    "independenceBody2": "Muchos de nosotros servimos o tenemos familiares que lo hicieron. Creamos {orgName} para ayudar donde los programas oficiales no siempre llegan a tiempo.",
-    "ctaHeading": "Apóyalos",
-    "ctaBody": "Dona una vez o cada mes, o dona tu tiempo."
+    "independenceHeading": "Una organización privada",
+    "independenceBody1": "{orgName} es una organización privada. No forma parte del Departamento de Defensa ni de ninguno de sus componentes y no tiene carácter gubernamental.",
+    "independenceBody2": "Nuestros miembros sirven en la Fuerza Aérea, pero {orgName} habla solo en su propio nombre, y las donaciones que recibe no son donaciones a la Fuerza Aérea.",
+    "ctaHeading": "Apoya a los aviadores que lo hacen posible",
+    "ctaBody": "Dona una vez o cada mes, o echa una mano en un proyecto.",
+    "areasHeading": "Lo que hacemos",
+    "areas": {
+      "morale": {
+        "title": "Moral",
+        "body": "Eventos, actividades y proyectos que crean amistades y fortalecen la cohesión de la unidad."
+      },
+      "welfare": {
+        "title": "Bienestar",
+        "body": "Un foro donde los aviadores plantean sus inquietudes sobre la vida diaria y buscan soluciones juntos."
+      },
+      "growth": {
+        "title": "Crecimiento profesional",
+        "body": "Oportunidades para liderar, asumir responsabilidades y aprender de mentores desde el inicio de la carrera."
+      },
+      "community": {
+        "title": "Comunidad",
+        "body": "Voluntariado en proyectos de la base y locales, desde renovar instalaciones hasta ayudar a los vecinos."
+      }
+    },
+    "roles": {
+      "president": "Presidencia",
+      "vicePresident": "Vicepresidencia",
+      "secretary": "Secretaría",
+      "treasurer": "Tesorería"
+    }
   },
   "Programs": {
     "_reviewed": false,
     "title": "Programas",
-    "lead": "Cuatro fondos, cada uno para un tipo de ayuda concreto. Esto es lo que cubre cada uno y cómo llega la ayuda.",
-    "howHeading": "Cómo llega la ayuda",
-    "steps": {
-      "ask": {
-        "title": "Un veterano o una familia nos contacta",
-        "body": "A través del formulario de contacto, una llamada o alguien que nos conoce."
-      },
-      "review": {
-        "title": "Un voluntario revisa la solicitud",
-        "body": "Conversa con la persona, revisa los detalles y decide qué fondo corresponde."
-      },
-      "pay": {
-        "title": "Pagamos directamente",
-        "body": "Cuando es posible, el dinero va directo al arrendador, la compañía de servicios, el taller o la escuela."
-      }
-    },
+    "lead": "Tres fondos, cada uno para una parte distinta de nuestra misión. Esto es lo que cubre cada uno y cómo se organiza un proyecto.",
+    "howHeading": "Cómo se organiza un proyecto",
     "fundsHeading": "Qué cubre cada fondo",
     "coversLabel": "Qué cubre",
-    "covers": {
-      "general": {
-        "item1": "El fondo con más demanda ese mes",
-        "item2": "Solicitudes que no encajan en un solo fondo",
-        "item3": "Necesidades nuevas que no habíamos previsto"
+    "steps": {
+      "idea": {
+        "title": "Un aviador trae una idea",
+        "body": "En una reunión o hablando con cualquier oficial. Todos los miembros pueden proponer algo."
       },
-      "emergency": {
-        "item1": "Renta o hipoteca tras una pérdida repentina de ingresos",
-        "item2": "Facturas de servicios atrasadas",
-        "item3": "Reparaciones del auto para poder seguir yendo a trabajar"
+      "plan": {
+        "title": "Los miembros lo planean juntos",
+        "body": "Lo votamos, definimos el presupuesto y elegimos quién lo dirige."
       },
-      "families": {
-        "item1": "Cuidado infantil durante despliegues y hospitalizaciones",
-        "item2": "Viajes para acompañar a un familiar enfermo",
-        "item3": "Apoyo tras la pérdida de un militar o veterano"
-      },
-      "transition": {
-        "item1": "Cursos, exámenes y certificaciones",
-        "item2": "Herramientas y equipo para un nuevo oficio",
-        "item3": "Ayuda para traducir la experiencia militar a un currículum civil"
+      "run": {
+        "title": "Los aviadores lo hacen realidad",
+        "body": "Tus donaciones pagan materiales y entradas. Los miembros hacen el trabajo y rinden cuentas."
       }
     },
-    "needHelpHeading": "¿Necesitas ayuda?",
-    "needHelpBody": "Si eres veterano de la Fuerza Aérea o familiar y tienes un gasto que no puedes cubrir, cuéntanos qué pasa. Un voluntario leerá tu mensaje.",
-    "needHelpCta": "Pedir ayuda"
+    "covers": {
+      "general": {
+        "item1": "El proyecto al que le falte dinero este mes",
+        "item2": "Ideas que no encajan en un solo fondo",
+        "item3": "Nuevas necesidades que los miembros planteen durante el año"
+      },
+      "morale": {
+        "item1": "Parrilladas en las residencias, noches de juegos y comidas festivas",
+        "item2": "Salidas en grupo y entradas a eventos locales",
+        "item3": "Eventos de bienvenida para aviadores recién llegados a la base"
+      },
+      "development": {
+        "item1": "Talleres de liderazgo y jornadas de desarrollo profesional",
+        "item2": "Material de estudio para cursos y exámenes de ascenso",
+        "item3": "Sesiones de mentoría con suboficiales con experiencia"
+      },
+      "community": {
+        "item1": "Pintura, muebles y herramientas para renovar instalaciones de la base",
+        "item2": "Materiales para proyectos de voluntariado locales",
+        "item3": "Colectas para la comunidad local"
+      }
+    },
+    "joinHeading": "¿Eres aviador de rango E-⁠1 a E-⁠4?",
+    "joinBody": "Ya formas parte del nivel. Ven a una reunión, trae una idea o cuéntanos qué mejoraría la vida en la base.",
+    "joinCta": "Escríbenos"
   },
   "Stories": {
     "_reviewed": false,
     "title": "Historias",
-    "lead": "Lo que una donación hace posible, contado por quienes recibieron la ayuda.",
+    "lead": "Lo que tu apoyo hace posible, contado por los aviadores que estuvieron allí.",
     "sampleBadge": "Historia de ejemplo",
     "sampleNotice": "Esta es una historia de ejemplo escrita para mostrar cómo se verá esta página. La reemplazarán historias reales, compartidas con permiso.",
     "readStory": "Leer la historia de {name}",
@@ -309,26 +328,26 @@
     "publishedOn": "Publicado el {date}",
     "featuredHeading": "En sus palabras",
     "items": {
-      "kept-on-the-road": {
-        "name": "Dana",
-        "role": "Veterana de la Fuerza Aérea, exmecánica de aeronaves",
-        "title": "La reparación que salvó un nuevo empleo",
-        "summary": "Cuando falló su transmisión a las tres semanas de empezar un nuevo trabajo, el fondo de emergencia pagó el taller y Dana siguió trabajando.",
-        "quote": "Había hecho todo bien y aun así todo dependía de una factura. Esa ayuda me permitió seguir yendo a trabajar."
+      "dorm-cookout": {
+        "name": "Jaylen",
+        "role": "Aviador de primera clase, mantenimiento de aeronaves",
+        "title": "La parrillada que convirtió las residencias en un hogar",
+        "summary": "A tres meses de su primer destino, Jaylen no conocía a nadie fuera de su taller. Una parrillada pagada por el fondo de moral cambió eso.",
+        "quote": "Conocía a la gente con la que trabajaba. Después de esa noche, conocía a mis vecinos."
       },
-      "holding-the-fort": {
-        "name": "Marisol",
-        "role": "Esposa de un militar de la Fuerza Aérea, madre de dos",
-        "title": "Ayuda en casa durante un largo despliegue",
-        "summary": "Con su esposo desplegado y su hija en el hospital, Marisol recibió dos semanas de cuidado infantil para poder estar a su lado.",
-        "quote": "Alguien que entendía la vida militar me quitó una cosa de la lista. Esa semana, eso lo fue todo."
+      "study-hall": {
+        "name": "Keisha",
+        "role": "Aviadora sénior, personal",
+        "title": "Un grupo de estudio y una sala llena de mentores",
+        "summary": "Keisha organizó un grupo de estudio semanal para aviadores que preparaban sus exámenes de ascenso. El fondo de crecimiento profesional pagó los libros y suboficiales con experiencia vinieron a ayudar.",
+        "quote": "Dirigir el grupo me enseñó tanto como los libros."
       },
-      "second-takeoff": {
-        "name": "Terrence",
-        "role": "Veterano de la Fuerza Aérea, 20 años en logística",
-        "title": "El último paso hacia una segunda carrera",
-        "summary": "Una ayuda educativa cubrió el último curso y el examen de licencia de Terrence. Aprobó al primer intento y hoy trabaja en calefacción y aire acondicionado.",
-        "quote": "Veinte años de logística no venían con una licencia. La ayuda cubrió el último curso y el examen."
+      "day-room-rebuild": {
+        "name": "Marcus",
+        "role": "Aviador, fuerzas de seguridad",
+        "title": "La renovación de la sala común",
+        "summary": "Veinte aviadores pasaron dos fines de semana convirtiendo una sala común descuidada en un espacio que la gente usa de verdad. El fondo comunitario compró la pintura y los muebles.",
+        "quote": "Pasamos por esa sala todos los días. Ahora es nuestra, porque la construimos nosotros."
       }
     }
   },
@@ -346,44 +365,44 @@
       "item2": "Paga con tarjeta, Apple Pay o Google Pay.",
       "item3": "Recibe tu comprobante por correo electrónico."
     },
-    "veterans": {
-      "tab": "Veteranos y familias",
-      "title": "Encuentra apoyo",
-      "body": "Si tú o tu familia necesitan ayuda, cuéntanos qué está pasando y te orientaremos hacia el apoyo adecuado.",
-      "cta": "Contáctanos",
-      "listHeading": "Qué pasa después",
-      "item1": "Cuéntanos un poco sobre lo que está pasando.",
-      "item2": "Un voluntario lee tu mensaje.",
-      "item3": "Te respondemos por correo con los próximos pasos o la organización adecuada."
-    },
     "companies": {
       "tab": "Empresas",
       "title": "Colabora con nosotros",
-      "body": "Patrocina un programa, iguala las donaciones de tus empleados o involucra a tu equipo.",
+      "body": "Los negocios locales pueden patrocinar un evento, donar materiales o involucrar a su equipo.",
       "cta": "Hablemos de una alianza",
       "listHeading": "Formas de colaborar",
-      "item1": "Patrocina un fondo o un evento.",
-      "item2": "Iguala las donaciones de tus empleados.",
+      "item1": "Patrocina un evento o un proyecto.",
+      "item2": "Dona materiales o servicios.",
       "item3": "Hagan voluntariado en equipo."
     },
     "volunteers": {
       "tab": "Voluntarios",
       "title": "Dona tu tiempo",
-      "body": "Desde eventos hasta mentorías, hay una forma de ayudar que se adapta a tu horario.",
+      "body": "Desde parrilladas hasta proyectos de renovación, hay una forma de ayudar que se adapta a tu horario.",
       "cta": "Hazte voluntario",
       "listHeading": "Formas de ayudar",
-      "item1": "Ayuda a organizar eventos de recaudación.",
-      "item2": "Aporta una habilidad profesional, como diseño, redacción o finanzas.",
+      "item1": "Ayuda a organizar eventos.",
+      "item2": "Aporta una habilidad, como carpintería, diseño o mentoría.",
       "item3": "Corre la voz en tu unidad o comunidad."
     },
-    "lead": "Ya sea que quieras donar, necesites apoyo o quieras ayudar, empieza aquí."
+    "lead": "Ya sea que quieras donar, seas aviador de rango inicial o quieras ayudar, empieza aquí.",
+    "airmen": {
+      "tab": "Aviadores E-⁠1 a E-⁠4",
+      "title": "Participa",
+      "body": "Si eres aviador de rango E-⁠1 a E-⁠4, ya eres uno de nosotros. Trae una idea o únete a un proyecto.",
+      "cta": "Contáctanos",
+      "listHeading": "Cómo empezar",
+      "item1": "Envíanos un mensaje o ven a una reunión.",
+      "item2": "Cuéntanos qué te gustaría hacer o cambiar.",
+      "item3": "Únete a un proyecto, o dirige uno."
+    }
   },
   "Stats": {
     "_reviewed": false,
     "heading": "Nuestro impacto",
-    "veteransHelped": "{count, plural, one {veterano ayudado} other {veteranos ayudados}}",
-    "familiesSupported": "{count, plural, one {familia apoyada} other {familias apoyadas}}",
-    "volunteerHours": "{count, plural, one {hora de voluntariado} other {horas de voluntariado}}"
+    "volunteerHours": "{count, plural, one {hora de voluntariado} other {horas de voluntariado}}",
+    "airmenReached": "{count, plural, one {aviador alcanzado} other {aviadores alcanzados}}",
+    "eventsHeld": "{count, plural, one {evento realizado} other {eventos realizados}}"
   },
   "Partners": {
     "_reviewed": false,
@@ -392,7 +411,7 @@
   "VolunteerBand": {
     "_reviewed": false,
     "title": "¿No puedes donar ahora? Dona tu tiempo.",
-    "body": "Los voluntarios hacen posible todo lo que hacemos. Cuéntanos en qué eres bueno y encontraremos un lugar para ti.",
+    "body": "Los aviadores dirigen todo lo que hacemos. Cuéntanos en qué eres bueno y te encontraremos un lugar.",
     "cta": "Hazte voluntario"
   }
 }
