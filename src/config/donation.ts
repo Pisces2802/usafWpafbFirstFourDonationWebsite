@@ -1,7 +1,7 @@
 export const FREQUENCIES = ["one_time", "monthly"] as const;
 export type Frequency = (typeof FREQUENCIES)[number];
 
-export const FUND_IDS = ["general", "emergency", "families", "transition"] as const;
+export const FUND_IDS = ["general", "morale", "development", "community"] as const;
 export type FundId = (typeof FUND_IDS)[number];
 
 /** Placeholder presets and fund list from the handoff; confirm both with the group before launch. */

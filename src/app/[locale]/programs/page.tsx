@@ -10,7 +10,7 @@ import { Link } from "@/i18n/navigation";
 import { getPageMetadata } from "@/lib/metadata";
 import { cn } from "@/lib/utils";
 
-const STEPS = ["ask", "review", "pay"] as const;
+const STEPS = ["idea", "plan", "run"] as const;
 const COVERS = ["item1", "item2", "item3"] as const;
 
 export const generateMetadata = ({ params }: PageProps<"/[locale]/programs">) =>
@@ -125,21 +125,21 @@ const ProgramsPage = async () => {
       </section>
 
       <section
-        aria-labelledby="need-help-heading"
+        aria-labelledby="join-heading"
         className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-8 lg:py-20"
       >
         <div className="border-primary flex flex-col gap-6 border-l-4 pl-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <h2 id="need-help-heading" className="headline text-4xl">
-              {t("needHelpHeading")}
+            <h2 id="join-heading" className="headline text-4xl">
+              {t("joinHeading")}
             </h2>
-            <p className="text-muted-foreground mt-3 text-xl">{t("needHelpBody")}</p>
+            <p className="text-muted-foreground mt-3 text-xl">{t("joinBody")}</p>
           </div>
           <Link
             href="/contact"
             className={cn(buttonVariants({ variant: "outline", size: "touch" }), "shrink-0")}
           >
-            {t("needHelpCta")}
+            {t("joinCta")}
           </Link>
         </div>
       </section>

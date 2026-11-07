@@ -53,7 +53,7 @@ export const DONATE_FIELD_IDS: Record<DonationField, string> = {
 };
 
 /**
- * Applies a campaign deep link (`?amount=100&frequency=monthly&fund=emergency&campaign=giving-day`) over whatever the
+ * Applies a campaign deep link (`?amount=100&frequency=monthly&fund=morale&campaign=giving-day`) over whatever the
  * donor chose earlier this visit, then strips the query so a refresh doesn't undo later changes.
  */
 const applyDeepLink = () => {
