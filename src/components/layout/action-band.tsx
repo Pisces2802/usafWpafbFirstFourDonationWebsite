@@ -29,7 +29,7 @@ export const ActionBand = async ({ id, title, body }: ActionBandProps) => {
             {t("Common.donateNow")}
           </Link>
           <Link
-            href="/get-involved"
+            href={{ pathname: "/get-involved", hash: "volunteer" }}
             className={cn(
               buttonVariants({ variant: "outline", size: "touch" }),
               "border-white/50 bg-transparent text-white hover:bg-white/10 hover:text-white",

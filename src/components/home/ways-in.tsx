@@ -3,11 +3,11 @@
 import { Tabs } from "@base-ui/react/tabs";
 import { Check } from "lucide-react";
 import { useTranslations } from "next-intl";
+import type { ComponentProps } from "react";
 
 import { SectionHeading } from "@/components/home/section-heading";
 import { buttonVariants } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-import type { StaticPathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 
 const ITEMS = ["item1", "item2", "item3"] as const;
@@ -15,12 +15,27 @@ const ITEMS = ["item1", "item2", "item3"] as const;
 /** `isSequence` marks lists that are real steps in order, so they render as numbered steps. */
 const AUDIENCES = [
   { id: "donors", href: "/donate", isDonate: true, isSequence: true },
-  { id: "airmen", href: "/contact", isDonate: false, isSequence: true },
-  { id: "companies", href: "/get-involved", isDonate: false, isSequence: false },
-  { id: "volunteers", href: "/get-involved", isDonate: false, isSequence: false },
+  {
+    id: "airmen",
+    href: { pathname: "/contact", query: { topic: "airmen" } },
+    isDonate: false,
+    isSequence: true,
+  },
+  {
+    id: "companies",
+    href: { pathname: "/contact", query: { topic: "partnering" } },
+    isDonate: false,
+    isSequence: false,
+  },
+  {
+    id: "volunteers",
+    href: { pathname: "/get-involved", hash: "volunteer" },
+    isDonate: false,
+    isSequence: false,
+  },
 ] as const satisfies readonly {
   id: string;
-  href: StaticPathname;
+  href: ComponentProps<typeof Link>["href"];
   isDonate: boolean;
   isSequence: boolean;
 }[];

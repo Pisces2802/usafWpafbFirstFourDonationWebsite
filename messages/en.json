@@ -30,8 +30,6 @@
     "donorPrivacy": "Donor privacy",
     "terms": "Terms of use",
     "donate": "Donate",
-    "placeholder": "We're still writing this page. In the meantime, you can make a gift or get in touch.",
-    "transparencyPlaceholder": "Annual report coming {year}.",
     "thankYou": "Thank you"
   },
   "Home": {
@@ -187,7 +185,18 @@
     "tributeBody": "{type, select, memory {{donor} made a gift to {orgName} in memory of {honoree}.} other {{donor} made a gift to {orgName} in honor of {honoree}.}}",
     "tributeAbout": "{orgName} is run by junior enlisted Airmen, E-⁠1 to E-⁠4, to improve morale and welfare, build leaders and serve the community.",
     "tributeWhy": "You're getting this email because {donor} asked us to let you know. We won't email you again about this gift.",
-    "aboutLink": "Learn about {orgName}"
+    "aboutLink": "Learn about {orgName}",
+    "volunteerNoticeSubject": "New volunteer: {name}",
+    "volunteerNoticeHeading": "New volunteer sign-up",
+    "contactNoticeSubject": "{topic}: message from {name}",
+    "rowName": "Name",
+    "rowEmail": "Email",
+    "rowPhone": "Phone",
+    "rowAffiliation": "Describes themselves as",
+    "rowInterests": "Wants to help with",
+    "rowAvailability": "Availability",
+    "rowLanguage": "Site language",
+    "noticeReplyNote": "Reply to this email to answer {name} directly."
   },
   "Funds": {
     "_reviewed": true,
@@ -413,5 +422,146 @@
     "title": "Can't give right now? Give your time.",
     "body": "Airmen run everything we do. Tell us what you're good at and we'll find a fit.",
     "cta": "Become a volunteer"
+  },
+  "Forms": {
+    "_reviewed": true,
+    "optional": "optional",
+    "errorSummaryTitle": "{count, plural, one {Fix 1 thing to send this} other {Fix # things to send this}}",
+    "affiliations": {
+      "airman": "Airman, E-⁠1 to E-⁠4",
+      "military": "Serving or former military",
+      "family": "Military family",
+      "community": "Community member or local business"
+    },
+    "interests": {
+      "events": "Running events",
+      "projects": "Building and community projects",
+      "mentoring": "Mentoring junior Airmen",
+      "skills": "A professional skill, like design, writing or finance",
+      "outreach": "Spreading the word"
+    },
+    "topics": {
+      "general": "General question",
+      "airmen": "Airman idea or question",
+      "giving": "Giving and donations",
+      "partnering": "Partnering or sponsorship",
+      "other": "Something else"
+    },
+    "status": {
+      "verifying": "We're still checking your connection. Try again in a few seconds.",
+      "invalid": "Something in the form didn't go through. Check your answers and try again.",
+      "rate_limited": "Too many attempts in a short time. Wait a few minutes, then try again.",
+      "verification_failed": "We couldn't confirm this request. Refresh the page and try again.",
+      "unavailable": "This form isn't switched on yet, so nothing was sent.",
+      "failed": "We couldn't send that. Your answers are still here, so try again in a moment."
+    },
+    "sending": "Sending…",
+    "sendAnother": "Send another",
+    "privacy": "We only use your details to reply. Read our <link>privacy policy</link>."
+  },
+  "Volunteer": {
+    "_reviewed": true,
+    "heading": "Sign up to volunteer",
+    "lead": "Tell us a little about yourself and what you'd like to do. It takes about a minute.",
+    "name": "Your name",
+    "email": "Email",
+    "emailHint": "We'll contact you here.",
+    "phone": "Phone",
+    "affiliationLegend": "Which describes you best?",
+    "interestsLegend": "What would you like to help with?",
+    "interestsHint": "Choose as many as you like.",
+    "availability": "When are you usually free?",
+    "availabilityHint": "For example: weekends, or weekday evenings after 1700.",
+    "submit": "Sign up to volunteer",
+    "successTitle": "Thanks, {name}. You're on the list.",
+    "successBody": "A member will email {email} about upcoming events and projects that match what you chose.",
+    "errors": {
+      "name": "Enter your name.",
+      "email": "Enter an email address like name@example.com.",
+      "phone": "Enter a phone number of 40 characters or fewer.",
+      "affiliation": "Choose the option that describes you best.",
+      "interests": "Choose at least one way you'd like to help.",
+      "availability": "Keep your availability under 1,000 characters."
+    }
+  },
+  "GetInvolved": {
+    "_reviewed": true,
+    "lead": "Give an evening, a skill or an idea. Here's how to join in.",
+    "waysHeading": "Ways to get involved",
+    "ways": {
+      "airmen": {
+        "title": "Airmen E-⁠1 to E-⁠4",
+        "body": "You're already part of the tier. Bring an idea to a meeting, join a project, or lead one.",
+        "cta": "Share an idea"
+      },
+      "partners": {
+        "title": "Local businesses",
+        "body": "Sponsor an event, donate supplies or services, or volunteer together as a team.",
+        "cta": "Talk to us about partnering"
+      },
+      "fundraise": {
+        "title": "Fundraise for us",
+        "body": "Planning a bake sale, a run or a birthday fundraiser? Talk to us first and we'll help you send gifts to the right fund.",
+        "cta": "Plan a fundraiser"
+      }
+    }
+  },
+  "Contact": {
+    "_reviewed": true,
+    "lead": "Questions, ideas or offers of help. A member of the group reads every message.",
+    "formHeading": "Send us a message",
+    "name": "Your name",
+    "email": "Email",
+    "emailHint": "We'll reply here.",
+    "topic": "What's it about?",
+    "message": "Your message",
+    "submit": "Send message",
+    "successTitle": "Thanks, {name}. Your message is on its way.",
+    "successBody": "A member of the group will reply to {email}.",
+    "errors": {
+      "name": "Enter your name.",
+      "email": "Enter an email address like name@example.com.",
+      "topic": "Choose what your message is about.",
+      "message": "Write a message between 10 and 4,000 characters."
+    },
+    "nextHeading": "What happens next",
+    "next": {
+      "item1": "Your message goes to the group's inbox.",
+      "item2": "A member reads it and passes it to whoever can help.",
+      "item3": "They reply to you by email."
+    },
+    "elsewhereHeading": "Looking for something else?",
+    "volunteerLink": "Sign up to volunteer",
+    "donateLink": "Make a gift"
+  },
+  "Legal": {
+    "_reviewed": true,
+    "lastUpdated": "Last updated {date}",
+    "draftNotice": "This is a draft, written to show how this page will look. {orgName} will review it, ideally with legal advice, before the site launches."
+  },
+  "Transparency": {
+    "_reviewed": true,
+    "lead": "Where gifts go, what card payments cost, and when you'll see our first report.",
+    "moneyHeading": "Where your gift goes",
+    "moneyBody1": "Every gift goes to the fund you choose. Gifts to “Where it's needed most” go to whichever project members decide needs them next.",
+    "moneyBody2": "Members vote on how money is spent, and the treasurer keeps the records.",
+    "fundsLink": "See what each fund pays for",
+    "feesHeading": "Card fees",
+    "feesBody": "Our payment processor, Stripe, charges about {pct} plus {fixed} on each card payment. When you give, you can choose to add that amount so {orgName} receives your full gift.",
+    "feesExample": "For example, covering the fees on a {amount} gift adds {fee}.",
+    "statusHeading": "Our status",
+    "statusPrivate": "{orgName} is a private organization. It is not part of the Department of Defense or any of its components and has no governmental status.",
+    "taxDeductible": "{orgName} is a 501(c)(3) nonprofit organization, EIN {ein}. Gifts are tax-deductible to the extent allowed by law.",
+    "taxUnconfirmed": "We haven't confirmed that gifts to {orgName} are tax-deductible, so please don't count on a deduction. We'll update this page if that changes.",
+    "reportHeading": "Annual report",
+    "reportBody": "Our first annual report is due in {year}. It will show:",
+    "reportItems": {
+      "item1": "How much we raised, by fund",
+      "item2": "What each fund paid for",
+      "item3": "What it cost to run, including card fees"
+    },
+    "questionsHeading": "Questions about the money?",
+    "questionsBody": "Ask us anything about where gifts go or how they're spent.",
+    "questionsCta": "Ask a question"
   }
 }

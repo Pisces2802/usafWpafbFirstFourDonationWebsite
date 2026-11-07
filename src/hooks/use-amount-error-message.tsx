@@ -18,7 +18,10 @@ export const useAmountErrorMessage = (error: CustomAmountError) => {
     return t.rich("errorMax", {
       max: formatMoney(donationConfig.maxCents),
       link: (chunks) => (
-        <Link href="/contact" className="font-semibold underline underline-offset-2">
+        <Link
+          href={{ pathname: "/contact", query: { topic: "giving" } }}
+          className="font-semibold underline underline-offset-2"
+        >
           {chunks}
         </Link>
       ),

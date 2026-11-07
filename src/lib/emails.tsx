@@ -78,7 +78,7 @@ export const sendReceipt = async (gift: GiftEmailData) => {
     ...(frequency === "monthly" ? [t("monthlyNote")] : []),
   ];
 
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: env.EMAIL_FROM,
     to: gift.donorEmail,
     replyTo: env.ORG_NOTIFY_EMAIL,
@@ -97,6 +97,7 @@ export const sendReceipt = async (gift: GiftEmailData) => {
       />
     ),
   });
+  if (error) throw new Error(`Resend rejected the email: ${error.message}`);
 };
 
 /**
@@ -116,7 +117,7 @@ export const sendTributeNotice = async (gift: GiftEmailData) => {
   const donor = `${gift.firstName} ${gift.lastName}`.trim();
   const subject = t("tributeSubject", { type: tribute.type, honoree: tribute.honoreeName });
 
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: env.EMAIL_FROM,
     to: notifyEmail,
     replyTo: env.ORG_NOTIFY_EMAIL,
@@ -137,4 +138,57 @@ export const sendTributeNotice = async (gift: GiftEmailData) => {
       />
     ),
   });
+  if (error) throw new Error(`Resend rejected the email: ${error.message}`);
+};
+
+/** True when submissions can be emailed to the group's inbox. */
+export const isOrgNoticeConfigured = () =>
+  Boolean(env.RESEND_API_KEY && env.EMAIL_FROM && env.ORG_NOTIFY_EMAIL);
+
+type OrgNotice = {
+  subject: string;
+  heading: string;
+  replyTo: string;
+  rows: { label: string; value: string }[];
+  paragraphs?: string[];
+  notes?: string[];
+};
+
+/**
+ * Emails a form submission to the group's inbox. Replies go straight to the person who sent it.
+ * Written in English, the group's working language, whichever locale the form was filled in.
+ */
+export const sendOrgNotice = async ({
+  subject,
+  heading,
+  replyTo,
+  rows,
+  paragraphs,
+  notes,
+}: OrgNotice) => {
+  const resend = getResend();
+  if (!resend || !env.EMAIL_FROM || !env.ORG_NOTIFY_EMAIL) return;
+
+  const { orgName } = siteConfig;
+  const tFooter = await getTranslations({ locale: "en", namespace: "Footer" });
+
+  const { error } = await resend.emails.send({
+    from: env.EMAIL_FROM,
+    to: env.ORG_NOTIFY_EMAIL,
+    replyTo,
+    subject,
+    react: (
+      <NoticeEmail
+        lang="en"
+        orgName={orgName}
+        preview={subject}
+        heading={heading}
+        paragraphs={paragraphs ?? []}
+        rows={rows}
+        notes={notes}
+        footer={[tFooter("disclaimer", { orgName })]}
+      />
+    ),
+  });
+  if (error) throw new Error(`Resend rejected the notice: ${error.message}`);
 };

@@ -1,11 +1,11 @@
 import { getTranslations } from "next-intl/server";
 
 import { DonateForm } from "@/components/donation/donate-form";
-import { placeholderMetadata } from "@/components/layout/placeholder-page";
 import { env } from "@/env";
+import { getPageMetadata } from "@/lib/metadata";
 
 export const generateMetadata = ({ params }: PageProps<"/[locale]/donate">) =>
-  placeholderMetadata(params, "donate", "/donate");
+  getPageMetadata(params, { titleKey: "donate", href: "/donate" });
 
 const DonatePage = async () => {
   const t = await getTranslations("Donate");

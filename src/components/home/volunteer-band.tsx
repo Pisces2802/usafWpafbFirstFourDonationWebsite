@@ -17,7 +17,7 @@ export const VolunteerBand = () => {
           <p className="mt-4 text-xl text-white/85">{t("body")}</p>
         </div>
         <Link
-          href="/get-involved"
+          href={{ pathname: "/get-involved", hash: "volunteer" }}
           className={cn(
             buttonVariants({ size: "touch" }),
             "text-ultramarine shrink-0 bg-white hover:bg-white/90 focus-visible:ring-white/50",
