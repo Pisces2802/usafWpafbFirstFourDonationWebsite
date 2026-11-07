@@ -30,8 +30,6 @@
     "donorPrivacy": "Confidentialité des donateurs",
     "terms": "Conditions d'utilisation",
     "donate": "Faire un don",
-    "placeholder": "Cette page est en cours de rédaction. En attendant, vous pouvez faire un don ou nous écrire.",
-    "transparencyPlaceholder": "Rapport annuel prévu en {year}.",
     "thankYou": "Merci"
   },
   "Home": {
@@ -187,7 +185,18 @@
     "tributeBody": "{type, select, memory {{donor} a fait un don à {orgName} à la mémoire de {honoree}.} other {{donor} a fait un don à {orgName} en l'honneur de {honoree}.}}",
     "tributeAbout": "{orgName} est dirigée par des aviateurs de grade E-⁠1 à E-⁠4 pour améliorer le moral et le bien-être, former des leaders et servir la communauté.",
     "tributeWhy": "Vous recevez cet e-mail parce que {donor} nous a demandé de vous prévenir. Nous ne vous écrirons plus au sujet de ce don.",
-    "aboutLink": "Découvrir {orgName}"
+    "aboutLink": "Découvrir {orgName}",
+    "volunteerNoticeSubject": "Nouveau bénévole : {name}",
+    "volunteerNoticeHeading": "Nouvelle inscription de bénévole",
+    "contactNoticeSubject": "{topic} : message de {name}",
+    "rowName": "Nom",
+    "rowEmail": "E-mail",
+    "rowPhone": "Téléphone",
+    "rowAffiliation": "Se décrit comme",
+    "rowInterests": "Souhaite aider pour",
+    "rowAvailability": "Disponibilités",
+    "rowLanguage": "Langue du site",
+    "noticeReplyNote": "Répondez à cet e-mail pour écrire directement à {name}."
   },
   "Funds": {
     "_reviewed": false,
@@ -413,5 +422,146 @@
     "title": "Vous ne pouvez pas donner maintenant ? Donnez de votre temps.",
     "body": "Les aviateurs mènent tout ce que nous faisons. Dites-nous ce que vous savez faire et nous vous trouverons une place.",
     "cta": "Devenir bénévole"
+  },
+  "Forms": {
+    "_reviewed": false,
+    "optional": "facultatif",
+    "errorSummaryTitle": "{count, plural, one {Corrigez 1 point pour envoyer} other {Corrigez # points pour envoyer}}",
+    "affiliations": {
+      "airman": "Aviateur, E-⁠1 à E-⁠4",
+      "military": "Militaire en service ou ancien militaire",
+      "family": "Famille de militaire",
+      "community": "Membre de la communauté ou entreprise locale"
+    },
+    "interests": {
+      "events": "Organiser des événements",
+      "projects": "Chantiers et projets solidaires",
+      "mentoring": "Mentorat de jeunes aviateurs",
+      "skills": "Une compétence professionnelle : graphisme, rédaction ou finances",
+      "outreach": "Faire passer le mot"
+    },
+    "topics": {
+      "general": "Question générale",
+      "airmen": "Idée ou question d'un aviateur",
+      "giving": "Dons",
+      "partnering": "Partenariat ou parrainage",
+      "other": "Autre chose"
+    },
+    "status": {
+      "verifying": "Nous vérifions encore votre connexion. Réessayez dans quelques secondes.",
+      "invalid": "Une partie du formulaire n'est pas passée. Vérifiez vos réponses et réessayez.",
+      "rate_limited": "Trop de tentatives en peu de temps. Attendez quelques minutes, puis réessayez.",
+      "verification_failed": "Nous n'avons pas pu confirmer cette demande. Actualisez la page et réessayez.",
+      "unavailable": "Ce formulaire n'est pas encore activé : rien n'a été envoyé.",
+      "failed": "L'envoi n'a pas abouti. Vos réponses sont toujours là : réessayez dans un instant."
+    },
+    "sending": "Envoi…",
+    "sendAnother": "Envoyer un autre message",
+    "privacy": "Nous utilisons vos coordonnées uniquement pour vous répondre. Lisez notre <link>politique de confidentialité</link>."
+  },
+  "Volunteer": {
+    "_reviewed": false,
+    "heading": "Devenir bénévole",
+    "lead": "Parlez-nous un peu de vous et de ce que vous aimeriez faire. Cela prend environ une minute.",
+    "name": "Votre nom",
+    "email": "E-mail",
+    "emailHint": "Nous vous contacterons à cette adresse.",
+    "phone": "Téléphone",
+    "affiliationLegend": "Qu'est-ce qui vous décrit le mieux ?",
+    "interestsLegend": "Pour quoi aimeriez-vous aider ?",
+    "interestsHint": "Choisissez autant d'options que vous le souhaitez.",
+    "availability": "Quand êtes-vous généralement disponible ?",
+    "availabilityHint": "Par exemple : le week-end, ou en semaine après 17 h.",
+    "submit": "Devenir bénévole",
+    "successTitle": "Merci, {name}. Vous êtes sur la liste.",
+    "successBody": "Un membre écrira à {email} au sujet des prochains événements et projets qui correspondent à vos choix.",
+    "errors": {
+      "name": "Indiquez votre nom.",
+      "email": "Indiquez une adresse e-mail comme nom@exemple.com.",
+      "phone": "Indiquez un numéro de téléphone de 40 caractères maximum.",
+      "affiliation": "Choisissez l'option qui vous décrit le mieux.",
+      "interests": "Choisissez au moins une façon d'aider.",
+      "availability": "Vos disponibilités doivent faire moins de 1 000 caractères."
+    }
+  },
+  "GetInvolved": {
+    "_reviewed": false,
+    "lead": "Offrez une soirée, une compétence ou une idée. Voici comment participer.",
+    "waysHeading": "Comment s'impliquer",
+    "ways": {
+      "airmen": {
+        "title": "Aviateurs E-⁠1 à E-⁠4",
+        "body": "Vous faites déjà partie du rang. Proposez une idée en réunion, rejoignez un projet ou pilotez-en un.",
+        "cta": "Proposer une idée"
+      },
+      "partners": {
+        "title": "Entreprises locales",
+        "body": "Parrainez un événement, donnez du matériel ou des services, ou faites du bénévolat en équipe.",
+        "cta": "Parler d'un partenariat"
+      },
+      "fundraise": {
+        "title": "Collecter des fonds pour nous",
+        "body": "Vous organisez une vente de gâteaux, une course ou une collecte d'anniversaire ? Parlez-nous-en d'abord et nous vous aiderons à diriger les dons vers le bon fonds.",
+        "cta": "Organiser une collecte"
+      }
+    }
+  },
+  "Contact": {
+    "_reviewed": false,
+    "lead": "Questions, idées ou propositions d'aide. Un membre du groupe lit chaque message.",
+    "formHeading": "Écrivez-nous",
+    "name": "Votre nom",
+    "email": "E-mail",
+    "emailHint": "Nous vous répondrons à cette adresse.",
+    "topic": "De quoi s'agit-il ?",
+    "message": "Votre message",
+    "submit": "Envoyer le message",
+    "successTitle": "Merci, {name}. Votre message est en route.",
+    "successBody": "Un membre du groupe répondra à {email}.",
+    "errors": {
+      "name": "Indiquez votre nom.",
+      "email": "Indiquez une adresse e-mail comme nom@exemple.com.",
+      "topic": "Choisissez le sujet de votre message.",
+      "message": "Écrivez un message de 10 à 4 000 caractères."
+    },
+    "nextHeading": "Et ensuite ?",
+    "next": {
+      "item1": "Votre message arrive dans la boîte de réception du groupe.",
+      "item2": "Un membre le lit et le transmet à la personne qui peut aider.",
+      "item3": "On vous répond par e-mail."
+    },
+    "elsewhereHeading": "Vous cherchez autre chose ?",
+    "volunteerLink": "Devenir bénévole",
+    "donateLink": "Faire un don"
+  },
+  "Legal": {
+    "_reviewed": false,
+    "lastUpdated": "Dernière mise à jour : {date}",
+    "draftNotice": "Ceci est un brouillon, rédigé pour montrer à quoi ressemblera cette page. {orgName} le relira, idéalement avec un conseil juridique, avant le lancement du site."
+  },
+  "Transparency": {
+    "_reviewed": false,
+    "lead": "Où vont les dons, ce que coûtent les paiements par carte et quand paraîtra notre premier rapport.",
+    "moneyHeading": "Où va votre don",
+    "moneyBody1": "Chaque don va au fonds que vous choisissez. Les dons « Là où les besoins sont les plus grands » vont au projet que les membres jugent prioritaire.",
+    "moneyBody2": "Les membres votent sur l'utilisation de l'argent, et la trésorerie tient les comptes.",
+    "fundsLink": "Voir ce que finance chaque fonds",
+    "feesHeading": "Frais de carte",
+    "feesBody": "Notre prestataire de paiement, Stripe, prélève environ {pct} plus {fixed} sur chaque paiement par carte. Lors de votre don, vous pouvez ajouter ce montant pour que {orgName} reçoive l'intégralité de votre don.",
+    "feesExample": "Par exemple, couvrir les frais d'un don de {amount} ajoute {fee}.",
+    "statusHeading": "Notre statut",
+    "statusPrivate": "{orgName} est une organisation privée. Elle ne fait pas partie du Département de la Défense ni d'aucune de ses composantes et n'a aucun statut gouvernemental.",
+    "taxDeductible": "{orgName} est un organisme à but non lucratif 501(c)(3), EIN {ein}. Les dons sont déductibles des impôts dans les limites prévues par la loi.",
+    "taxUnconfirmed": "Nous n'avons pas confirmé que les dons à {orgName} sont déductibles des impôts : ne comptez donc pas sur une déduction. Nous mettrons cette page à jour si cela change.",
+    "reportHeading": "Rapport annuel",
+    "reportBody": "Notre premier rapport annuel paraîtra en {year}. Il présentera :",
+    "reportItems": {
+      "item1": "Le montant collecté, par fonds",
+      "item2": "Ce que chaque fonds a financé",
+      "item3": "Nos frais de fonctionnement, y compris les frais de carte"
+    },
+    "questionsHeading": "Des questions sur l'argent ?",
+    "questionsBody": "Posez-nous toutes vos questions sur la destination et l'utilisation des dons.",
+    "questionsCta": "Poser une question"
   }
 }

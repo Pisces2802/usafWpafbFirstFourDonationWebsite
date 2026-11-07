@@ -1,8 +1,12 @@
-import { PlaceholderPage, placeholderMetadata } from "@/components/layout/placeholder-page";
+import { LegalPage } from "@/components/legal/legal-page";
+import { legalDocs } from "@/config/legal";
+import { getPageMetadata } from "@/lib/metadata";
+
+const doc = legalDocs.privacy;
 
 export const generateMetadata = ({ params }: PageProps<"/[locale]/privacy">) =>
-  placeholderMetadata(params, "privacy", "/privacy");
+  getPageMetadata(params, { titleKey: doc.titleKey, href: doc.href });
 
-const PrivacyPage = () => <PlaceholderPage titleKey="privacy" />;
+const PrivacyPage = () => <LegalPage doc={doc} />;
 
 export default PrivacyPage;

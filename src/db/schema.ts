@@ -9,9 +9,13 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
+import { CONTACT_TOPICS, VOLUNTEER_AFFILIATIONS } from "@/lib/form-schemas";
+
 export const frequency = pgEnum("frequency", ["one_time", "monthly"]);
 export const donationStatus = pgEnum("donation_status", ["succeeded", "refunded", "failed"]);
 export const tributeType = pgEnum("tribute_type", ["honour", "memory"]);
+export const volunteerAffiliation = pgEnum("volunteer_affiliation", VOLUNTEER_AFFILIATIONS);
+export const contactTopic = pgEnum("contact_topic", CONTACT_TOPICS);
 
 /** Names and descriptions live in the messages files, keyed by slug. */
 export const funds = pgTable("funds", {
@@ -88,8 +92,19 @@ export const volunteers = pgTable("volunteers", {
   name: text().notNull(),
   email: text().notNull(),
   phone: text(),
+  affiliation: volunteerAffiliation(),
   interests: text().array().notNull().default([]),
   availability: text(),
+  locale: text().notNull(),
+  createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+});
+
+export const contactMessages = pgTable("contact_messages", {
+  id: serial().primaryKey(),
+  name: text().notNull(),
+  email: text().notNull(),
+  topic: contactTopic().notNull(),
+  message: text().notNull(),
   locale: text().notNull(),
   createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
 });

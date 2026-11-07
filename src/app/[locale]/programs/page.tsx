@@ -136,7 +136,7 @@ const ProgramsPage = async () => {
             <p className="text-muted-foreground mt-3 text-xl">{t("joinBody")}</p>
           </div>
           <Link
-            href="/contact"
+            href={{ pathname: "/contact", query: { topic: "airmen" } }}
             className={cn(buttonVariants({ variant: "outline", size: "touch" }), "shrink-0")}
           >
             {t("joinCta")}

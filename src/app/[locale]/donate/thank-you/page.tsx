@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
-import { placeholderMetadata } from "@/components/layout/placeholder-page";
 import { ClearDonation } from "@/components/thank-you/clear-donation";
 import { ShareCard } from "@/components/thank-you/share-card";
 import { buttonVariants } from "@/components/ui/button";
@@ -10,13 +9,14 @@ import { env } from "@/env";
 import { getPathname, Link, redirect } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { lookUpGift } from "@/lib/gifts";
+import { getPageMetadata } from "@/lib/metadata";
 import { MONEY_FORMAT } from "@/lib/money";
 import { cn } from "@/lib/utils";
 
 type ThankYouProps = PageProps<"/[locale]/donate/thank-you">;
 
 export const generateMetadata = async ({ params }: ThankYouProps): Promise<Metadata> => ({
-  ...(await placeholderMetadata(params, "thankYou", "/donate/thank-you")),
+  ...(await getPageMetadata(params, { titleKey: "thankYou", href: "/donate/thank-you" })),
   robots: { index: false, follow: false },
 });
 

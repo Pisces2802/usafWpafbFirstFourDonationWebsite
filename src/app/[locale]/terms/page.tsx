@@ -1,8 +1,12 @@
-import { PlaceholderPage, placeholderMetadata } from "@/components/layout/placeholder-page";
+import { LegalPage } from "@/components/legal/legal-page";
+import { legalDocs } from "@/config/legal";
+import { getPageMetadata } from "@/lib/metadata";
+
+const doc = legalDocs.terms;
 
 export const generateMetadata = ({ params }: PageProps<"/[locale]/terms">) =>
-  placeholderMetadata(params, "terms", "/terms");
+  getPageMetadata(params, { titleKey: doc.titleKey, href: doc.href });
 
-const TermsPage = () => <PlaceholderPage titleKey="terms" />;
+const TermsPage = () => <LegalPage doc={doc} />;
 
 export default TermsPage;
