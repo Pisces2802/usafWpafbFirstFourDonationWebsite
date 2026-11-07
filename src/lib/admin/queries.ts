@@ -3,7 +3,7 @@ import "server-only";
 import { and, count, countDistinct, desc, eq, gte, inArray, max, sql } from "drizzle-orm";
 
 import type { Db } from "@/db";
-import { campaigns, donations, donors, funds, volunteers } from "@/db/schema";
+import { campaigns, contactMessages, donations, donors, funds, volunteers } from "@/db/schema";
 
 /** Upper bound on rows sent to a client-side table. Past this, the list needs server paging. */
 export const ADMIN_ROW_LIMIT = 5000;
@@ -131,3 +131,9 @@ export type AdminVolunteerRow = Awaited<ReturnType<typeof listVolunteers>>[numbe
 /** Volunteer sign-ups, newest first. */
 export const listVolunteers = (db: Db, { limit = ADMIN_ROW_LIMIT }: { limit?: number } = {}) =>
   db.select().from(volunteers).orderBy(desc(volunteers.createdAt)).limit(limit);
+
+export type AdminMessageRow = Awaited<ReturnType<typeof listContactMessages>>[number];
+
+/** Contact form messages, newest first. */
+export const listContactMessages = (db: Db, { limit = ADMIN_ROW_LIMIT }: { limit?: number } = {}) =>
+  db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt)).limit(limit);
