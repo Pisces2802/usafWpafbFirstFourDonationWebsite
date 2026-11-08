@@ -99,7 +99,7 @@ interface Props<TData extends RowData> {
 
 const SortIcon = ({ direction }: { direction: false | "asc" | "desc" }) => {
   const Icon = direction === "asc" ? ArrowUp : direction === "desc" ? ArrowDown : ChevronsUpDown;
-  return <Icon className={cn("size-3.5", !direction && "text-neutral-400")} />;
+  return <Icon className={cn("size-3.5", !direction && "text-muted-foreground")} />;
 };
 
 export function DataTable<TData extends RowData>({
@@ -172,13 +172,13 @@ export function DataTable<TData extends RowData>({
   return (
     <section
       className={cn(
-        "w-full min-w-0 overflow-hidden rounded-[20px] border border-neutral-200 bg-white",
+        "border-border bg-card w-full min-w-0 overflow-hidden rounded-[20px] border",
         className,
       )}
     >
       {title && <h2 className="px-5 pt-5 pb-1 text-lg font-semibold sm:text-xl">{title}</h2>}
       {caption && (
-        <p className="border-b border-neutral-200 px-5 py-4 text-sm text-neutral-600">
+        <p className="border-border text-muted-foreground border-b px-5 py-4 text-sm">
           {loading ? "Loading…" : caption(total)}
         </p>
       )}
@@ -186,7 +186,7 @@ export function DataTable<TData extends RowData>({
         <table className={cn("w-full text-left text-sm", tableClassName)}>
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="border-b border-neutral-200">
+              <tr key={headerGroup.id} className="border-border border-b">
                 {headerGroup.headers.map((header) => {
                   const meta = header.column.columnDef.meta;
                   const canSort = header.column.getCanSort();
@@ -213,7 +213,7 @@ export function DataTable<TData extends RowData>({
                           type="button"
                           onClick={header.column.getToggleSortingHandler()}
                           className={cn(
-                            "-mx-1 inline-flex items-center gap-1 rounded px-1 outline-none hover:text-neutral-600 focus-visible:ring-2 focus-visible:ring-black/25",
+                            "hover:text-muted-foreground focus-visible:ring-ring/50 -mx-1 inline-flex items-center gap-1 rounded px-1 outline-none focus-visible:ring-2",
                             meta?.align === "right" && "flex-row-reverse",
                           )}
                         >
@@ -232,9 +232,9 @@ export function DataTable<TData extends RowData>({
           <tbody>
             {loading ? (
               Array.from({ length: 6 }, (_, index) => (
-                <tr key={index} className="border-b border-neutral-200 last:border-0">
+                <tr key={index} className="border-border border-b last:border-0">
                   <td colSpan={columnCount} className="px-5 py-3">
-                    <div className="h-9 animate-pulse rounded-lg bg-neutral-100" />
+                    <div className="bg-muted h-9 animate-pulse rounded-lg" />
                   </td>
                 </tr>
               ))
@@ -246,8 +246,8 @@ export function DataTable<TData extends RowData>({
                     key={row.id}
                     data-state={row.getIsSelected() || active ? "selected" : undefined}
                     className={cn(
-                      "data-[state=selected]:bg-brand-soft/40 border-b border-neutral-200 transition-colors last:border-0",
-                      handleRowClick && "cursor-pointer hover:bg-neutral-50",
+                      "data-[state=selected]:bg-brand-soft/40 border-border border-b transition-colors last:border-0",
+                      handleRowClick && "hover:bg-muted cursor-pointer",
                     )}
                     {...(handleRowClick
                       ? {
@@ -285,14 +285,14 @@ export function DataTable<TData extends RowData>({
               })
             ) : (
               <tr>
-                <td colSpan={columnCount} className="px-5 py-14 text-center text-neutral-600">
+                <td colSpan={columnCount} className="text-muted-foreground px-5 py-14 text-center">
                   {empty}
                 </td>
               </tr>
             )}
           </tbody>
           {footer && !loading && (
-            <tfoot className="border-t border-black font-semibold">{footer}</tfoot>
+            <tfoot className="border-foreground border-t font-semibold">{footer}</tfoot>
           )}
         </table>
       </div>

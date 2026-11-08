@@ -15,6 +15,20 @@
       "when": 1794050794544,
       "tag": "0001_uneven_squirrel_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794068143008,
+      "tag": "0002_admin_users",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794072256946,
+      "tag": "0003_admin_auth",
+      "breakpoints": true
     }
   ]
 }

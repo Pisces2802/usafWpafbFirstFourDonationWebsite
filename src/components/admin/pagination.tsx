@@ -23,7 +23,7 @@ interface Props {
 const PAGE_SIZES = ["10", "20", "50", "100"];
 
 const pageButton =
-  "flex size-9 items-center justify-center rounded-full border border-neutral-200 bg-white text-black transition-colors outline-none hover:bg-neutral-100 focus-visible:ring-2 focus-visible:ring-black/25 disabled:pointer-events-none disabled:opacity-40";
+  "flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-40";
 
 const numberFormat = new Intl.NumberFormat("en-NG");
 
@@ -43,22 +43,22 @@ export const Pagination = ({
     <nav
       aria-label="Pagination"
       className={cn(
-        "flex flex-wrap items-center justify-between gap-3 border-t border-neutral-200 px-5 py-3 text-sm",
+        "border-border flex flex-wrap items-center justify-between gap-3 border-t px-5 py-3 text-sm",
         className,
       )}
     >
-      <p className="text-neutral-600 tabular-nums">
+      <p className="text-muted-foreground tabular-nums">
         {numberFormat.format(start)}–{numberFormat.format(end)} of {numberFormat.format(total)}
       </p>
       <div className="flex items-center gap-4">
         {onPageSizeChange && (
-          <label className="hidden items-center gap-2 text-neutral-600 sm:flex">
+          <label className="text-muted-foreground hidden items-center gap-2 sm:flex">
             Rows
             <Select
               onValueChange={(value) => onPageSizeChange(Number(value))}
               value={pageSize.toString()}
             >
-              <SelectTrigger className="h-9 w-20 rounded-full border-neutral-200 bg-white">
+              <SelectTrigger className="border-border bg-card h-9 w-20 rounded-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>

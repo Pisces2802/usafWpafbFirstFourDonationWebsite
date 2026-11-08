@@ -1,7 +1,76 @@
-export function Header() {
+import { ExternalLink, LogOut, UserRound } from "lucide-react";
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
+
+import { LogoMark } from "@/components/brand/logo";
+import { siteConfig } from "@/config/site";
+import { getAdminUser } from "@/lib/admin/access";
+import { signOut } from "@/lib/admin/auth/actions";
+
+const CurrentUser = async () => {
+  const t = await getTranslations("Admin");
+  const user = await getAdminUser();
+  if (!user) return null;
+
   return (
-    <header className="flex h-16 items-center justify-between border-b px-4">
-      <div></div>
+    <span className="text-muted-foreground hidden items-center gap-2 text-sm sm:inline-flex">
+      <UserRound aria-hidden="true" className="size-4" />
+      <span className="sr-only">{t("signedInAs", { name: user.name })}</span>
+      <span aria-hidden="true">{user.name}</span>
+      <span className="bg-background/10 rounded-full px-2 py-0.5 text-xs">
+        {t(`roles.${user.role}.name`)}
+      </span>
+    </span>
+  );
+};
+
+const SignOut = async () => {
+  const t = await getTranslations("Admin");
+  if (!(await getAdminUser())) return null;
+
+  return (
+    <form action={signOut}>
+      <button
+        type="submit"
+        className="inline-flex min-h-11 items-center gap-2 text-sm font-medium hover:underline"
+      >
+        <LogOut aria-hidden="true" className="size-4" />
+        {t("signOut")}
+      </button>
+    </form>
+  );
+};
+
+export const Header = async () => {
+  const t = await getTranslations("Admin");
+
+  return (
+    <header className="surface-night sticky top-0 z-40 border-b">
+      <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
+        <Link
+          href="/admin"
+          className="mr-auto inline-flex min-h-11 items-center gap-2.5 rounded-sm"
+        >
+          <LogoMark />
+          <span className="font-condensed text-xl leading-none">
+            {t("titleSuffix", { orgName: siteConfig.orgName })}
+          </span>
+        </Link>
+        <Suspense>
+          <CurrentUser />
+        </Suspense>
+        <Link
+          href="/"
+          className="inline-flex min-h-11 items-center gap-2 text-sm font-medium hover:underline"
+        >
+          {t("viewSite")}
+          <ExternalLink aria-hidden="true" className="size-4" />
+        </Link>
+        <Suspense>
+          <SignOut />
+        </Suspense>
+      </div>
     </header>
   );
-}
+};

@@ -42,13 +42,31 @@ const schema = z
       z
         .string()
         .regex(/^postgres(ql)?:\/\//, "must be a postgres:// connection string")
+        .refine((value) => {
+          try {
+            const { hostname, search, hash } = new URL(value);
+            const looksLikeHost = hostname.includes(".") || hostname === "localhost";
+            return looksLikeHost && !`${search}${hash}`.includes("@");
+          } catch {
+            return false;
+          }
+        }, "doesn't parse. Percent-encode special characters in the password (? → %3F, @ → %40, # → %23, / → %2F)")
         .optional(),
     ),
     RESEND_API_KEY: blankToUndefined(
       z.string().startsWith("re_", "must start with re_").optional(),
     ),
-    EMAIL_FROM: blankToUndefined(z.string().optional()),
+    EMAIL_FROM: blankToUndefined(
+      z
+        .string()
+        .regex(
+          /^(?:[^<>]+<[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+>|[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+)$/,
+          'must be an email address, or "Name <address>", e.g. "FirstFour <gifts@yourdomain.org>"',
+        )
+        .optional(),
+    ),
     ORG_NOTIFY_EMAIL: blankToUndefined(z.email().optional()),
+    AUTH_SECRET: blankToUndefined(z.string().min(32, "must be at least 32 characters").optional()),
     STRIPE_PCT_FEE: blankToUndefined(z.coerce.number().min(0).max(0.2).default(0.029)),
     STRIPE_FIXED_FEE_CENTS: blankToUndefined(z.coerce.number().int().min(0).max(500).default(30)),
   })
@@ -79,6 +97,7 @@ const parsed = schema.safeParse({
   RESEND_API_KEY: process.env.RESEND_API_KEY,
   EMAIL_FROM: process.env.EMAIL_FROM,
   ORG_NOTIFY_EMAIL: process.env.ORG_NOTIFY_EMAIL,
+  AUTH_SECRET: process.env.AUTH_SECRET,
   STRIPE_PCT_FEE: process.env.STRIPE_PCT_FEE,
   STRIPE_FIXED_FEE_CENTS: process.env.STRIPE_FIXED_FEE_CENTS,
 });

@@ -1,7 +1,6 @@
 import "../globals.css";
 
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { Archivo, Public_Sans } from "next/font/google";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -13,18 +12,7 @@ import { siteConfig } from "@/config/site";
 import { routing } from "@/i18n/routing";
 import { env } from "@/env";
 
-const archivo = Archivo({
-  subsets: ["latin", "latin-ext"],
-  axes: ["wdth"],
-  variable: "--font-archivo",
-  display: "swap",
-});
-
-const publicSans = Public_Sans({
-  subsets: ["latin", "latin-ext"],
-  variable: "--font-public-sans",
-  display: "swap",
-});
+import { fontVariables } from "../fonts";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -53,7 +41,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
   const t = await getTranslations("Common");
 
   return (
-    <html lang={locale} className={`${archivo.variable} ${publicSans.variable} h-full`}>
+    <html lang={locale} className={`${fontVariables} h-full`}>
       <body className="flex min-h-full flex-col">
         <NextIntlClientProvider>
           <a
