@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
+import { PasswordField } from "@/components/admin/auth/password-field";
 import { AuthAlert, AuthSubmit } from "@/components/admin/auth/auth-parts";
 import { TextField } from "@/components/donation/text-field";
 import { useAuthForm } from "@/hooks/use-auth-form";
@@ -32,9 +33,8 @@ export const SignInForm = ({ next }: { next?: string }) => {
         {...register("email")}
       />
       <div className="flex flex-col gap-2">
-        <TextField
+        <PasswordField
           id="sign-in-password"
-          type="password"
           label={t("password")}
           autoComplete="current-password"
           error={message(fieldError("password"))}

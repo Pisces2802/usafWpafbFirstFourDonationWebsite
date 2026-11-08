@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, count, countDistinct, desc, eq, gte, inArray, max, sql } from "drizzle-orm";
+import { and, count, countDistinct, desc, eq, gte, inArray, lt, max, sql } from "drizzle-orm";
 
 import type { Db } from "@/db";
 import { campaigns, contactMessages, donations, donors, funds, volunteers } from "@/db/schema";
@@ -137,3 +137,118 @@ export type AdminMessageRow = Awaited<ReturnType<typeof listContactMessages>>[nu
 /** Contact form messages, newest first. */
 export const listContactMessages = (db: Db, { limit = ADMIN_ROW_LIMIT }: { limit?: number } = {}) =>
   db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt)).limit(limit);
+
+export type TrendRange = "daily" | "weekly" | "monthly";
+
+/** Each trend range: the Postgres bucket it groups by, how many buckets, and how to step back one. */
+const TREND_RANGES = {
+  daily: { unit: "day", buckets: 30 },
+  weekly: { unit: "week", buckets: 12 },
+  monthly: { unit: "month", buckets: 12 },
+} as const satisfies Record<TrendRange, { unit: string; buckets: number }>;
+
+export type TrendPoint = { bucket: string; netCents: number };
+
+export type PeriodTotals = { netCents: number; giftCount: number; donorCount: number };
+
+export type AdminDashboardInsights = {
+  /** The last 30 days and the 30 before them, for the change shown on each headline number. */
+  current: PeriodTotals;
+  previous: PeriodTotals;
+  trends: Record<TrendRange, TrendPoint[]>;
+  byFund: { fund: string; netCents: number }[];
+  campaigns: { slug: string; goalCents: number; raisedCents: number }[];
+};
+
+const PERIOD_DAYS = 30;
+const DAY_MS = 86_400_000;
+
+const toBucketKey = (date: Date) => date.toISOString().slice(0, 10);
+
+/** Bucket start dates (UTC, oldest first) matching Postgres `date_trunc` for the range. */
+export const trendBuckets = (range: TrendRange, now: Date): Date[] => {
+  const { unit, buckets } = TREND_RANGES[range];
+  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+
+  return Array.from({ length: buckets }, (_, index) => {
+    const back = buckets - 1 - index;
+    if (unit === "day") return new Date(today.getTime() - back * DAY_MS);
+    if (unit === "week") {
+      const monday = today.getTime() - ((today.getUTCDay() + 6) % 7) * DAY_MS;
+      return new Date(monday - back * 7 * DAY_MS);
+    }
+    return new Date(Date.UTC(today.getUTCFullYear(), today.getUTCMonth() - back, 1));
+  });
+};
+
+const periodTotals = async (db: Db, from: Date, to: Date): Promise<PeriodTotals> => {
+  const [row] = await db
+    .select({ netCents, giftCount: count(), donorCount: countDistinct(donations.donorId) })
+    .from(donations)
+    .where(and(counted, gte(donations.createdAt, from), lt(donations.createdAt, to)));
+  return {
+    netCents: row?.netCents ?? 0,
+    giftCount: row?.giftCount ?? 0,
+    donorCount: row?.donorCount ?? 0,
+  };
+};
+
+const trendSeries = async (db: Db, range: TrendRange, now: Date): Promise<TrendPoint[]> => {
+  const starts = trendBuckets(range, now);
+  // `unit` comes from the fixed TREND_RANGES table, never from input, so inlining it is safe.
+  const bucket = sql<string>`to_char(date_trunc('${sql.raw(TREND_RANGES[range].unit)}', ${donations.createdAt} at time zone 'UTC'), 'YYYY-MM-DD')`;
+  const rows = await db
+    .select({ bucket, netCents })
+    .from(donations)
+    .where(and(counted, gte(donations.createdAt, starts[0])))
+    .groupBy(bucket);
+  const byBucket = new Map(rows.map((row) => [row.bucket, row.netCents]));
+
+  return starts.map((start) => {
+    const key = toBucketKey(start);
+    return { bucket: key, netCents: byBucket.get(key) ?? 0 };
+  });
+};
+
+/**
+ * Everything the dashboard charts need: 30-day totals against the 30 days before, net giving
+ * over time at three granularities, all-time net per fund, and the three campaigns that have
+ * raised the most against their goals.
+ */
+export const getDashboardInsights = async (
+  db: Db,
+  { now = new Date() }: { now?: Date } = {},
+): Promise<AdminDashboardInsights> => {
+  const periodStart = new Date(now.getTime() - PERIOD_DAYS * DAY_MS);
+  const previousStart = new Date(periodStart.getTime() - PERIOD_DAYS * DAY_MS);
+
+  const [current, previous, daily, weekly, monthly, byFund, topCampaigns] = await Promise.all([
+    periodTotals(db, periodStart, now),
+    periodTotals(db, previousStart, periodStart),
+    trendSeries(db, "daily", now),
+    trendSeries(db, "weekly", now),
+    trendSeries(db, "monthly", now),
+    db
+      .select({ fund: funds.slug, netCents })
+      .from(donations)
+      .innerJoin(funds, eq(donations.fundId, funds.id))
+      .where(counted)
+      .groupBy(funds.slug)
+      .orderBy(desc(netCents)),
+    db
+      .select({ slug: campaigns.slug, goalCents: campaigns.goalCents, raisedCents: netCents })
+      .from(campaigns)
+      .leftJoin(donations, and(eq(donations.campaignId, campaigns.id), counted))
+      .groupBy(campaigns.id)
+      .orderBy(desc(netCents), desc(campaigns.id))
+      .limit(3),
+  ]);
+
+  return {
+    current,
+    previous,
+    trends: { daily, weekly, monthly },
+    byFund: byFund.filter((row) => row.netCents > 0),
+    campaigns: topCampaigns,
+  };
+};

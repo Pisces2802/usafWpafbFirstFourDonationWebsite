@@ -9,7 +9,7 @@ import type { AdminUserValues, TeamResult } from "@/lib/admin/team-schema";
 
 const UNIQUE_VIOLATION = "23505";
 
-const isUniqueViolation = (error: unknown): boolean => {
+export const isUniqueViolation = (error: unknown): boolean => {
   if (typeof error !== "object" || error === null) return false;
   if ("code" in error && error.code === UNIQUE_VIOLATION) return true;
   return "cause" in error && isUniqueViolation(error.cause);

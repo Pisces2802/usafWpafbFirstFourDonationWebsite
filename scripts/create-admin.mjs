@@ -76,6 +76,13 @@ try {
       await tx`delete from admin_recovery_codes where admin_user_id = ${row.id}`;
     }
     await tx`delete from admin_sessions where admin_user_id = ${row.id}`;
+    await tx`
+      insert into admin_audit_events (action, target_label, details)
+      values ('team.updated_from_cli', ${`${row.name} <${email}>`}, ${sql.json({
+        created: !existing,
+        role: row.role,
+        resetTwoFactor: values["reset-2fa"],
+      })})`;
 
     const purpose = row.password_hash ? "reset_password" : "verify_email";
     const token = randomBytes(32).toString("base64url");

@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 
+import { PasswordField } from "@/components/admin/auth/password-field";
 import { AuthAlert, AuthNotice } from "@/components/admin/auth/auth-parts";
 import { RecoveryCodes } from "@/components/admin/auth/recovery-codes";
 import { TextField } from "@/components/donation/text-field";
@@ -77,26 +78,23 @@ export const ChangePasswordForm = ({ email }: { email: string }) => {
     >
       <AuthAlert>{errorText(error)}</AuthAlert>
       <input type="email" name="username" autoComplete="username" value={email} readOnly hidden />
-      <TextField
+      <PasswordField
         id="current-password"
-        type="password"
         label={t("auth.currentPassword")}
         autoComplete="current-password"
         error={errorText(fieldError("currentPassword"))}
         {...register("currentPassword")}
       />
-      <TextField
+      <PasswordField
         id="settings-new-password"
-        type="password"
         label={t("auth.newPassword")}
         hint={t("auth.passwordHint")}
         autoComplete="new-password"
         error={errorText(fieldError("password"))}
         {...register("password")}
       />
-      <TextField
+      <PasswordField
         id="settings-confirm-password"
-        type="password"
         label={t("auth.confirmPassword")}
         autoComplete="new-password"
         error={errorText(fieldError("confirmPassword"))}

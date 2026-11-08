@@ -14,7 +14,7 @@ import {
 } from "@/lib/form-submissions";
 
 vi.mock("next-intl/server", () => ({ getTranslations: vi.fn() }));
-vi.mock("@/lib/emails", () => ({ sendOrgNotice: vi.fn() }));
+vi.mock("@/lib/admin/team-notices", () => ({ deliverOrgNotice: vi.fn() }));
 
 const volunteer = {
   name: "  Jaylen Brooks ",

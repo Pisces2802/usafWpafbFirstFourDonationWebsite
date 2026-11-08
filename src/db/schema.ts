@@ -5,6 +5,7 @@ import {
   check,
   index,
   integer,
+  jsonb,
   pgEnum,
   pgTable,
   serial,
@@ -139,13 +140,26 @@ export const adminUsers = pgTable(
     lockedUntil: timestamp({ withTimezone: true }),
     createdById: integer().references((): AnyPgColumn => adminUsers.id, { onDelete: "set null" }),
     lastSignInAt: timestamp({ withTimezone: true }),
+    /** IANA time zone for dates in the back office; null uses the site default. */
+    timeZone: text(),
+    /** Rows per page in back-office tables. */
+    pageSize: integer().notNull().default(10),
+    /** Email this person about new volunteer sign-ups (needs `volunteers:view`). */
+    notifyVolunteers: boolean().notNull().default(false),
+    /** Email this person about new contact messages (needs `messages:view`). */
+    notifyMessages: boolean().notNull().default(false),
+    /** Email this person about sign-ins and security changes on their own account. */
+    notifySecurity: boolean().notNull().default(true),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true })
       .notNull()
       .defaultNow()
       .$onUpdate(() => new Date()),
   },
-  (table) => [check("admin_users_email_lowercase", sql`${table.email} = lower(${table.email})`)],
+  (table) => [
+    check("admin_users_email_lowercase", sql`${table.email} = lower(${table.email})`),
+    check("admin_users_page_size", sql`${table.pageSize} in (10, 20, 50, 100)`),
+  ],
 );
 
 /**
@@ -203,4 +217,45 @@ export const adminRecoveryCodes = pgTable(
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [index().on(table.adminUserId)],
+);
+
+/** Settings for the whole site, changed by owners. There's only ever one row, with id 1. */
+export const platformSettings = pgTable(
+  "platform_settings",
+  {
+    id: integer().primaryKey().default(1),
+    /** Where volunteer and contact notices go; null falls back to `ORG_NOTIFY_EMAIL`. */
+    inboxEmail: text(),
+    /** Stops new online gifts; checkout reports that giving is unavailable. */
+    donationsPaused: boolean().notNull().default(false),
+    /** How long a back-office sign-in lasts. */
+    sessionHours: integer().notNull().default(12),
+    updatedById: integer().references(() => adminUsers.id, { onDelete: "set null" }),
+    updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    check("platform_settings_single_row", sql`${table.id} = 1`),
+    check("platform_settings_session_hours", sql`${table.sessionHours} between 1 and 24`),
+  ],
+);
+
+/**
+ * Who did what in the back office. The actor's name and email are copied in, so entries stay
+ * readable after someone is removed. The app only ever adds entries.
+ */
+export const adminAuditEvents = pgTable(
+  "admin_audit_events",
+  {
+    id: serial().primaryKey(),
+    actorId: integer().references(() => adminUsers.id, { onDelete: "set null" }),
+    actorName: text(),
+    actorEmail: text(),
+    action: text().notNull(),
+    /** What the action was done to, as shown in the log, like a person's name and email. */
+    targetLabel: text(),
+    details: jsonb().$type<Record<string, string | number | boolean | null>>(),
+    ip: text(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index().on(table.createdAt), index().on(table.actorId)],
 );

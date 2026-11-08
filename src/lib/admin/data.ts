@@ -2,10 +2,13 @@ import "server-only";
 
 import { getDb } from "@/db";
 import { requireAdmin } from "@/lib/admin/access";
+import { listAuditEvents } from "@/lib/admin/audit";
+import { listCampaigns, listFunds } from "@/lib/admin/catalog-queries";
 import type { AdminPermission } from "@/lib/admin/permissions";
 import { can } from "@/lib/admin/permissions";
 import {
   getAdminOverview,
+  getDashboardInsights,
   listContactMessages,
   listDonations,
   listDonors,
@@ -23,15 +26,16 @@ const withAdminDb = async (permission: AdminPermission) => {
   return { user, db: getDb() };
 };
 
-/** Totals, plus recent gifts only for roles that can see donations. */
+/** Totals and chart data, plus recent gifts only for roles that can see donations. */
 export const loadOverview = async () => {
   const { user, db } = await withAdminDb("dashboard:view");
   if (!db) return null;
-  const [overview, recent] = await Promise.all([
+  const [overview, insights, recent] = await Promise.all([
     getAdminOverview(db),
-    can(user.role, "donations:view") ? listDonations(db, { limit: 8 }) : null,
+    getDashboardInsights(db),
+    can(user.role, "donations:view") ? listDonations(db, { limit: 6 }) : null,
   ]);
-  return { overview, recent };
+  return { overview, insights, recent, canViewDonors: can(user.role, "donors:view") };
 };
 
 export const loadDonations = async () => {
@@ -57,4 +61,22 @@ export const loadMessages = async () => {
 export const loadTeam = async () => {
   const { user, db } = await withAdminDb("team:manage");
   return db ? { currentUserId: user.id, members: await listAdminUsers(db) } : null;
+};
+
+/** The audit log, newest first. Owners only. */
+export const loadAuditLog = async () => {
+  const { db } = await withAdminDb("audit:view");
+  return db ? listAuditEvents(db) : null;
+};
+
+/** Campaigns with what each has raised, for people who manage them. */
+export const loadCampaigns = async () => {
+  const { db } = await withAdminDb("campaigns:manage");
+  return db ? listCampaigns(db) : null;
+};
+
+/** Funds in their saved order, whether each is on, and what each has raised. */
+export const loadFunds = async () => {
+  const { db } = await withAdminDb("funds:manage");
+  return db ? listFunds(db) : null;
 };

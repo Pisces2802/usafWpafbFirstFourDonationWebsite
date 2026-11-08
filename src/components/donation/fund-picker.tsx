@@ -2,14 +2,16 @@
 
 import { useTranslations } from "next-intl";
 
-import { FUND_IDS, type FundId } from "@/config/donation";
+import type { FundId } from "@/config/donation";
 
 type FundPickerProps = {
+  /** The funds donors can pick, in order. */
+  funds: readonly FundId[];
   value: FundId;
   onChange: (value: FundId) => void;
 };
 
-export const FundPicker = ({ value, onChange }: FundPickerProps) => {
+export const FundPicker = ({ funds, value, onChange }: FundPickerProps) => {
   const t = useTranslations("Funds");
   const tDonate = useTranslations("Donate");
 
@@ -19,7 +21,7 @@ export const FundPicker = ({ value, onChange }: FundPickerProps) => {
         {tDonate("fundLegend")}
       </legend>
       <div className="grid gap-2 sm:grid-cols-2">
-        {FUND_IDS.map((id) => (
+        {funds.map((id) => (
           <label
             key={id}
             className="border-input bg-background hover:border-primary has-checked:border-primary has-checked:bg-primary/5 has-focus-visible:outline-ring has-checked:ring-primary flex cursor-pointer gap-3 rounded-lg border p-4 transition-[background-color,border-color] duration-150 has-checked:ring-1 has-focus-visible:outline-3 has-focus-visible:outline-offset-2"

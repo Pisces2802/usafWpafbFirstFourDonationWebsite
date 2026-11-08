@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 import { LogoMark } from "@/components/brand/logo";
+import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import { getAdminUser } from "@/lib/admin/access";
 import { signOut } from "@/lib/admin/auth/actions";
@@ -31,13 +32,10 @@ const SignOut = async () => {
 
   return (
     <form action={signOut}>
-      <button
-        type="submit"
-        className="inline-flex min-h-11 items-center gap-2 text-sm font-medium hover:underline"
-      >
-        <LogOut aria-hidden="true" className="size-4" />
+      <Button type="submit" variant="ghost" className="min-h-11 gap-2 px-3">
+        <LogOut aria-hidden="true" />
         {t("signOut")}
-      </button>
+      </Button>
     </form>
   );
 };

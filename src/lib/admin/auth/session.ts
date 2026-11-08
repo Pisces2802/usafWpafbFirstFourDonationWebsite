@@ -14,13 +14,14 @@ import {
   promoteSession,
   type SessionStage,
 } from "@/lib/admin/auth/queries";
+import { readPlatformSettings } from "@/lib/admin/platform-settings";
 import { getClientIp } from "@/lib/rate-limit";
 
-/** A signed-in session lasts 12 hours; the step between password and code, 10 minutes. */
-const SESSION_TTL_MS: Record<SessionStage, number> = {
-  active: 12 * 60 * 60_000,
-  two_factor: 10 * 60_000,
-};
+/** The step between password and code lasts 10 minutes. */
+const TWO_FACTOR_TTL_MS = 10 * 60_000;
+
+/** How long a signed-in session lasts, as an owner set it on the Platform tab (12 hours by default). */
+const activeTtlMs = async (db: Db) => (await readPlatformSettings(db)).sessionHours * 60 * 60_000;
 
 /**
  * Starts a session and sets its cookie. Call only from a server action or route handler. The cookie
@@ -29,7 +30,8 @@ const SESSION_TTL_MS: Record<SessionStage, number> = {
  */
 export const startSession = async (db: Db, adminUserId: number, stage: SessionStage) => {
   const token = randomToken();
-  const expiresAt = new Date(Date.now() + SESSION_TTL_MS[stage]);
+  const activeTtl = await activeTtlMs(db);
+  const expiresAt = new Date(Date.now() + (stage === "active" ? activeTtl : TWO_FACTOR_TTL_MS));
   const requestHeaders = await headers();
 
   await insertSession(db, {
@@ -46,7 +48,7 @@ export const startSession = async (db: Db, adminUserId: number, stage: SessionSt
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    expires: new Date(Date.now() + SESSION_TTL_MS.active),
+    expires: new Date(Date.now() + activeTtl),
   });
 };
 
@@ -85,5 +87,9 @@ export const replaceSession = async (current: CurrentSession, stage: SessionStag
  * Moves the current session to `active` without a new token. Setting a cookie in a server action
  * re-renders the page, so two-factor setup uses this to keep the recovery codes on screen.
  */
-export const promoteCurrentSession = (current: CurrentSession) =>
-  promoteSession(current.db, current.session.id, new Date(Date.now() + SESSION_TTL_MS.active));
+export const promoteCurrentSession = async (current: CurrentSession) =>
+  promoteSession(
+    current.db,
+    current.session.id,
+    new Date(Date.now() + (await activeTtlMs(current.db))),
+  );

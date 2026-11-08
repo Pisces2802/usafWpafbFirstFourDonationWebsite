@@ -6,16 +6,24 @@ import { useTranslations } from "next-intl";
 import { AmountPicker } from "@/components/donation/amount-picker";
 import { FrequencyToggle } from "@/components/donation/frequency-toggle";
 import { buttonVariants } from "@/components/ui/button";
-import { FUND_IDS, isFundId } from "@/config/donation";
+import { type FundId, isFundId } from "@/config/donation";
+import { useAvailableFund } from "@/hooks/use-available-fund";
 import { useFormatMoney } from "@/hooks/use-format-money";
 import { useQuickGive } from "@/hooks/use-quick-give";
 import { cn } from "@/lib/utils";
 
-export const QuickGiveBar = ({ isTaxDeductible }: { isTaxDeductible: boolean }) => {
+type QuickGiveBarProps = {
+  isTaxDeductible: boolean;
+  /** The funds donors can pick, in order. */
+  funds: readonly FundId[];
+};
+
+export const QuickGiveBar = ({ isTaxDeductible, funds }: QuickGiveBarProps) => {
   const t = useTranslations("QuickGive");
   const tFunds = useTranslations("Funds");
   const formatMoney = useFormatMoney();
   const { amount, fundId, selectFund, submit } = useQuickGive();
+  useAvailableFund(funds);
 
   return (
     <section
@@ -56,7 +64,7 @@ export const QuickGiveBar = ({ isTaxDeductible }: { isTaxDeductible: boolean }) 
                 onChange={(event) => isFundId(event.target.value) && selectFund(event.target.value)}
                 className="border-input bg-background focus-visible:border-primary focus-visible:ring-primary/25 min-h-11 w-full cursor-pointer appearance-none rounded-lg border py-2 pr-10 pl-4 text-base transition-[border-color,box-shadow] duration-150 outline-none focus-visible:ring-3"
               >
-                {FUND_IDS.map((id) => (
+                {funds.map((id) => (
                   <option key={id} value={id}>
                     {tFunds(`${id}.name`)}
                   </option>

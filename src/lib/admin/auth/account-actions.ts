@@ -1,6 +1,9 @@
 "use server";
 
 import { refresh } from "next/cache";
+import { headers } from "next/headers";
+
+import { recordAudit } from "@/lib/admin/audit";
 
 import {
   generateRecoveryCodes,
@@ -16,9 +19,9 @@ import {
   updateAdminName,
 } from "@/lib/admin/auth/queries";
 import { type AuthResult, changePasswordSchema, nameSchema } from "@/lib/admin/auth/schema";
+import { sendSecurityNotice } from "@/lib/admin/auth/security-email";
 import { readSession } from "@/lib/admin/auth/session";
 import { getClientIp, isRateLimited } from "@/lib/rate-limit";
-import { headers } from "next/headers";
 
 /** The signed-in session, or null. Every settings action starts here. */
 const activeSession = async () => {
@@ -33,6 +36,13 @@ export const updateName = async (input: unknown): Promise<AuthResult> => {
   if (!current) return { ok: false, error: "expired" };
 
   await updateAdminName(current.db, current.user.id, parsed.data.name);
+  if (parsed.data.name !== current.user.name) {
+    await recordAudit(current.db, {
+      actor: { ...current.user, name: parsed.data.name },
+      action: "account.name_changed",
+      details: { from: current.user.name, to: parsed.data.name },
+    });
+  }
   refresh();
   return { ok: true };
 };
@@ -59,6 +69,8 @@ export const changePassword = async (input: unknown): Promise<AuthResult> => {
     passwordHash: await hashPassword(parsed.data.password),
     keepSessionId: current.session.id,
   });
+  await recordAudit(current.db, { actor: current.user, action: "account.password_changed" });
+  await sendSecurityNotice(current.user, "passwordChanged");
   refresh();
   return { ok: true };
 };
@@ -76,6 +88,11 @@ export const regenerateRecoveryCodes = async (): Promise<
     current.user.id,
     recoveryCodes.map((code) => sha256(normalizeRecoveryCode(code))),
   );
+  await recordAudit(current.db, {
+    actor: current.user,
+    action: "account.recovery_codes_regenerated",
+  });
+  await sendSecurityNotice(current.user, "recoveryCodesRegenerated");
   refresh();
   return { ok: true, recoveryCodes };
 };
@@ -85,6 +102,7 @@ export const signOutOtherSessions = async (): Promise<AuthResult> => {
   if (!current) return { ok: false, error: "expired" };
 
   await deleteOtherSessions(current.db, current.user.id, current.session.id);
+  await recordAudit(current.db, { actor: current.user, action: "account.other_sessions_ended" });
   refresh();
   return { ok: true };
 };

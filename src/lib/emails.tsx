@@ -141,11 +141,17 @@ export const sendTributeNotice = async (gift: GiftEmailData) => {
   if (error) throw new Error(`Resend rejected the email: ${error.message}`);
 };
 
-/** True when submissions can be emailed to the group's inbox. */
-export const isOrgNoticeConfigured = () =>
-  Boolean(env.RESEND_API_KEY && env.EMAIL_FROM && env.ORG_NOTIFY_EMAIL);
+/** True when emails can be sent at all. */
+export const isEmailConfigured = () => Boolean(env.RESEND_API_KEY && env.EMAIL_FROM);
 
-type OrgNotice = {
+/**
+ * True when submissions can be emailed: Resend is set up and there's somewhere to send them,
+ * either `ORG_NOTIFY_EMAIL` or a database holding the team inbox and people's notification choices.
+ */
+export const isOrgNoticeConfigured = () =>
+  isEmailConfigured() && Boolean(env.ORG_NOTIFY_EMAIL || env.DATABASE_URL);
+
+export type OrgNotice = {
   subject: string;
   heading: string;
   replyTo: string;
@@ -155,26 +161,23 @@ type OrgNotice = {
 };
 
 /**
- * Emails a form submission to the group's inbox. Replies go straight to the person who sent it.
- * Written in English, the group's working language, whichever locale the form was filled in.
+ * Emails a form submission to `to`: the group's inbox or a team member. Replies go straight to
+ * the person who sent it. Written in English, the group's working language, whichever locale the
+ * form was filled in.
  */
-export const sendOrgNotice = async ({
-  subject,
-  heading,
-  replyTo,
-  rows,
-  paragraphs,
-  notes,
-}: OrgNotice) => {
+export const sendOrgNotice = async (
+  to: string,
+  { subject, heading, replyTo, rows, paragraphs, notes }: OrgNotice,
+) => {
   const resend = getResend();
-  if (!resend || !env.EMAIL_FROM || !env.ORG_NOTIFY_EMAIL) return;
+  if (!resend || !env.EMAIL_FROM) return;
 
   const { orgName } = siteConfig;
   const tFooter = await getTranslations({ locale: "en", namespace: "Footer" });
 
   const { error } = await resend.emails.send({
     from: env.EMAIL_FROM,
-    to: env.ORG_NOTIFY_EMAIL,
+    to,
     replyTo,
     subject,
     react: (

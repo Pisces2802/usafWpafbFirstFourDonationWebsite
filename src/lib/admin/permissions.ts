@@ -11,6 +11,8 @@ export const ADMIN_PERMISSIONS = [
   "campaigns:manage",
   "funds:manage",
   "team:manage",
+  "settings:manage",
+  "audit:view",
 ] as const;
 export type AdminPermission = (typeof ADMIN_PERMISSIONS)[number];
 

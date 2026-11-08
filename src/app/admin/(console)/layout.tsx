@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { AdminNav } from "@/components/admin/admin-nav";
 import { Header } from "@/components/admin/header";
 import { Sidebar } from "@/components/admin/sidebar";
+import { WithPreferences } from "@/components/admin/with-preferences";
 
 export default async function ConsoleLayout({ children }: { children: React.ReactNode }) {
   const t = await getTranslations("Admin");
@@ -22,7 +23,9 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
           <AdminNav />
         </Suspense>
         <main id="main" tabIndex={-1} className="min-w-0 flex-1 outline-none">
-          {children}
+          <Suspense>
+            <WithPreferences>{children}</WithPreferences>
+          </Suspense>
         </main>
       </div>
     </>
