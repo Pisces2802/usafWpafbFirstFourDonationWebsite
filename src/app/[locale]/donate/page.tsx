@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 
+import { connection } from "next/server";
+
 import { DonateForm } from "@/components/donation/donate-form";
 import { env } from "@/env";
 import { getActiveCampaignProgress, getCampaignProgress } from "@/lib/campaign-progress";
@@ -15,6 +17,7 @@ const DonatePage = async ({ searchParams }: { searchParams: Promise<Record<strin
   const funds = await getActiveFunds();
 
   const params = await searchParams;
+  await connection();
   const slugParsed = campaignSlugSchema.safeParse(params.campaign);
   const campaignProgress = slugParsed.success
     ? await getCampaignProgress(slugParsed.data)
