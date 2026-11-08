@@ -22,6 +22,27 @@ import type { FeeRates } from "@/lib/fees";
 import type { CampaignProgress } from "@/lib/campaign-progress";
 import { cn } from "@/lib/utils";
 
+const CampaignProgressBar = ({ progress }: { progress: CampaignProgress }) => {
+  const ratio = progress.goalCents > 0 ? progress.raisedCents / progress.goalCents : 0;
+  const percent = Math.min(Math.round(ratio * 100), 100);
+  return (
+    <div className="flex flex-col gap-2">
+      <div
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={percent}
+        className="bg-muted h-2 overflow-hidden rounded-full"
+      >
+        <div
+          className="bg-primary h-full rounded-full transition-[width] duration-500"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+    </div>
+  );
+};
+
 const TRIBUTE_TYPES = ["honour", "memory"] as const satisfies readonly TributeType[];
 
 const checkboxRowClassName =
@@ -99,6 +120,8 @@ export const DonateForm = ({
           {campaignProgress && (
             <CampaignProgressBar progress={campaignProgress} />
           )}
+
+          <FormStep id="donate-step-gift" step={1} title={t("stepGift")}>
             <FrequencyToggle value={frequency} onChange={selectFrequency} className="sm:max-w-xs" />
             <AmountPicker amount={amount} inputId={DONATE_FIELD_IDS.amount} />
             <FundPicker funds={funds} value={fundId} onChange={selectFund} />

@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 
 import { DonateForm } from "@/components/donation/donate-form";
 import { env } from "@/env";
-import { getCampaignProgress } from "@/lib/campaign-progress";
+import { getActiveCampaignProgress, getCampaignProgress } from "@/lib/campaign-progress";
 import { campaignSlugSchema } from "@/lib/donation-schema";
 import { getActiveFunds } from "@/lib/fund-settings";
 import { getPageMetadata } from "@/lib/metadata";
@@ -18,7 +18,7 @@ const DonatePage = async ({ searchParams }: { searchParams: Promise<Record<strin
   const slugParsed = campaignSlugSchema.safeParse(params.campaign);
   const campaignProgress = slugParsed.success
     ? await getCampaignProgress(slugParsed.data)
-    : null;
+    : await getActiveCampaignProgress(new Date());
 
   return (
     <div className="mx-auto w-full max-w-7xl px-4 py-12 sm:px-8 lg:py-16">
