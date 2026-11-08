@@ -1,0 +1,392 @@
+{
+  "titleSuffix": "{orgName} back office",
+  "skipToContent": "Skip to main content",
+  "navLabel": "Back office",
+  "viewSite": "View site",
+  "signedInAs": "Signed in as {name}",
+  "nav": {
+    "dashboard": "Dashboard",
+    "donations": "Donations",
+    "donors": "Donors",
+    "volunteers": "Volunteers",
+    "messages": "Messages",
+    "campaigns": "Campaigns",
+    "funds": "Funds",
+    "team": "Team",
+    "settings": "Settings"
+  },
+  "noDatabase": {
+    "title": "No database connected",
+    "body": "Set DATABASE_URL and run pnpm db:migrate to see gifts, donors, volunteers and messages here."
+  },
+  "exportCsv": "Export CSV",
+  "searchLabel": "Search",
+  "searchPlaceholder": "Search by name or email",
+  "emptySearch": "Nothing matches that search.",
+  "rowCount": "{count, plural, one {# row} other {# rows}}",
+  "dashboard": {
+    "lead": "All-time totals, net of refunds. Card fees donors added are counted separately.",
+    "net": "Raised",
+    "netHint": "After refunds, excluding added card fees",
+    "gifts": "Gifts",
+    "giftsHint": "Successful charges, including each monthly payment",
+    "donors": "Donors",
+    "donorsHint": "People who've given at least once",
+    "monthly": "Monthly donors",
+    "monthlyHint": "Billed in the last 35 days",
+    "fees": "Card fees covered",
+    "refunded": "Refunded",
+    "recentHeading": "Recent gifts",
+    "viewAll": "View all donations",
+    "empty": "No gifts yet. They'll appear here once Stripe sends its first payment."
+  },
+  "donations": {
+    "lead": "Every successful charge, newest first. Monthly gifts appear once per payment.",
+    "empty": "No gifts yet.",
+    "columns": {
+      "date": "Date",
+      "donor": "Donor",
+      "amount": "Gift",
+      "fee": "Fee covered",
+      "refunded": "Refunded",
+      "frequency": "Frequency",
+      "fund": "Fund",
+      "campaign": "Campaign",
+      "status": "Status"
+    }
+  },
+  "donors": {
+    "lead": "Everyone who's given, ordered by their latest gift.",
+    "empty": "No donors yet.",
+    "columns": {
+      "name": "Name",
+      "email": "Email",
+      "net": "Lifetime giving",
+      "gifts": "Gifts",
+      "lastGift": "Last gift",
+      "monthly": "Monthly",
+      "language": "Language"
+    }
+  },
+  "volunteers": {
+    "lead": "Sign-ups from the Get involved page, newest first.",
+    "empty": "No volunteers yet.",
+    "columns": {
+      "date": "Signed up",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "affiliation": "Describes themselves as",
+      "interests": "Wants to help with",
+      "availability": "Availability"
+    }
+  },
+  "messages": {
+    "lead": "Messages from the contact form, newest first. Reply from your inbox; each one was also emailed to the group.",
+    "empty": "No messages yet.",
+    "columns": {
+      "date": "Received",
+      "name": "Name",
+      "email": "Email",
+      "topic": "Topic",
+      "message": "Message"
+    }
+  },
+  "comingSoon": "Coming next",
+  "campaigns": {
+    "lead": "Time-limited appeals with a goal, like a giving day.",
+    "plan": "Create a campaign with a goal and dates, share its donate link, and track progress against the goal. Gifts made through a campaign link are already tagged, so the numbers will be there when this page is built."
+  },
+  "funds": {
+    "lead": "The funds donors can choose from.",
+    "plan": "Turn funds on or off and change their order. Fund names and descriptions live in the translation files, so new funds also need copy in all three languages."
+  },
+  "values": {
+    "frequency": {
+      "one_time": "One-time",
+      "monthly": "Monthly"
+    },
+    "status": {
+      "succeeded": "Paid",
+      "refunded": "Refunded",
+      "failed": "Failed"
+    },
+    "yes": "Yes",
+    "no": "No",
+    "none": "—"
+  },
+  "csv": {
+    "date": "Date",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "amount": "Gift (USD)",
+    "fee": "Fee covered (USD)",
+    "refunded": "Refunded (USD)",
+    "net": "Lifetime giving (USD)",
+    "gifts": "Gifts",
+    "lastGift": "Last gift",
+    "monthly": "Monthly",
+    "frequency": "Frequency",
+    "fund": "Fund",
+    "campaign": "Campaign",
+    "status": "Status",
+    "tributeType": "Tribute",
+    "honoree": "Honoree",
+    "stripePayment": "Stripe payment",
+    "stripeInvoice": "Stripe invoice",
+    "language": "Language",
+    "marketing": "Marketing opt-in",
+    "name": "Name",
+    "phone": "Phone",
+    "affiliation": "Affiliation",
+    "interests": "Interests",
+    "availability": "Availability",
+    "topic": "Topic",
+    "message": "Message"
+  },
+  "unavailable": "No database connected, so there is nothing to export.",
+  "forbidden": {
+    "title": "No access",
+    "body": "Your role doesn’t include this page. Ask an owner if you need it.",
+    "back": "Go to the dashboard"
+  },
+  "team": {
+    "lead": "Who can open the back office and what each person’s role lets them do. Only owners see this page.",
+    "pendingSignIn": "They’ll get an email with a link to confirm their address, choose a password and set up two-step verification.",
+    "addHeading": "Add a person",
+    "name": "Name",
+    "email": "Email",
+    "emailHint": "The address they’ll sign in with.",
+    "role": "Role",
+    "add": "Add person",
+    "adding": "Adding…",
+    "columns": {
+      "name": "Name",
+      "role": "Role",
+      "lastSignIn": "Last signed in",
+      "access": "Access"
+    },
+    "you": "You",
+    "never": "Never",
+    "deactivated": "No access",
+    "roleFor": "Role for {name}",
+    "removeAccess": "Remove access",
+    "restoreAccess": "Restore access",
+    "removeAccessFor": "Remove access for {name}",
+    "restoreAccessFor": "Restore access for {name}",
+    "saving": "Saving…",
+    "empty": "No one has been added yet.",
+    "rolesHeading": "What each role can do",
+    "rolesLead": "Roles are set in the code, so changing what a role can do goes through review like any other change.",
+    "permissionColumn": "Can",
+    "granted": "Yes",
+    "notGranted": "No",
+    "errors": {
+      "name": "Enter their name.",
+      "email": "Enter a valid email address.",
+      "role": "Choose a role.",
+      "invalid": "That change wasn’t valid. Reload the page and try again.",
+      "emailTaken": "Someone with that email is already on the team. Change their role in the list instead.",
+      "notFound": "That person is no longer on the team. Reload the page.",
+      "lastOwner": "There has to be at least one owner with access. Make someone else an owner first.",
+      "noDatabase": "Connect a database to manage the team.",
+      "unknown": "That didn’t save. Try again.",
+      "alreadySetUp": "They’ve already set up their account."
+    },
+    "tabs": {
+      "people": "People",
+      "roles": "Roles and permissions"
+    },
+    "cancel": "Cancel",
+    "close": "Close",
+    "inviteSent": "Added {name} as {role}. We emailed them a link to set up their account.",
+    "inviteNotSent": "Added {name} as {role}, but the email couldn’t be sent. Send them this link yourself. It works once and expires in 7 days:",
+    "resent": "New set-up link emailed to {name}.",
+    "resentNotSent": "The email couldn’t be sent. Send {name} this link yourself:",
+    "resendInvite": "Resend invite",
+    "resendInviteFor": "Resend invite to {name}",
+    "invited": "Invite sent",
+    "copyLink": "Copy link",
+    "copied": "Copied"
+  },
+  "roles": {
+    "owner": {
+      "name": "Owner",
+      "description": "Everything, including adding people and changing roles."
+    },
+    "treasurer": {
+      "name": "Treasurer",
+      "description": "Gifts and donors with their exports, plus campaigns and funds."
+    },
+    "coordinator": {
+      "name": "Coordinator",
+      "description": "Volunteers and messages with their exports."
+    },
+    "viewer": {
+      "name": "Viewer",
+      "description": "Dashboard totals only. No names or contact details."
+    }
+  },
+  "permissions": {
+    "dashboard:view": "See dashboard totals",
+    "donations:view": "See gifts",
+    "donations:export": "Export gifts",
+    "donors:view": "See donors and their contact details",
+    "donors:export": "Export donors",
+    "volunteers:view": "See volunteer sign-ups",
+    "volunteers:export": "Export volunteers",
+    "messages:view": "Read contact messages",
+    "messages:export": "Export messages",
+    "campaigns:manage": "Manage campaigns",
+    "funds:manage": "Manage funds",
+    "team:manage": "Add people and change roles"
+  },
+  "signOut": "Sign out",
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "currentPassword": "Current password",
+    "passwordHint": "At least 12 characters. A few unrelated words is easy to remember and hard to guess.",
+    "unavailable": "Sign-in isn’t set up yet. The site needs a database and AUTH_SECRET.",
+    "signIn": {
+      "title": "Sign in",
+      "lead": "For members of the team. You’ll need your authenticator app too.",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "forgot": "Forgot your password?",
+      "resetDone": "Your password has been changed. Sign in with the new one.",
+      "signedOut": "You’ve signed out."
+    },
+    "forgot": {
+      "title": "Reset your password",
+      "lead": "Enter the email you sign in with and we’ll send you a link to choose a new password.",
+      "submit": "Send reset link",
+      "submitting": "Sending…",
+      "sentTitle": "Check your email",
+      "sent": "If {email} belongs to someone on the team, a reset link is on its way. It works once and expires in an hour.",
+      "back": "Back to sign in"
+    },
+    "reset": {
+      "title": "Choose a new password",
+      "lead": "You’ll be signed out everywhere and can sign in again with the new password.",
+      "submit": "Change password",
+      "submitting": "Changing…"
+    },
+    "verify": {
+      "title": "Welcome, {name}",
+      "lead": "Your email is confirmed once you choose a password. Next you’ll set up an authenticator app.",
+      "submit": "Set password and continue",
+      "submitting": "Saving…",
+      "pageTitle": "Set up your account"
+    },
+    "linkInvalid": {
+      "title": "This link doesn’t work",
+      "body": "It may have expired or already been used. Ask an owner to send a new invite, or reset your password if you’ve set one before.",
+      "reset": "Reset your password",
+      "signIn": "Back to sign in"
+    },
+    "twoFactor": {
+      "title": "Two-step verification",
+      "lead": "Enter the 6-digit code from your authenticator app.",
+      "code": "Code",
+      "submit": "Verify",
+      "submitting": "Checking…",
+      "useRecovery": "Use a recovery code instead",
+      "useApp": "Use your authenticator app instead",
+      "recoveryLead": "Enter one of the recovery codes you saved when you set up two-step verification. Each one works once.",
+      "recoveryCode": "Recovery code",
+      "lostAccess": "Lost your phone and your recovery codes? Ask an owner to reset your two-step verification.",
+      "startOver": "Sign in again"
+    },
+    "setup": {
+      "title": "Set up two-step verification",
+      "lead": "Everyone on the team uses an authenticator app, because the back office holds donors’ details.",
+      "step1": "Scan this code with an authenticator app such as Google Authenticator, Microsoft Authenticator, 1Password or Authy.",
+      "qrAlt": "QR code for your authenticator app",
+      "manual": "Can’t scan it? Enter this key instead:",
+      "copyKey": "Copy key",
+      "copied": "Copied",
+      "step2": "Enter the 6-digit code the app shows.",
+      "loading": "Preparing your code…",
+      "submit": "Turn on two-step verification",
+      "codesTitle": "Save your recovery codes",
+      "codesLead": "If you lose your phone, each of these codes signs you in once. Keep them somewhere safe, like a password manager. You won’t see them again.",
+      "copyCodes": "Copy codes",
+      "download": "Download",
+      "continue": "I’ve saved them, continue"
+    },
+    "errors": {
+      "email": "Enter a valid email address.",
+      "passwordRequired": "Enter your password.",
+      "passwordLength": "Use between 12 and 128 characters.",
+      "passwordMismatch": "The passwords don’t match.",
+      "code": "Enter the 6-digit code.",
+      "recoveryCode": "Enter a recovery code, like abcde-fghjk.",
+      "name": "Enter your name.",
+      "invalid": "That email and password don’t match.",
+      "locked": "Too many wrong passwords. Wait 15 minutes, or reset your password.",
+      "rateLimited": "Too many attempts. Wait a few minutes and try again.",
+      "unavailable": "Sign-in isn’t set up yet.",
+      "expired": "That took too long or had too many wrong codes. Sign in again.",
+      "wrongCode": "That code didn’t work. Check the app and try again.",
+      "wrongPassword": "Your current password isn’t right.",
+      "linkInvalid": "This link has expired or was already used.",
+      "unknown": "Something went wrong. Try again."
+    },
+    "emails": {
+      "invite": {
+        "subject": "Set up your {orgName} back office account",
+        "heading": "Hi {name}",
+        "added": "{invitedBy} added you to the {orgName} back office as {role}.",
+        "instructions": "Confirm your email and choose a password with the button below. The link works once and expires in 7 days.",
+        "button": "Set up your account",
+        "footer": "If you weren’t expecting this, you can ignore it."
+      },
+      "reset": {
+        "subject": "Reset your back office password",
+        "heading": "Reset your password",
+        "instructions": "Someone asked to reset the password for {email}. If it was you, choose a new one with the button below. The link works once and expires in an hour.",
+        "button": "Choose a new password",
+        "footer": "If you didn’t ask for this, ignore it. Your password hasn’t changed."
+      }
+    }
+  },
+  "settings": {
+    "lead": "Your name, password and sign-in security.",
+    "profile": {
+      "title": "Profile",
+      "name": "Name",
+      "email": "Email",
+      "emailHint": "Ask an owner if your email needs to change.",
+      "role": "Role",
+      "save": "Save name",
+      "saving": "Saving…",
+      "saved": "Name saved."
+    },
+    "password": {
+      "title": "Password",
+      "lead": "Changing it signs you out on your other devices.",
+      "submit": "Change password",
+      "submitting": "Changing…",
+      "saved": "Password changed."
+    },
+    "twoFactor": {
+      "title": "Two-step verification",
+      "on": "On, with an authenticator app.",
+      "remaining": "{count, plural, =0 {You have no recovery codes left. Make new ones now.} one {# recovery code left.} other {# recovery codes left.}}",
+      "regenerate": "Make new recovery codes",
+      "regenerating": "Making…",
+      "regenerateHint": "Your old codes stop working.",
+      "done": "Done"
+    },
+    "sessions": {
+      "title": "Signed-in devices",
+      "others": "{count, plural, =0 {You aren’t signed in anywhere else.} one {You’re also signed in on # other device.} other {You’re also signed in on # other devices.}}",
+      "signOutOthers": "Sign out other devices",
+      "signingOut": "Signing out…"
+    }
+  }
+}

@@ -192,3 +192,56 @@ export const sendOrgNotice = async ({
   });
   if (error) throw new Error(`Resend rejected the notice: ${error.message}`);
 };
+
+type AdminEmail = {
+  to: string;
+  subject: string;
+  heading: string;
+  paragraphs: string[];
+  link: { label: string; href: string };
+  footer: string[];
+};
+
+/**
+ * Sends a back-office account email (invite, password reset). Returns whether it was accepted.
+ * Failures are logged, not thrown: the caller decides what to tell the person, and a password
+ * reset must look the same whether or not the address belongs to someone.
+ */
+export const sendAdminEmail = async ({
+  to,
+  subject,
+  heading,
+  paragraphs,
+  link,
+  footer,
+}: AdminEmail) => {
+  const resend = getResend();
+  if (!resend || !env.EMAIL_FROM) {
+    if (process.env.NODE_ENV === "development") {
+      console.info(`[admin email not sent: Resend isn't configured] ${subject}\n${link.href}`);
+    }
+    return false;
+  }
+
+  const { error } = await resend.emails.send({
+    from: env.EMAIL_FROM,
+    to,
+    subject,
+    react: (
+      <NoticeEmail
+        lang="en"
+        orgName={siteConfig.orgName}
+        preview={subject}
+        heading={heading}
+        paragraphs={paragraphs}
+        link={link}
+        footer={footer}
+      />
+    ),
+  });
+  if (error) {
+    console.error(`Resend rejected an admin email: ${error.message}`);
+    return false;
+  }
+  return true;
+};

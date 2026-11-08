@@ -1,28 +1,42 @@
-import { cn } from "cn";
+import type { ReactNode } from "react";
+
+import { cn } from "@/lib/utils";
 
 type Variant = "default" | "error" | "info" | "success" | "warning";
 
 const VARIANT_STYLES: Record<Variant, string> = {
-  default: "bg-gray-100 text-gray-800 border-gray-300",
-  error: "bg-red-100 text-red-800 border-red-300",
-  info: "bg-blue-100 text-blue-800 border-blue-300",
-  success: "bg-green-100 text-green-800 border-green-300",
-  warning: "bg-yellow-100 text-yellow-800 border-yellow-300",
+  default: "border-t-foreground/20",
+  error: "border-t-destructive",
+  info: "border-t-primary",
+  success: "border-t-emerald-600",
+  warning: "border-t-taxiway",
 };
 
-interface Props {
-  label: string;
-  value: string;
-  onClick: (value: string) => void;
-  selected: boolean;
-  className?: string;
-  description?: string;
-  disabled?: boolean;
+type StatisticProps = {
+  label: ReactNode;
+  value: ReactNode;
+  description?: ReactNode;
   variant?: Variant;
-}
+  className?: string;
+};
 
-export function Statistic({ variant = "default" }: Props) {
-  <div className={cn("rounded-md border p-4", VARIANT_STYLES[variant])}>
-    <div></div>
-  </div>;
-}
+/** One headline number with a label and an optional line explaining what it counts. */
+export const Statistic = ({
+  label,
+  value,
+  description,
+  variant = "default",
+  className,
+}: StatisticProps) => (
+  <div
+    className={cn(
+      "bg-card ring-foreground/10 flex flex-col gap-1 rounded-xl border-t-4 p-5 ring-1",
+      VARIANT_STYLES[variant],
+      className,
+    )}
+  >
+    <dt className="text-muted-foreground text-sm font-medium">{label}</dt>
+    <dd className="font-condensed text-4xl leading-tight tabular-nums">{value}</dd>
+    {description && <dd className="text-muted-foreground text-sm">{description}</dd>}
+  </div>
+);

@@ -60,7 +60,7 @@ export const WaysIn = () => {
               <Tabs.Tab
                 key={audience.id}
                 value={audience.id}
-                className="data-[active]:text-primary-foreground text-muted-foreground hover:text-foreground focus-visible:outline-ring data-[active]:hover:text-primary-foreground relative z-10 min-h-11 cursor-pointer rounded-lg px-4 py-2 text-sm font-semibold transition-colors duration-150 focus-visible:outline-3 md:flex-auto md:text-base md:whitespace-nowrap"
+                className="data-active:text-primary-foreground text-muted-foreground hover:text-foreground focus-visible:outline-ring data-active:hover:text-primary-foreground relative z-10 min-h-11 cursor-pointer rounded-lg px-4 py-2 text-sm font-semibold transition-colors duration-150 focus-visible:outline-3 md:flex-auto md:text-base md:whitespace-nowrap"
               >
                 {t(`${audience.id}.tab`)}
               </Tabs.Tab>
