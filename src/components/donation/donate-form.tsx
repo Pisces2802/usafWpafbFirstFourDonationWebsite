@@ -117,9 +117,7 @@ export const DonateForm = ({
         <div className="flex min-w-0 flex-col gap-6">
           {errors.length > 0 && <ErrorSummary ref={errorSummaryRef} fields={errors} />}
 
-          {campaignProgress && (
-            <CampaignProgressBar progress={campaignProgress} />
-          )}
+          {campaignProgress && <CampaignProgressBar progress={campaignProgress} />}
 
           <FormStep id="donate-step-gift" step={1} title={t("stepGift")}>
             <FrequencyToggle value={frequency} onChange={selectFrequency} className="sm:max-w-xs" />

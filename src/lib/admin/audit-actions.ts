@@ -30,6 +30,9 @@ export const AUDIT_ACTIONS = [
   "fund.turned_on",
   "fund.turned_off",
   "fund.reordered",
+  "story.created",
+  "story.updated",
+  "story.deleted",
   "platform.settings_changed",
 ] as const;
 export type AuditAction = (typeof AUDIT_ACTIONS)[number];

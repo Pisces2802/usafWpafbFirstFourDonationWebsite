@@ -12,6 +12,7 @@
     "messages": "Messages",
     "campaigns": "Campaigns",
     "funds": "Funds",
+    "stories": "Stories",
     "team": "Team",
     "audit": "Audit log",
     "settings": "Settings"
@@ -202,6 +203,150 @@
       "turnedOff": "{name} is hidden from the site. Monthly gifts already set up keep going to it."
     }
   },
+  "stories": {
+    "lead": "Stories about what gifts made possible. Write them in English, add Spanish and French when you can, and publish when they’re ready.",
+    "new": "New story",
+    "emptyTitle": "No stories yet",
+    "emptyBody": "Write one about something a gift paid for. It stays a draft, off the site, until you publish it.",
+    "status": {
+      "draft": "Draft",
+      "published": "Published"
+    },
+    "featured": "Featured on home page",
+    "sample": "Sample",
+    "languagesLabel": "Languages",
+    "untitled": "Untitled story",
+    "dated": "Dated {date}",
+    "edit": "Edit",
+    "editFor": "Edit {title}",
+    "view": "View",
+    "viewFor": "View {title} on the site",
+    "delete": "Delete",
+    "deleteFor": "Delete {title}",
+    "deleteDialog": {
+      "title": "Delete “{title}”?",
+      "body": "It comes off the site straight away, along with its link. This can’t be undone.",
+      "cancel": "Cancel",
+      "close": "Close"
+    },
+    "notices": {
+      "created": "Created “{title}”.",
+      "updated": "Saved “{title}”.",
+      "deleted": "Deleted “{title}”."
+    },
+    "errors": {
+      "invalid": "Something in the story wasn’t valid. Check the highlighted fields and try again.",
+      "slugTaken": "Another story already uses that link name.",
+      "notFound": "That story no longer exists. Go back to the list.",
+      "noDatabase": "No database is connected.",
+      "unknown": "That didn’t save. Check your connection and try again."
+    },
+    "backToStories": "All stories",
+    "newTitle": "New story",
+    "editTitle": "Edit story",
+    "form": {
+      "languagesLabel": "Story language",
+      "locales": {
+        "en": "English",
+        "es": "Spanish",
+        "fr": "French"
+      },
+      "localeHint": {
+        "source": "Required. The Spanish and French pages show this version until they’re written.",
+        "other": "Optional. Leave every field empty to show the English version here, or fill in all of them."
+      },
+      "needsAttention": "Needs attention",
+      "title": "Title",
+      "titleHint": "The headline on the story page and its card.",
+      "name": "Name",
+      "nameHint": "Usually a first name only, as the person agreed to share it.",
+      "role": "Role",
+      "roleHint": "Rank and job, like “Airman First Class, aircraft maintenance”.",
+      "summary": "Summary",
+      "summaryHint": "One or two sentences for the story card and search results.",
+      "quote": "Pull quote",
+      "quoteHint": "A line in their own words, shown when the story is on the home page.",
+      "body": "Story",
+      "bodyHint": "Add images with the image button, or paste or drop them in. Select an image to resize it from its corners or describe it for screen readers.",
+      "publishing": "Publishing",
+      "slug": "Link name",
+      "slugHint": "Goes in the story’s web address. Lowercase letters, numbers and dashes.",
+      "fund": "Fund",
+      "fundHint": "The story asks readers to give to this fund.",
+      "publishedOn": "Date",
+      "publishedOnHint": "Shown on the story, and used to order the list.",
+      "published": "Published",
+      "publishedHint": "Drafts aren’t on the site.",
+      "isFeatured": "Feature on the home page",
+      "isFeaturedHint": "Replaces the story featured now. With none featured, the newest is shown.",
+      "isSample": "Sample story",
+      "isSampleHint": "Labels it as written to show the layout, not a real account.",
+      "create": "Create story",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "errors": {
+        "required": "Fill this in.",
+        "incomplete": "Fill this in too, or clear this language’s other fields to show English.",
+        "tooLong": "That’s longer than {max} characters.",
+        "slug": "Use lowercase letters, numbers and single dashes.",
+        "fundId": "Pick a fund.",
+        "publishedOn": "Pick a date."
+      },
+      "bodyHintNoImages": "Images are off until Cloudinary is set up (CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET)."
+    },
+    "editor": {
+      "toolbarLabel": "Formatting",
+      "placeholder": "Tell the story…",
+      "undo": "Undo",
+      "redo": "Redo",
+      "paragraph": "Paragraph",
+      "heading2": "Heading",
+      "heading3": "Subheading",
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "strike": "Strikethrough",
+      "subscript": "Subscript",
+      "superscript": "Superscript",
+      "highlight": "Highlight",
+      "textColor": "Text color",
+      "bulletList": "Bulleted list",
+      "orderedList": "Numbered list",
+      "blockquote": "Quote",
+      "alignLeft": "Align left",
+      "alignCenter": "Center",
+      "alignRight": "Align right",
+      "alignJustify": "Justify",
+      "divider": "Divider",
+      "colors": {
+        "default": "Default",
+        "blue": "Blue",
+        "red": "Red",
+        "green": "Green",
+        "amber": "Amber",
+        "gray": "Gray"
+      },
+      "link": {
+        "button": "Link",
+        "label": "Link address",
+        "apply": "Apply",
+        "remove": "Remove link",
+        "invalid": "Enter a web address, like https://example.org."
+      },
+      "image": {
+        "button": "Image",
+        "uploading": "Uploading image…",
+        "tooLarge": "Images can be up to 5 MB.",
+        "type": "Use a JPEG, PNG, WebP or GIF image.",
+        "failed": "The image didn’t upload. Try again.",
+        "describe": "Describe image",
+        "altLabel": "Image description",
+        "altHint": "What someone who can’t see the image needs to know. Leave empty if it’s only decoration.",
+        "apply": "Save description"
+      }
+    }
+  },
   "values": {
     "frequency": {
       "one_time": "One-time",
@@ -336,7 +481,7 @@
     },
     "coordinator": {
       "name": "Coordinator",
-      "description": "Volunteers and messages with their exports."
+      "description": "Volunteers and messages with their exports, plus stories."
     },
     "viewer": {
       "name": "Viewer",
@@ -355,6 +500,7 @@
     "messages:export": "Export messages",
     "campaigns:manage": "Manage campaigns",
     "funds:manage": "Manage funds",
+    "stories:manage": "Write and publish stories",
     "team:manage": "Add people and change roles",
     "settings:manage": "Change platform settings",
     "audit:view": "See the audit log"
@@ -603,7 +749,7 @@
     }
   },
   "audit": {
-    "lead": "Who did what in the back office: sign-ins, team, campaign, fund and settings changes, and data downloads. Newest first.",
+    "lead": "Who did what in the back office: sign-ins, team, campaign, fund, story and settings changes, and data downloads. Newest first.",
     "empty": "Nothing recorded yet.",
     "allActivity": "All activity",
     "filterLabel": "Show activity",
@@ -627,7 +773,8 @@
       "data": "Data",
       "platform": "Platform",
       "campaign": "Campaigns",
-      "fund": "Funds"
+      "fund": "Funds",
+      "story": "Stories"
     },
     "methods": {
       "authenticator": "Authenticator app",
@@ -652,7 +799,11 @@
       "slug": "Link name",
       "startsOn": "Starts",
       "endsOn": "Ends",
-      "order": "Order"
+      "order": "Order",
+      "status": "Status",
+      "fund": "Fund",
+      "languages": "Languages",
+      "featured": "Featured"
     },
     "actions": {
       "auth": {
@@ -696,6 +847,11 @@
         "turned_on": "Showed a fund on the site",
         "turned_off": "Hid a fund from the site",
         "reordered": "Changed the fund order"
+      },
+      "story": {
+        "created": "Created a story",
+        "updated": "Changed a story",
+        "deleted": "Deleted a story"
       }
     }
   },

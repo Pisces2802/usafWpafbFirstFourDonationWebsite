@@ -28,7 +28,6 @@ export const getCampaignProgress = async (slug: string): Promise<CampaignProgres
     .where(eq(campaigns.slug, slug));
   if (!campaign) return null;
 
-
   const [totals] = await db
     .select({
       raisedCents: sql<number>`coalesce(sum(${donations.amountCents} - least(${donations.refundedCents}, ${donations.amountCents})), 0)::int`,

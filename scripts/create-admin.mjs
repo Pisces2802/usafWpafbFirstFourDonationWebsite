@@ -31,7 +31,7 @@ const fail = (message) => {
 
 if (existsSync(".env.local")) process.loadEnvFile(".env.local");
 if (!process.env.DATABASE_URL) fail("DATABASE_URL isn't set. Add it to .env.local first.");
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/+$/, "");
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3001").replace(/\/+$/, "");
 
 const { values } = parseArgs({
   options: {

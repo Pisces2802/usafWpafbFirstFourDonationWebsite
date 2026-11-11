@@ -14,6 +14,7 @@ import {
   listDonors,
   listVolunteers,
 } from "@/lib/admin/queries";
+import { findStory, listStories } from "@/lib/admin/story-queries";
 import { listAdminUsers } from "@/lib/admin/team-queries";
 
 /**
@@ -79,4 +80,16 @@ export const loadCampaigns = async () => {
 export const loadFunds = async () => {
   const { db } = await withAdminDb("funds:manage");
   return db ? listFunds(db) : null;
+};
+
+/** Every story, published or not, for people who write them. */
+export const loadStories = async () => {
+  const { db } = await withAdminDb("stories:manage");
+  return db ? listStories(db) : null;
+};
+
+/** One story to edit; undefined when it doesn't exist. */
+export const loadStory = async (id: number) => {
+  const { db } = await withAdminDb("stories:manage");
+  return db ? ((await findStory(db, id)) ?? undefined) : null;
 };

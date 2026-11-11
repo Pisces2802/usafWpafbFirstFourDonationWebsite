@@ -3,7 +3,7 @@ import { Suspense } from "react";
 
 import { AdminNav } from "@/components/admin/admin-nav";
 import { Header } from "@/components/admin/header";
-import { Sidebar } from "@/components/admin/sidebar";
+import { SidebarFallback } from "@/components/admin/sidebar";
 import { WithPreferences } from "@/components/admin/with-preferences";
 
 export default async function ConsoleLayout({ children }: { children: React.ReactNode }) {
@@ -19,7 +19,7 @@ export default async function ConsoleLayout({ children }: { children: React.Reac
       </a>
       <Header />
       <div className="flex flex-1 flex-col lg:flex-row">
-        <Suspense fallback={<Sidebar keys={[]} />}>
+        <Suspense fallback={<SidebarFallback />}>
           <AdminNav />
         </Suspense>
         <main id="main" tabIndex={-1} className="min-w-0 flex-1 outline-none">

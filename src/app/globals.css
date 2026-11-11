@@ -44,7 +44,7 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --font-sans: var(--font-public-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
 
@@ -214,6 +214,14 @@
   body {
     @apply bg-background text-foreground antialiased;
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+  }
   :focus-visible {
     outline: 3px solid var(--ring);
     outline-offset: 2px;
@@ -235,5 +243,94 @@
   }
   p {
     max-width: 75ch;
+  }
+}
+
+/*
+ * Story bodies: the HTML from the back-office editor, on the story page and inside the editor.
+ * Mirrors the MDX styles in `mdx-components.tsx` so stories read like the rest of the site.
+ */
+@layer components {
+  .story-body {
+    @apply text-lg leading-relaxed;
+  }
+  .story-body > * + * {
+    @apply mt-5;
+  }
+  .story-body h2 {
+    @apply font-condensed mt-12 mb-4 text-3xl leading-tight;
+  }
+  .story-body h3 {
+    @apply mt-8 mb-3 text-xl font-semibold;
+  }
+  .story-body ul {
+    @apply list-disc space-y-2 pl-6;
+  }
+  .story-body ol {
+    @apply list-decimal space-y-2 pl-6;
+  }
+  .story-body li > p {
+    @apply m-0;
+  }
+  .story-body a {
+    @apply text-primary font-semibold underline underline-offset-2;
+  }
+  .story-body strong {
+    @apply font-semibold;
+  }
+  .story-body blockquote {
+    @apply border-taxiway my-8 border-l-4 pl-6 text-xl italic;
+  }
+  .story-body hr {
+    @apply border-border my-10;
+  }
+  .story-body mark {
+    @apply rounded-sm bg-amber-200 px-0.5 text-inherit dark:bg-amber-400/40;
+  }
+  .story-body img {
+    @apply my-8 h-auto max-w-full rounded-xl;
+  }
+
+  /* In the editor: smaller type, the placeholder, and handles for resizing images. */
+  .story-body--editor {
+    @apply text-base;
+  }
+  .story-body--editor p.is-editor-empty:first-child::before {
+    @apply text-muted-foreground pointer-events-none float-left h-0;
+    content: attr(data-placeholder);
+  }
+  .story-body--editor [data-resize-container] {
+    @apply my-6 max-w-full;
+  }
+  .story-body--editor [data-resize-wrapper] {
+    @apply max-w-full;
+  }
+  .story-body--editor [data-resize-wrapper] img {
+    @apply m-0 block max-w-full rounded-lg;
+    height: auto !important;
+  }
+  .story-body--editor .ProseMirror-selectednode [data-resize-wrapper] img,
+  .story-body--editor [data-resize-container]:hover [data-resize-wrapper] img {
+    @apply outline-primary outline-2 outline-offset-2;
+  }
+  .story-body--editor [data-resize-handle] {
+    @apply bg-background border-primary z-10 size-3.5 rounded-full border-2 opacity-0 transition-opacity;
+  }
+  .story-body--editor [data-resize-container]:hover [data-resize-handle],
+  .story-body--editor .ProseMirror-selectednode [data-resize-handle],
+  .story-body--editor [data-resize-state="true"] [data-resize-handle] {
+    @apply opacity-100;
+  }
+  .story-body--editor [data-resize-handle="top-left"] {
+    @apply -translate-x-1/2 -translate-y-1/2 cursor-nwse-resize;
+  }
+  .story-body--editor [data-resize-handle="top-right"] {
+    @apply translate-x-1/2 -translate-y-1/2 cursor-nesw-resize;
+  }
+  .story-body--editor [data-resize-handle="bottom-left"] {
+    @apply -translate-x-1/2 translate-y-1/2 cursor-nesw-resize;
+  }
+  .story-body--editor [data-resize-handle="bottom-right"] {
+    @apply translate-x-1/2 translate-y-1/2 cursor-nwse-resize;
   }
 }

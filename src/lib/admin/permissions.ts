@@ -10,6 +10,7 @@ export const ADMIN_PERMISSIONS = [
   "messages:export",
   "campaigns:manage",
   "funds:manage",
+  "stories:manage",
   "team:manage",
   "settings:manage",
   "audit:view",
@@ -41,6 +42,7 @@ export const ROLE_PERMISSIONS: Record<AdminRole, readonly AdminPermission[]> = {
     "volunteers:export",
     "messages:view",
     "messages:export",
+    "stories:manage",
   ],
   viewer: ["dashboard:view"],
 };

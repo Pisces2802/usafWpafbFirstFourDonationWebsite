@@ -3,6 +3,7 @@ import {
   type AnyPgColumn,
   boolean,
   check,
+  date,
   index,
   integer,
   jsonb,
@@ -11,10 +12,12 @@ import {
   serial,
   text,
   timestamp,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 import { ADMIN_ROLES } from "@/lib/admin/permissions";
 import { CONTACT_TOPICS, VOLUNTEER_AFFILIATIONS } from "@/lib/form-schemas";
+import { STORY_STATUSES, type StoryContent } from "@/lib/stories/story-schema";
 
 export const frequency = pgEnum("frequency", ["one_time", "monthly"]);
 export const donationStatus = pgEnum("donation_status", ["succeeded", "refunded", "failed"]);
@@ -23,6 +26,7 @@ export const volunteerAffiliation = pgEnum("volunteer_affiliation", VOLUNTEER_AF
 export const contactTopic = pgEnum("contact_topic", CONTACT_TOPICS);
 export const adminRole = pgEnum("admin_role", ADMIN_ROLES);
 export const adminSessionStage = pgEnum("admin_session_stage", ["two_factor", "active"]);
+export const storyStatus = pgEnum("story_status", STORY_STATUSES);
 export const adminTokenPurpose = pgEnum("admin_token_purpose", ["verify_email", "reset_password"]);
 
 /** Names and descriptions live in the messages files, keyed by slug. */
@@ -258,4 +262,40 @@ export const adminAuditEvents = pgTable(
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [index().on(table.createdAt), index().on(table.actorId)],
+);
+
+/**
+ * Stories about what gifts made possible, written in the back office. `content` holds each
+ * language's text; English is always there, and a missing Spanish or French version falls back to
+ * it. Bodies are HTML from the editor, sanitised before they're saved; their images live on
+ * Cloudinary.
+ */
+export const stories = pgTable(
+  "stories",
+  {
+    id: serial().primaryKey(),
+    slug: text().notNull().unique(),
+    /** A fund id from `config/donation`; the story links to giving to it. */
+    fundId: text().notNull(),
+    status: storyStatus().notNull().default("draft"),
+    /** Shown on the home page. At most one story is featured. */
+    isFeatured: boolean().notNull().default(false),
+    /** Written to show the layout; the site labels it as a sample. */
+    isSample: boolean().notNull().default(false),
+    publishedOn: date({ mode: "string" }).notNull(),
+    content: jsonb().$type<StoryContent>().notNull(),
+    createdById: integer().references(() => adminUsers.id, { onDelete: "set null" }),
+    updatedById: integer().references(() => adminUsers.id, { onDelete: "set null" }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    uniqueIndex("stories_one_featured")
+      .on(table.isFeatured)
+      .where(sql`${table.isFeatured}`),
+    index().on(table.status, table.publishedOn),
+  ],
 );

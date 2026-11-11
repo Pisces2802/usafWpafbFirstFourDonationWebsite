@@ -1,3 +1,6 @@
+import { getFormatter, getTranslations } from "next-intl/server";
+import { Suspense } from "react";
+import Link from "next/link";
 import {
   ChartSpline,
   HandCoins,
@@ -8,17 +11,14 @@ import {
   Target,
   Users,
 } from "lucide-react";
-import Link from "next/link";
-import { getFormatter, getTranslations } from "next-intl/server";
-import { Suspense } from "react";
 
 import { AdminPage, NoDatabase, TableSkeleton } from "@/components/admin/admin-page";
 import { CampaignProgress } from "@/components/admin/dashboard/campaign-progress";
 import { DonationTrends } from "@/components/admin/dashboard/donation-trends";
 import { FundBreakdown } from "@/components/admin/dashboard/fund-breakdown";
+import { RecentGifts } from "@/components/admin/dashboard/recent-gifts";
 import { KpiCard } from "@/components/admin/dashboard/kpi-card";
 import { Panel } from "@/components/admin/dashboard/panel";
-import { RecentGifts } from "@/components/admin/dashboard/recent-gifts";
 import { loadOverview } from "@/lib/admin/data";
 import { MONEY_FORMAT } from "@/lib/money";
 
@@ -93,7 +93,6 @@ const Overview = async () => {
           {...donorsLink}
         />
       </dl>
-
       <div className="grid gap-4 lg:grid-cols-3">
         <div className="flex min-w-0 flex-col gap-4 lg:col-span-2">
           <Panel id="trends-heading" title={t("trends.heading")} icon={ChartSpline}>
@@ -111,7 +110,6 @@ const Overview = async () => {
               ))}
             </dl>
           </Panel>
-
           {recent && (
             <Panel
               id="recent-heading"
@@ -134,7 +132,6 @@ const Overview = async () => {
             </Panel>
           )}
         </div>
-
         <div className="flex min-w-0 flex-col gap-4">
           <Panel id="funds-heading" title={t("byFund.heading")} icon={PieChart}>
             <FundBreakdown byFund={insights.byFund} />
@@ -150,7 +147,6 @@ const Overview = async () => {
 
 const DashboardPage = async () => {
   const t = await getTranslations("Admin");
-
   return (
     <AdminPage title={t("nav.dashboard")} lead={t("dashboard.lead")}>
       <Suspense fallback={<TableSkeleton />}>

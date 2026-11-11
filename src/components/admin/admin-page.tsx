@@ -14,7 +14,7 @@ type AdminPageProps = {
 
 /** Heading, optional lead and actions, then the page body. */
 export const AdminPage = ({ title, lead, actions, children }: AdminPageProps) => (
-  <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 px-4 py-8 lg:px-8 lg:py-10">
+  <div className="mx-auto flex w-full container flex-col gap-8 px-4 py-8 lg:px-12 lg:py-10">
     <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div className="max-w-2xl">
         <h1 className="headline text-4xl lg:text-5xl">{title}</h1>
