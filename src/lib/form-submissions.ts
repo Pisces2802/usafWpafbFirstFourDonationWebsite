@@ -6,7 +6,7 @@ import type { z } from "zod";
 import type { Db } from "@/db";
 import { contactMessages, volunteers } from "@/db/schema";
 import type { Locale } from "@/i18n/routing";
-import { sendOrgNotice } from "@/lib/emails";
+import { deliverOrgNotice } from "@/lib/admin/team-notices";
 import {
   type ContactMessage,
   type FormError,
@@ -33,7 +33,7 @@ export const notifyVolunteer = async (volunteer: Volunteer, locale: Locale) => {
   const t = await getTranslations({ locale: "en", namespace: "Emails" });
   const tForms = await getTranslations({ locale: "en", namespace: "Forms" });
 
-  await sendOrgNotice({
+  await deliverOrgNotice("volunteers", {
     subject: t("volunteerNoticeSubject", { name: volunteer.name }),
     heading: t("volunteerNoticeHeading"),
     replyTo: volunteer.email,
@@ -63,7 +63,7 @@ export const notifyContactMessage = async (message: ContactMessage, locale: Loca
   const tForms = await getTranslations({ locale: "en", namespace: "Forms" });
   const topic = tForms(`topics.${message.topic}`);
 
-  await sendOrgNotice({
+  await deliverOrgNotice("messages", {
     subject: t("contactNoticeSubject", { topic, name: message.name }),
     heading: topic,
     replyTo: message.email,

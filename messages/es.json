@@ -335,30 +335,7 @@
     "backToStories": "Todas las historias",
     "moreStories": "Más historias",
     "publishedOn": "Publicado el {date}",
-    "featuredHeading": "En sus palabras",
-    "items": {
-      "dorm-cookout": {
-        "name": "Jaylen",
-        "role": "Aviador de primera clase, mantenimiento de aeronaves",
-        "title": "La parrillada que convirtió las residencias en un hogar",
-        "summary": "A tres meses de su primer destino, Jaylen no conocía a nadie fuera de su taller. Una parrillada pagada por el fondo de moral cambió eso.",
-        "quote": "Conocía a la gente con la que trabajaba. Después de esa noche, conocía a mis vecinos."
-      },
-      "study-hall": {
-        "name": "Keisha",
-        "role": "Aviadora sénior, personal",
-        "title": "Un grupo de estudio y una sala llena de mentores",
-        "summary": "Keisha organizó un grupo de estudio semanal para aviadores que preparaban sus exámenes de ascenso. El fondo de crecimiento profesional pagó los libros y suboficiales con experiencia vinieron a ayudar.",
-        "quote": "Dirigir el grupo me enseñó tanto como los libros."
-      },
-      "day-room-rebuild": {
-        "name": "Marcus",
-        "role": "Aviador, fuerzas de seguridad",
-        "title": "La renovación de la sala común",
-        "summary": "Veinte aviadores pasaron dos fines de semana convirtiendo una sala común descuidada en un espacio que la gente usa de verdad. El fondo comunitario compró la pintura y los muebles.",
-        "quote": "Pasamos por esa sala todos los días. Ahora es nuestra, porque la construimos nosotros."
-      }
-    }
+    "featuredHeading": "En sus palabras"
   },
   "WaysIn": {
     "_reviewed": false,

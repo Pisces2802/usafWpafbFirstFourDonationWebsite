@@ -4,6 +4,7 @@ import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 import { cn } from "cn";
+import { useAdminPreferences } from "@/components/admin/preferences-provider";
 import {
   columnFilteringFeature,
   createFilteredRowModel,
@@ -87,6 +88,7 @@ interface Props<TData extends RowData> {
   footer?: ReactNode;
   empty?: ReactNode;
   loading?: boolean;
+  /** Rows per page; leave it out to use the person's preference from Settings. */
   pageSize?: number;
   isRowActive?: (row: TData) => boolean;
   getRowId?: (row: TData) => string;
@@ -113,7 +115,7 @@ export function DataTable<TData extends RowData>({
   footer,
   empty = "Nothing matches. Try a different search or filter.",
   loading,
-  pageSize = 10,
+  pageSize: fixedPageSize,
   isRowActive,
   getRowId,
   onRowSelectionChange,
@@ -125,7 +127,11 @@ export function DataTable<TData extends RowData>({
   const handleRowClick = onRowClick ?? (columns as Partial<ColumnsWithRowClick<TData>>).onRowClick;
 
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [pagination, setPagination] = useState<PaginationState>({ pageIndex: 0, pageSize });
+  const preferences = useAdminPreferences();
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: fixedPageSize ?? preferences.pageSize,
+  });
   const [internalRowSelection, setInternalRowSelection] = useState<RowSelectionState>({});
   const [lastFilter, setLastFilter] = useState([search, resetKey]);
 

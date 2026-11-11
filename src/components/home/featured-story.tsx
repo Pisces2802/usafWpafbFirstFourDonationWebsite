@@ -1,18 +1,19 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { SampleBadge } from "@/components/stories/sample-badge";
 import { StoryPortrait } from "@/components/stories/story-portrait";
 import { buttonVariants } from "@/components/ui/button";
-import { featuredStorySlug, getStory } from "@/config/stories";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
+import { getFeaturedStory } from "@/lib/stories/queries";
 import { cn } from "@/lib/utils";
 
 export const FeaturedStory = async () => {
-  const story = getStory(featuredStorySlug);
+  const story = await getFeaturedStory((await getLocale()) as Locale);
   if (!story) return null;
 
   const t = await getTranslations("Stories");
-  const name = t(`items.${story.slug}.name`);
+  const { name } = story;
 
   return (
     <section
@@ -29,12 +30,12 @@ export const FeaturedStory = async () => {
           {story.isSample && <SampleBadge label={t("sampleBadge")} />}
           <blockquote className="font-condensed mt-4 text-3xl leading-tight md:text-4xl">
             <p>
-              <q>{t(`items.${story.slug}.quote`)}</q>
+              <q>{story.quote}</q>
             </p>
           </blockquote>
           <figcaption className="mt-6 text-lg">
             <span className="font-semibold">{name}</span>
-            <span className="text-muted-foreground">, {t(`items.${story.slug}.role`)}</span>
+            <span className="text-muted-foreground">, {story.role}</span>
           </figcaption>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link

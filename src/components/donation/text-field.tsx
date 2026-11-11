@@ -8,9 +8,19 @@ type TextFieldProps = ComponentProps<"input"> & {
   label: ReactNode;
   hint?: ReactNode;
   error?: ReactNode;
+  /** A control inside the end of the input, like a show-password button. */
+  endSlot?: ReactNode;
 };
 
-export const TextField = ({ id, label, hint, error, className, ...props }: TextFieldProps) => {
+export const TextField = ({
+  id,
+  label,
+  hint,
+  error,
+  endSlot,
+  className,
+  ...props
+}: TextFieldProps) => {
   const hintId = `${id}-hint`;
   const errorId = `${id}-error`;
   const describedBy = [hint && hintId, error && errorId].filter(Boolean).join(" ") || undefined;
@@ -25,13 +35,18 @@ export const TextField = ({ id, label, hint, error, className, ...props }: TextF
           {hint}
         </p>
       )}
-      <Input
-        id={id}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={describedBy}
-        className="bg-background h-11 scroll-mt-32 px-3 md:text-base"
-        {...props}
-      />
+      <div className="relative">
+        <Input
+          id={id}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={describedBy}
+          className={cn("bg-background h-11 scroll-mt-32 px-3 md:text-base", endSlot && "pr-12")}
+          {...props}
+        />
+        {endSlot && (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-0.5">{endSlot}</div>
+        )}
+      </div>
       {error && (
         <p id={errorId} className="text-destructive text-sm">
           {error}

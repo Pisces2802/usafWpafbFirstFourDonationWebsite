@@ -3,6 +3,8 @@
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { Input } from "@/components/ui/input";
+
 type TableSearchProps = {
   id: string;
   value: string;
@@ -21,13 +23,13 @@ export const TableSearch = ({ id, value, onChange }: TableSearchProps) => {
         aria-hidden="true"
         className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2"
       />
-      <input
+      <Input
         id={id}
         type="search"
         value={value}
         onChange={(event) => onChange(event.target.value)}
         placeholder={t("searchPlaceholder")}
-        className="border-input bg-card focus-visible:border-primary focus-visible:ring-primary/25 min-h-11 w-full rounded-lg border py-2 pr-3 pl-9 text-base outline-none focus-visible:ring-3"
+        className="bg-card h-11 pr-3 pl-9 md:text-base"
       />
     </div>
   );

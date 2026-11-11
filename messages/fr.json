@@ -335,30 +335,7 @@
     "backToStories": "Tous les témoignages",
     "moreStories": "Autres témoignages",
     "publishedOn": "Publié le {date}",
-    "featuredHeading": "Avec leurs mots",
-    "items": {
-      "dorm-cookout": {
-        "name": "Jaylen",
-        "role": "Aviateur de première classe, maintenance aéronautique",
-        "title": "Le barbecue qui a fait des dortoirs un vrai chez-soi",
-        "summary": "Trois mois après le début de sa première affectation, Jaylen ne connaissait personne en dehors de son atelier. Un barbecue financé par le fonds moral a tout changé.",
-        "quote": "Je connaissais mes collègues. Après cette soirée, je connaissais mes voisins."
-      },
-      "study-hall": {
-        "name": "Keisha",
-        "role": "Aviatrice senior, ressources humaines",
-        "title": "Un groupe d'étude et une salle pleine de mentors",
-        "summary": "Keisha a lancé un groupe d'étude hebdomadaire pour les aviateurs qui préparaient leurs examens d'avancement. Le fonds de développement professionnel a payé les livres, et des sous-officiers expérimentés sont venus aider.",
-        "quote": "Animer le groupe m'a appris autant que les livres."
-      },
-      "day-room-rebuild": {
-        "name": "Marcus",
-        "role": "Aviateur, forces de sécurité",
-        "title": "La rénovation de la salle commune",
-        "summary": "Vingt aviateurs ont passé deux week-ends à transformer une salle commune défraîchie en un lieu que tout le monde utilise. Le fonds solidaire a acheté la peinture et le mobilier.",
-        "quote": "On passe devant cette salle tous les jours. Maintenant, elle est à nous, parce qu'on l'a construite."
-      }
-    }
+    "featuredHeading": "Avec leurs mots"
   },
   "WaysIn": {
     "_reviewed": false,

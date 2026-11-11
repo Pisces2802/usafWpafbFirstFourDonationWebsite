@@ -31,7 +31,7 @@ const fail = (message) => {
 
 if (existsSync(".env.local")) process.loadEnvFile(".env.local");
 if (!process.env.DATABASE_URL) fail("DATABASE_URL isn't set. Add it to .env.local first.");
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000").replace(/\/+$/, "");
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3001").replace(/\/+$/, "");
 
 const { values } = parseArgs({
   options: {
@@ -76,6 +76,13 @@ try {
       await tx`delete from admin_recovery_codes where admin_user_id = ${row.id}`;
     }
     await tx`delete from admin_sessions where admin_user_id = ${row.id}`;
+    await tx`
+      insert into admin_audit_events (action, target_label, details)
+      values ('team.updated_from_cli', ${`${row.name} <${email}>`}, ${sql.json({
+        created: !existing,
+        role: row.role,
+        resetTwoFactor: values["reset-2fa"],
+      })})`;
 
     const purpose = row.password_hash ? "reset_password" : "verify_email";
     const token = randomBytes(32).toString("base64url");

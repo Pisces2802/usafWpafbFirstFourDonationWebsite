@@ -1,6 +1,8 @@
 import "server-only";
 
+import { getDb } from "@/db";
 import { requireAdmin } from "@/lib/admin/access";
+import { recordAudit } from "@/lib/admin/audit";
 import { adminTranslator } from "@/lib/admin/translator";
 import { type CsvColumn, toCsv } from "@/lib/admin/csv";
 import { loadDonations, loadDonors, loadMessages, loadVolunteers } from "@/lib/admin/data";
@@ -76,25 +78,34 @@ const messageColumns = (h: Header): CsvColumn<AdminMessageRow>[] => [
  * and goes through the admin loaders, so the view permission is checked too.
  */
 export const exportDataset = async (dataset: AdminDataset): Promise<string | null> => {
-  await requireAdmin(`${dataset}:export`);
+  const actor = await requireAdmin(`${dataset}:export`);
+  const built = await buildCsv(dataset);
+  const db = getDb();
+  if (built && db) {
+    await recordAudit(db, {
+      actor,
+      action: "data.exported",
+      target: adminTranslator(`nav.${dataset}`),
+      details: { dataset, rows: built.rows },
+    });
+  }
+  return built?.csv ?? null;
+};
+
+const csvOf = <T>(rows: readonly T[] | null, columns: CsvColumn<T>[]) =>
+  rows && { csv: toCsv(rows, columns), rows: rows.length };
+
+const buildCsv = async (dataset: AdminDataset) => {
   const h: Header = (key) => adminTranslator(`csv.${key}` as Parameters<typeof adminTranslator>[0]);
 
   switch (dataset) {
-    case "donations": {
-      const rows = await loadDonations();
-      return rows && toCsv(rows, donationColumns(h));
-    }
-    case "donors": {
-      const rows = await loadDonors();
-      return rows && toCsv(rows, donorColumns(h));
-    }
-    case "volunteers": {
-      const rows = await loadVolunteers();
-      return rows && toCsv(rows, volunteerColumns(h));
-    }
-    case "messages": {
-      const rows = await loadMessages();
-      return rows && toCsv(rows, messageColumns(h));
-    }
+    case "donations":
+      return csvOf(await loadDonations(), donationColumns(h));
+    case "donors":
+      return csvOf(await loadDonors(), donorColumns(h));
+    case "volunteers":
+      return csvOf(await loadVolunteers(), volunteerColumns(h));
+    case "messages":
+      return csvOf(await loadMessages(), messageColumns(h));
   }
 };

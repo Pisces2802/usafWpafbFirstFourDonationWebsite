@@ -5,7 +5,7 @@ const blankToUndefined = <T extends z.ZodType>(schema: T) =>
 
 const schema = z
   .object({
-    NEXT_PUBLIC_SITE_URL: blankToUndefined(z.url().default("http://localhost:3000")),
+    NEXT_PUBLIC_SITE_URL: blankToUndefined(z.url().default("http://localhost:3001")),
     NEXT_PUBLIC_TAX_DEDUCTIBLE: blankToUndefined(
       z
         .enum(["true", "false"])
@@ -67,6 +67,14 @@ const schema = z
     ),
     ORG_NOTIFY_EMAIL: blankToUndefined(z.email().optional()),
     AUTH_SECRET: blankToUndefined(z.string().min(32, "must be at least 32 characters").optional()),
+    CLOUDINARY_CLOUD_NAME: blankToUndefined(
+      z
+        .string()
+        .regex(/^[a-z0-9_-]+$/i, "must be your Cloudinary cloud name")
+        .optional(),
+    ),
+    CLOUDINARY_API_KEY: blankToUndefined(z.string().regex(/^\d+$/, "must be numeric").optional()),
+    CLOUDINARY_API_SECRET: blankToUndefined(z.string().min(10).optional()),
     STRIPE_PCT_FEE: blankToUndefined(z.coerce.number().min(0).max(0.2).default(0.029)),
     STRIPE_FIXED_FEE_CENTS: blankToUndefined(z.coerce.number().int().min(0).max(500).default(30)),
   })
@@ -74,6 +82,18 @@ const schema = z
     message: "Set both Turnstile keys or neither",
     path: ["TURNSTILE_SECRET_KEY"],
   })
+  .refine(
+    (env) =>
+      new Set(
+        [env.CLOUDINARY_CLOUD_NAME, env.CLOUDINARY_API_KEY, env.CLOUDINARY_API_SECRET].map(
+          (value) => value === undefined,
+        ),
+      ).size === 1,
+    {
+      message: "Set all three Cloudinary variables or none",
+      path: ["CLOUDINARY_API_SECRET"],
+    },
+  )
   .refine((env) => !env.RESEND_API_KEY || env.EMAIL_FROM, {
     message: "EMAIL_FROM is required when RESEND_API_KEY is set",
     path: ["EMAIL_FROM"],
@@ -98,6 +118,9 @@ const parsed = schema.safeParse({
   EMAIL_FROM: process.env.EMAIL_FROM,
   ORG_NOTIFY_EMAIL: process.env.ORG_NOTIFY_EMAIL,
   AUTH_SECRET: process.env.AUTH_SECRET,
+  CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
+  CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
   STRIPE_PCT_FEE: process.env.STRIPE_PCT_FEE,
   STRIPE_FIXED_FEE_CENTS: process.env.STRIPE_FIXED_FEE_CENTS,
 });

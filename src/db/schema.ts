@@ -3,17 +3,21 @@ import {
   type AnyPgColumn,
   boolean,
   check,
+  date,
   index,
   integer,
+  jsonb,
   pgEnum,
   pgTable,
   serial,
   text,
   timestamp,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 import { ADMIN_ROLES } from "@/lib/admin/permissions";
 import { CONTACT_TOPICS, VOLUNTEER_AFFILIATIONS } from "@/lib/form-schemas";
+import { STORY_STATUSES, type StoryContent } from "@/lib/stories/story-schema";
 
 export const frequency = pgEnum("frequency", ["one_time", "monthly"]);
 export const donationStatus = pgEnum("donation_status", ["succeeded", "refunded", "failed"]);
@@ -22,6 +26,7 @@ export const volunteerAffiliation = pgEnum("volunteer_affiliation", VOLUNTEER_AF
 export const contactTopic = pgEnum("contact_topic", CONTACT_TOPICS);
 export const adminRole = pgEnum("admin_role", ADMIN_ROLES);
 export const adminSessionStage = pgEnum("admin_session_stage", ["two_factor", "active"]);
+export const storyStatus = pgEnum("story_status", STORY_STATUSES);
 export const adminTokenPurpose = pgEnum("admin_token_purpose", ["verify_email", "reset_password"]);
 
 /** Names and descriptions live in the messages files, keyed by slug. */
@@ -139,13 +144,26 @@ export const adminUsers = pgTable(
     lockedUntil: timestamp({ withTimezone: true }),
     createdById: integer().references((): AnyPgColumn => adminUsers.id, { onDelete: "set null" }),
     lastSignInAt: timestamp({ withTimezone: true }),
+    /** IANA time zone for dates in the back office; null uses the site default. */
+    timeZone: text(),
+    /** Rows per page in back-office tables. */
+    pageSize: integer().notNull().default(10),
+    /** Email this person about new volunteer sign-ups (needs `volunteers:view`). */
+    notifyVolunteers: boolean().notNull().default(false),
+    /** Email this person about new contact messages (needs `messages:view`). */
+    notifyMessages: boolean().notNull().default(false),
+    /** Email this person about sign-ins and security changes on their own account. */
+    notifySecurity: boolean().notNull().default(true),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true })
       .notNull()
       .defaultNow()
       .$onUpdate(() => new Date()),
   },
-  (table) => [check("admin_users_email_lowercase", sql`${table.email} = lower(${table.email})`)],
+  (table) => [
+    check("admin_users_email_lowercase", sql`${table.email} = lower(${table.email})`),
+    check("admin_users_page_size", sql`${table.pageSize} in (10, 20, 50, 100)`),
+  ],
 );
 
 /**
@@ -203,4 +221,81 @@ export const adminRecoveryCodes = pgTable(
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [index().on(table.adminUserId)],
+);
+
+/** Settings for the whole site, changed by owners. There's only ever one row, with id 1. */
+export const platformSettings = pgTable(
+  "platform_settings",
+  {
+    id: integer().primaryKey().default(1),
+    /** Where volunteer and contact notices go; null falls back to `ORG_NOTIFY_EMAIL`. */
+    inboxEmail: text(),
+    /** Stops new online gifts; checkout reports that giving is unavailable. */
+    donationsPaused: boolean().notNull().default(false),
+    /** How long a back-office sign-in lasts. */
+    sessionHours: integer().notNull().default(12),
+    updatedById: integer().references(() => adminUsers.id, { onDelete: "set null" }),
+    updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    check("platform_settings_single_row", sql`${table.id} = 1`),
+    check("platform_settings_session_hours", sql`${table.sessionHours} between 1 and 24`),
+  ],
+);
+
+/**
+ * Who did what in the back office. The actor's name and email are copied in, so entries stay
+ * readable after someone is removed. The app only ever adds entries.
+ */
+export const adminAuditEvents = pgTable(
+  "admin_audit_events",
+  {
+    id: serial().primaryKey(),
+    actorId: integer().references(() => adminUsers.id, { onDelete: "set null" }),
+    actorName: text(),
+    actorEmail: text(),
+    action: text().notNull(),
+    /** What the action was done to, as shown in the log, like a person's name and email. */
+    targetLabel: text(),
+    details: jsonb().$type<Record<string, string | number | boolean | null>>(),
+    ip: text(),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index().on(table.createdAt), index().on(table.actorId)],
+);
+
+/**
+ * Stories about what gifts made possible, written in the back office. `content` holds each
+ * language's text; English is always there, and a missing Spanish or French version falls back to
+ * it. Bodies are HTML from the editor, sanitised before they're saved; their images live on
+ * Cloudinary.
+ */
+export const stories = pgTable(
+  "stories",
+  {
+    id: serial().primaryKey(),
+    slug: text().notNull().unique(),
+    /** A fund id from `config/donation`; the story links to giving to it. */
+    fundId: text().notNull(),
+    status: storyStatus().notNull().default("draft"),
+    /** Shown on the home page. At most one story is featured. */
+    isFeatured: boolean().notNull().default(false),
+    /** Written to show the layout; the site labels it as a sample. */
+    isSample: boolean().notNull().default(false),
+    publishedOn: date({ mode: "string" }).notNull(),
+    content: jsonb().$type<StoryContent>().notNull(),
+    createdById: integer().references(() => adminUsers.id, { onDelete: "set null" }),
+    updatedById: integer().references(() => adminUsers.id, { onDelete: "set null" }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    uniqueIndex("stories_one_featured")
+      .on(table.isFeatured)
+      .where(sql`${table.isFeatured}`),
+    index().on(table.status, table.publishedOn),
+  ],
 );

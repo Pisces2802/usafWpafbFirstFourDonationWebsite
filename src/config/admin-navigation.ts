@@ -4,8 +4,10 @@ import {
   HeartHandshake,
   Inbox,
   LayoutDashboard,
+  BookOpenText,
   type LucideIcon,
   PiggyBank,
+  ScrollText,
   Settings,
   UserCog,
   Users,
@@ -21,7 +23,9 @@ export type AdminNavKey =
   | "messages"
   | "campaigns"
   | "funds"
+  | "stories"
   | "team"
+  | "audit"
   | "settings";
 
 export type AdminNavItem = {
@@ -45,6 +49,8 @@ export const adminNav: readonly AdminNavItem[] = [
   { key: "messages", href: "/admin/messages", icon: Inbox, permission: "messages:view" },
   { key: "campaigns", href: "/admin/campaigns", icon: Flag, permission: "campaigns:manage" },
   { key: "funds", href: "/admin/funds", icon: PiggyBank, permission: "funds:manage" },
+  { key: "stories", href: "/admin/stories", icon: BookOpenText, permission: "stories:manage" },
   { key: "team", href: "/admin/team", icon: UserCog, permission: "team:manage" },
+  { key: "audit", href: "/admin/audit-log", icon: ScrollText, permission: "audit:view" },
   { key: "settings", href: "/admin/settings", icon: Settings },
 ];

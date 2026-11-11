@@ -335,30 +335,7 @@
     "backToStories": "All stories",
     "moreStories": "More stories",
     "publishedOn": "Published {date}",
-    "featuredHeading": "In their words",
-    "items": {
-      "dorm-cookout": {
-        "name": "Jaylen",
-        "role": "Airman First Class, aircraft maintenance",
-        "title": "The cookout that made the dorms feel like home",
-        "summary": "Three months into his first assignment, Jaylen hadn't met anyone outside his shop. A dorm cookout paid for by the morale fund changed that.",
-        "quote": "I knew the people I worked with. After that night, I knew my neighbors."
-      },
-      "study-hall": {
-        "name": "Keisha",
-        "role": "Senior Airman, personnel",
-        "title": "A study group and a room full of mentors",
-        "summary": "Keisha started a weekly study group for Airmen preparing for promotion testing. The professional growth fund paid for the books, and senior NCOs came to help.",
-        "quote": "Leading the group taught me as much as the books did."
-      },
-      "day-room-rebuild": {
-        "name": "Marcus",
-        "role": "Airman, security forces",
-        "title": "Rebuilding the dorm day room",
-        "summary": "Twenty Airmen spent two weekends turning a tired dorm day room into a space people actually use. The community fund bought the paint and furniture.",
-        "quote": "We walk past that room every day. Now it's ours, because we built it."
-      }
-    }
+    "featuredHeading": "In their words"
   },
   "WaysIn": {
     "_reviewed": true,

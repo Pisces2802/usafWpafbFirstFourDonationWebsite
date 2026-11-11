@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 interface Props {
   page: number;
@@ -21,9 +22,6 @@ interface Props {
 }
 
 const PAGE_SIZES = ["10", "20", "50", "100"];
-
-const pageButton =
-  "flex size-9 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-40";
 
 const numberFormat = new Intl.NumberFormat("en-NG");
 
@@ -72,27 +70,31 @@ export const Pagination = ({
           </label>
         )}
         <div className="flex items-center gap-2">
-          <button
+          <Button
             type="button"
+            variant="outline"
+            size="icon-lg"
             aria-label="Previous page"
-            className={pageButton}
+            className="bg-card rounded-full"
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1}
           >
             <ChevronLeft className="size-4" />
-          </button>
+          </Button>
           <span className="min-w-16 text-center font-semibold tabular-nums">
             {page} / {totalPages}
           </span>
-          <button
+          <Button
             type="button"
+            variant="outline"
+            size="icon-lg"
             aria-label="Next page"
-            className={pageButton}
+            className="bg-card rounded-full"
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages}
           >
             <ChevronRight className="size-4" />
-          </button>
+          </Button>
         </div>
       </div>
     </nav>

@@ -12,7 +12,9 @@
     "messages": "Messages",
     "campaigns": "Campaigns",
     "funds": "Funds",
+    "stories": "Stories",
     "team": "Team",
+    "audit": "Audit log",
     "settings": "Settings"
   },
   "noDatabase": {
@@ -25,19 +27,46 @@
   "emptySearch": "Nothing matches that search.",
   "rowCount": "{count, plural, one {# row} other {# rows}}",
   "dashboard": {
-    "lead": "All-time totals, net of refunds. Card fees donors added are counted separately.",
+    "lead": "Totals are all-time and net of refunds. Changes compare the last 30 days with the 30 days before.",
     "net": "Raised",
-    "netHint": "After refunds, excluding added card fees",
-    "gifts": "Gifts",
-    "giftsHint": "Successful charges, including each monthly payment",
     "donors": "Donors",
-    "donorsHint": "People who've given at least once",
+    "average": "Average gift",
     "monthly": "Monthly donors",
     "monthlyHint": "Billed in the last 35 days",
+    "gifts": "Gifts",
     "fees": "Card fees covered",
     "refunded": "Refunded",
+    "change": "vs previous 30 days",
+    "changeNew": "New",
+    "openDonations": "Open donations",
+    "openDonors": "Open donors",
+    "trends": {
+      "heading": "Giving over time",
+      "rangeLabel": "Time range",
+      "ranges": {
+        "daily": "Daily",
+        "weekly": "Weekly",
+        "monthly": "Monthly"
+      },
+      "total": {
+        "daily": "Net raised, last 30 days",
+        "weekly": "Net raised, last 12 weeks",
+        "monthly": "Net raised, last 12 months"
+      },
+      "chartLabel": "Chart of {range}: {total}"
+    },
+    "byFund": {
+      "heading": "Giving by fund",
+      "total": "All time",
+      "empty": "No gifts yet."
+    },
+    "campaigns": {
+      "heading": "Top campaigns",
+      "raised": "{amount} raised of {goal}",
+      "empty": "No campaigns yet."
+    },
     "recentHeading": "Recent gifts",
-    "viewAll": "View all donations",
+    "viewAll": "View all",
     "empty": "No gifts yet. They'll appear here once Stripe sends its first payment."
   },
   "donations": {
@@ -94,12 +123,229 @@
   },
   "comingSoon": "Coming next",
   "campaigns": {
-    "lead": "Time-limited appeals with a goal, like a giving day.",
-    "plan": "Create a campaign with a goal and dates, share its donate link, and track progress against the goal. Gifts made through a campaign link are already tagged, so the numbers will be there when this page is built."
+    "lead": "Time-limited appeals with a goal, like a giving day. Share a campaign link and every gift made through it counts towards the goal.",
+    "new": "New campaign",
+    "emptyTitle": "No campaigns yet",
+    "emptyBody": "Create one with a goal and optional dates, then share its donate link. Gifts made through the link count towards the goal.",
+    "status": {
+      "upcoming": "Upcoming",
+      "live": "Live",
+      "ended": "Ended"
+    },
+    "goal": "Goal {goal}",
+    "progressLabel": "Progress towards the {name} goal",
+    "donors": "Donors",
+    "gifts": "Gifts",
+    "donorCount": "{count, plural, one {# donor} other {# donors}}",
+    "giftCount": "{count, plural, one {# gift} other {# gifts}}",
+    "datesLabel": "Dates",
+    "dates": {
+      "range": "{start} – {end}",
+      "from": "From {start}",
+      "until": "Until {end}",
+      "open": "No dates set"
+    },
+    "copyLink": "Copy link",
+    "copied": "Copied",
+    "copyLinkFor": "Copy the donate link for {name}",
+    "edit": "Edit",
+    "editFor": "Edit {name}",
+    "delete": "Delete",
+    "deleteFor": "Delete {name}",
+    "deleteDialog": {
+      "title": "Delete {name}?",
+      "body": "No gifts have come in through this campaign yet. Its link will stop showing progress, though gifts made through it will still go through."
+    },
+    "notices": {
+      "created": "Created {name}.",
+      "updated": "Saved {name}.",
+      "deleted": "Deleted {name}."
+    },
+    "form": {
+      "createTitle": "New campaign",
+      "editTitle": "Edit campaign",
+      "description": "The link name goes in the campaign link, so keep it short. Dates are in UTC and only label the campaign; gifts made through the link count whenever they come in.",
+      "slug": "Link name",
+      "slugHint": "Lowercase letters, numbers and dashes, like giving-day-2026.",
+      "slugLocked": "Gifts have come in through this link, so it can no longer change.",
+      "goal": "Goal (USD)",
+      "startsOn": "Starts",
+      "endsOn": "Ends",
+      "datesHint": "Both dates are optional.",
+      "cancel": "Cancel",
+      "close": "Close",
+      "create": "Create campaign",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "errors": {
+        "slug": "Use 1–64 lowercase letters, numbers or dashes.",
+        "goal": "Enter a goal between $1 and $1,000,000.",
+        "startsOn": "Enter a valid date.",
+        "endsOn": "Enter a valid date.",
+        "endsBeforeStart": "The end date can’t be before the start date."
+      }
+    }
   },
   "funds": {
-    "lead": "The funds donors can choose from.",
-    "plan": "Turn funds on or off and change their order. Fund names and descriptions live in the translation files, so new funds also need copy in all three languages."
+    "lead": "The funds donors can choose from, in the order they see them. Changes reach the site straight away.",
+    "showOnSite": "Show on site",
+    "hidden": "Hidden",
+    "lastOn": "At least one fund has to stay on.",
+    "raised": "Raised",
+    "gifts": "Gifts",
+    "donors": "Donors",
+    "lastGift": "Last gift",
+    "moveUp": "Move {name} up",
+    "moveDown": "Move {name} down",
+    "notices": {
+      "moved": "Moved {name} to position {position}.",
+      "turnedOn": "{name} is showing on the site again.",
+      "turnedOff": "{name} is hidden from the site. Monthly gifts already set up keep going to it."
+    }
+  },
+  "stories": {
+    "lead": "Stories about what gifts made possible. Write them in English, add Spanish and French when you can, and publish when they’re ready.",
+    "new": "New story",
+    "emptyTitle": "No stories yet",
+    "emptyBody": "Write one about something a gift paid for. It stays a draft, off the site, until you publish it.",
+    "status": {
+      "draft": "Draft",
+      "published": "Published"
+    },
+    "featured": "Featured on home page",
+    "sample": "Sample",
+    "languagesLabel": "Languages",
+    "untitled": "Untitled story",
+    "dated": "Dated {date}",
+    "edit": "Edit",
+    "editFor": "Edit {title}",
+    "view": "View",
+    "viewFor": "View {title} on the site",
+    "delete": "Delete",
+    "deleteFor": "Delete {title}",
+    "deleteDialog": {
+      "title": "Delete “{title}”?",
+      "body": "It comes off the site straight away, along with its link. This can’t be undone.",
+      "cancel": "Cancel",
+      "close": "Close"
+    },
+    "notices": {
+      "created": "Created “{title}”.",
+      "updated": "Saved “{title}”.",
+      "deleted": "Deleted “{title}”."
+    },
+    "errors": {
+      "invalid": "Something in the story wasn’t valid. Check the highlighted fields and try again.",
+      "slugTaken": "Another story already uses that link name.",
+      "notFound": "That story no longer exists. Go back to the list.",
+      "noDatabase": "No database is connected.",
+      "unknown": "That didn’t save. Check your connection and try again."
+    },
+    "backToStories": "All stories",
+    "newTitle": "New story",
+    "editTitle": "Edit story",
+    "form": {
+      "languagesLabel": "Story language",
+      "locales": {
+        "en": "English",
+        "es": "Spanish",
+        "fr": "French"
+      },
+      "localeHint": {
+        "source": "Required. The Spanish and French pages show this version until they’re written.",
+        "other": "Optional. Leave every field empty to show the English version here, or fill in all of them."
+      },
+      "needsAttention": "Needs attention",
+      "title": "Title",
+      "titleHint": "The headline on the story page and its card.",
+      "name": "Name",
+      "nameHint": "Usually a first name only, as the person agreed to share it.",
+      "role": "Role",
+      "roleHint": "Rank and job, like “Airman First Class, aircraft maintenance”.",
+      "summary": "Summary",
+      "summaryHint": "One or two sentences for the story card and search results.",
+      "quote": "Pull quote",
+      "quoteHint": "A line in their own words, shown when the story is on the home page.",
+      "body": "Story",
+      "bodyHint": "Add images with the image button, or paste or drop them in. Select an image to resize it from its corners or describe it for screen readers.",
+      "publishing": "Publishing",
+      "slug": "Link name",
+      "slugHint": "Goes in the story’s web address. Lowercase letters, numbers and dashes.",
+      "fund": "Fund",
+      "fundHint": "The story asks readers to give to this fund.",
+      "publishedOn": "Date",
+      "publishedOnHint": "Shown on the story, and used to order the list.",
+      "published": "Published",
+      "publishedHint": "Drafts aren’t on the site.",
+      "isFeatured": "Feature on the home page",
+      "isFeaturedHint": "Replaces the story featured now. With none featured, the newest is shown.",
+      "isSample": "Sample story",
+      "isSampleHint": "Labels it as written to show the layout, not a real account.",
+      "create": "Create story",
+      "save": "Save changes",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "errors": {
+        "required": "Fill this in.",
+        "incomplete": "Fill this in too, or clear this language’s other fields to show English.",
+        "tooLong": "That’s longer than {max} characters.",
+        "slug": "Use lowercase letters, numbers and single dashes.",
+        "fundId": "Pick a fund.",
+        "publishedOn": "Pick a date."
+      },
+      "bodyHintNoImages": "Images are off until Cloudinary is set up (CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY and CLOUDINARY_API_SECRET)."
+    },
+    "editor": {
+      "toolbarLabel": "Formatting",
+      "placeholder": "Tell the story…",
+      "undo": "Undo",
+      "redo": "Redo",
+      "paragraph": "Paragraph",
+      "heading2": "Heading",
+      "heading3": "Subheading",
+      "bold": "Bold",
+      "italic": "Italic",
+      "underline": "Underline",
+      "strike": "Strikethrough",
+      "subscript": "Subscript",
+      "superscript": "Superscript",
+      "highlight": "Highlight",
+      "textColor": "Text color",
+      "bulletList": "Bulleted list",
+      "orderedList": "Numbered list",
+      "blockquote": "Quote",
+      "alignLeft": "Align left",
+      "alignCenter": "Center",
+      "alignRight": "Align right",
+      "alignJustify": "Justify",
+      "divider": "Divider",
+      "colors": {
+        "default": "Default",
+        "blue": "Blue",
+        "red": "Red",
+        "green": "Green",
+        "amber": "Amber",
+        "gray": "Gray"
+      },
+      "link": {
+        "button": "Link",
+        "label": "Link address",
+        "apply": "Apply",
+        "remove": "Remove link",
+        "invalid": "Enter a web address, like https://example.org."
+      },
+      "image": {
+        "button": "Image",
+        "uploading": "Uploading image…",
+        "tooLarge": "Images can be up to 5 MB.",
+        "type": "Use a JPEG, PNG, WebP or GIF image.",
+        "failed": "The image didn’t upload. Try again.",
+        "describe": "Describe image",
+        "altLabel": "Image description",
+        "altHint": "What someone who can’t see the image needs to know. Leave empty if it’s only decoration.",
+        "apply": "Save description"
+      }
+    }
   },
   "values": {
     "frequency": {
@@ -208,7 +454,21 @@
     "resendInviteFor": "Resend invite to {name}",
     "invited": "Invite sent",
     "copyLink": "Copy link",
-    "copied": "Copied"
+    "copied": "Copied",
+    "changeRole": "Change role",
+    "roleDialog": {
+      "title": "Change {name}’s role",
+      "save": "Save role"
+    },
+    "removeDialog": {
+      "title": "Remove {name}’s access?",
+      "body": "{name} will be signed out straight away and won’t be able to sign in. You can restore their access later."
+    },
+    "notices": {
+      "roleChanged": "{name} is now {role}.",
+      "accessRemoved": "Removed {name}’s access.",
+      "accessRestored": "Restored {name}’s access."
+    }
   },
   "roles": {
     "owner": {
@@ -221,7 +481,7 @@
     },
     "coordinator": {
       "name": "Coordinator",
-      "description": "Volunteers and messages with their exports."
+      "description": "Volunteers and messages with their exports, plus stories."
     },
     "viewer": {
       "name": "Viewer",
@@ -240,7 +500,10 @@
     "messages:export": "Export messages",
     "campaigns:manage": "Manage campaigns",
     "funds:manage": "Manage funds",
-    "team:manage": "Add people and change roles"
+    "stories:manage": "Write and publish stories",
+    "team:manage": "Add people and change roles",
+    "settings:manage": "Change platform settings",
+    "audit:view": "See the audit log"
   },
   "signOut": "Sign out",
   "auth": {
@@ -249,6 +512,8 @@
     "newPassword": "New password",
     "confirmPassword": "Confirm new password",
     "currentPassword": "Current password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
     "passwordHint": "At least 12 characters. A few unrelated words is easy to remember and hard to guess.",
     "unavailable": "Sign-in isn’t set up yet. The site needs a database and AUTH_SECRET.",
     "signIn": {
@@ -334,7 +599,8 @@
       "wrongCode": "That code didn’t work. Check the app and try again.",
       "wrongPassword": "Your current password isn’t right.",
       "linkInvalid": "This link has expired or was already used.",
-      "unknown": "Something went wrong. Try again."
+      "unknown": "Something went wrong. Try again.",
+      "timeZone": "Choose a time zone from the list."
     },
     "emails": {
       "invite": {
@@ -351,11 +617,48 @@
         "instructions": "Someone asked to reset the password for {email}. If it was you, choose a new one with the button below. The link works once and expires in an hour.",
         "button": "Choose a new password",
         "footer": "If you didn’t ask for this, ignore it. Your password hasn’t changed."
+      },
+      "security": {
+        "unknownIp": "an unknown address",
+        "details": "When: {when}. From: {ip}.",
+        "notYou": "If this wasn’t you, change your password now and tell an owner.",
+        "button": "Review security settings",
+        "footer": "You get these emails because security alerts are on in your back office settings.",
+        "signedIn": {
+          "subject": "New sign-in to the {orgName} back office",
+          "heading": "You signed in",
+          "body": "Your back office account was just signed in to with your password and authenticator app."
+        },
+        "recoveryCodeUsed": {
+          "subject": "A recovery code was used on your {orgName} account",
+          "heading": "A recovery code was used",
+          "body": "Someone signed in to your back office account with one of your recovery codes. Each code works once, so make new ones if you’re running low."
+        },
+        "passwordChanged": {
+          "subject": "Your {orgName} back office password changed",
+          "heading": "Your password changed",
+          "body": "The password for your back office account was changed from Settings. Your other devices were signed out."
+        },
+        "passwordReset": {
+          "subject": "Your {orgName} back office password was reset",
+          "heading": "Your password was reset",
+          "body": "The password for your back office account was reset with an emailed link. Every device was signed out."
+        },
+        "twoFactorEnabled": {
+          "subject": "Two-step verification is on for your {orgName} account",
+          "heading": "Two-step verification is on",
+          "body": "An authenticator app was set up for your back office account. You’ll need a code from it each time you sign in."
+        },
+        "recoveryCodesRegenerated": {
+          "subject": "New recovery codes for your {orgName} account",
+          "heading": "You made new recovery codes",
+          "body": "New recovery codes were made for your back office account. The old ones no longer work."
+        }
       }
     }
   },
   "settings": {
-    "lead": "Your name, password and sign-in security.",
+    "lead": "Your account, security and preferences, plus settings for the whole site.",
     "profile": {
       "title": "Profile",
       "name": "Name",
@@ -387,6 +690,211 @@
       "others": "{count, plural, =0 {You aren’t signed in anywhere else.} one {You’re also signed in on # other device.} other {You’re also signed in on # other devices.}}",
       "signOutOthers": "Sign out other devices",
       "signingOut": "Signing out…"
+    },
+    "save": "Save changes",
+    "saving": "Saving…",
+    "saved": "Saved.",
+    "errors": {
+      "invalid": "Some settings weren’t valid. Check them and try again.",
+      "unavailable": "Settings can’t be saved without a database."
+    },
+    "tabs": {
+      "label": "Settings sections",
+      "account": "Account",
+      "security": "Security",
+      "notifications": "Notifications",
+      "preferences": "Preferences",
+      "platform": "Platform"
+    },
+    "notifications": {
+      "title": "Email notifications",
+      "lead": "Choose what we email to {email}.",
+      "emailOff": "Email isn’t set up on this site yet (RESEND_API_KEY and EMAIL_FROM), so nothing will be sent until it is.",
+      "notifyVolunteers": {
+        "label": "New volunteer sign-ups",
+        "hint": "A copy of each volunteer form as it comes in. The team inbox gets these too."
+      },
+      "notifyMessages": {
+        "label": "New contact messages",
+        "hint": "A copy of each contact form message. Reply to the email to answer the sender."
+      },
+      "notifySecurity": {
+        "label": "Security alerts",
+        "hint": "When you sign in, change your password, or use or replace recovery codes. We recommend keeping this on."
+      }
+    },
+    "preferences": {
+      "title": "Display",
+      "lead": "How the back office looks for you. Other people’s settings aren’t affected.",
+      "timeZone": "Time zone",
+      "timeZoneHint": "Dates and times in tables and the audit log use this zone.",
+      "siteDefault": "Site default ({zone})",
+      "pageSize": "Rows per page",
+      "pageSizeHint": "How many rows tables show before you page through them.",
+      "rows": "{count} rows"
+    },
+    "platform": {
+      "title": "Platform",
+      "lead": "Settings for the whole site and everyone on the team. Every change is recorded in the audit log.",
+      "inbox": "Team inbox",
+      "inboxHintFallback": "Volunteer sign-ups and contact messages are emailed here. Leave it empty to use {email} from ORG_NOTIFY_EMAIL.",
+      "inboxHintNone": "Volunteer sign-ups and contact messages are emailed here. If it’s empty they’re only saved in the back office and sent to anyone who turned those notifications on.",
+      "donationsPaused": "Pause online giving",
+      "donationsPausedHint": "Visitors can’t start a new gift; the donate form says giving is unavailable. Monthly gifts already set up keep going.",
+      "sessionHours": "Stay signed in for",
+      "sessionHoursHint": "Applies from each person’s next sign-in.",
+      "hours": "{count, plural, one {# hour} other {# hours}}",
+      "lastChange": "Last changed by {name} on {when}.",
+      "someone": "someone no longer on the team"
+    }
+  },
+  "audit": {
+    "lead": "Who did what in the back office: sign-ins, team, campaign, fund, story and settings changes, and data downloads. Newest first.",
+    "empty": "Nothing recorded yet.",
+    "allActivity": "All activity",
+    "filterLabel": "Show activity",
+    "commandLine": "Command line",
+    "unknownPerson": "Unknown person",
+    "none": "none",
+    "yes": "Yes",
+    "no": "No",
+    "columns": {
+      "when": "When",
+      "who": "Who",
+      "action": "Action",
+      "target": "For",
+      "details": "Details",
+      "ip": "IP address"
+    },
+    "categories": {
+      "auth": "Sign-in",
+      "account": "Account",
+      "team": "Team",
+      "data": "Data",
+      "platform": "Platform",
+      "campaign": "Campaigns",
+      "fund": "Funds",
+      "story": "Stories"
+    },
+    "methods": {
+      "authenticator": "Authenticator app",
+      "recovery_code": "Recovery code"
+    },
+    "details": {
+      "method": "With",
+      "role": "Role",
+      "emailed": "Emailed",
+      "rows": "Rows",
+      "created": "New person",
+      "resetTwoFactor": "Two-step reset",
+      "notifyVolunteers": "Volunteer emails",
+      "notifyMessages": "Message emails",
+      "notifySecurity": "Security alerts",
+      "timeZone": "Time zone",
+      "pageSize": "Rows per page",
+      "inboxEmail": "Team inbox",
+      "donationsPaused": "Giving paused",
+      "sessionHours": "Sign-in hours",
+      "goal": "Goal (USD)",
+      "slug": "Link name",
+      "startsOn": "Starts",
+      "endsOn": "Ends",
+      "order": "Order",
+      "status": "Status",
+      "fund": "Fund",
+      "languages": "Languages",
+      "featured": "Featured"
+    },
+    "actions": {
+      "auth": {
+        "signed_in": "Signed in",
+        "sign_in_failed": "Wrong email or password",
+        "sign_in_locked": "Tried to sign in while locked",
+        "two_factor_failed": "Too many wrong codes",
+        "signed_out": "Signed out",
+        "invite_accepted": "Accepted invite and set a password",
+        "password_reset": "Reset password from an emailed link",
+        "two_factor_enabled": "Turned on two-step verification"
+      },
+      "account": {
+        "name_changed": "Changed their name",
+        "password_changed": "Changed their password",
+        "recovery_codes_regenerated": "Made new recovery codes",
+        "other_sessions_ended": "Signed out other devices",
+        "notifications_changed": "Changed email notifications",
+        "preferences_changed": "Changed display preferences"
+      },
+      "team": {
+        "invited": "Added a person",
+        "invite_resent": "Sent a new invite link",
+        "role_changed": "Changed a role",
+        "access_removed": "Removed access",
+        "access_restored": "Restored access",
+        "updated_from_cli": "Added or updated from the command line"
+      },
+      "data": {
+        "exported": "Downloaded a CSV"
+      },
+      "platform": {
+        "settings_changed": "Changed platform settings"
+      },
+      "campaign": {
+        "created": "Created a campaign",
+        "updated": "Changed a campaign",
+        "deleted": "Deleted a campaign"
+      },
+      "fund": {
+        "turned_on": "Showed a fund on the site",
+        "turned_off": "Hid a fund from the site",
+        "reordered": "Changed the fund order"
+      },
+      "story": {
+        "created": "Created a story",
+        "updated": "Changed a story",
+        "deleted": "Deleted a story"
+      }
+    }
+  },
+  "datePicker": {
+    "selectDate": "Select date",
+    "startDate": "Start date",
+    "endDate": "End date",
+    "clearDate": "Clear date",
+    "clearDates": "Clear dates",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "previousYears": "Previous years",
+    "nextYears": "Next years",
+    "pickYear": "Pick a year",
+    "sunday": "Su",
+    "monday": "Mo",
+    "tuesday": "Tu",
+    "wednesday": "We",
+    "thursday": "Th",
+    "friday": "Fr",
+    "saturday": "Sa"
+  },
+  "table": {
+    "rowActions": "Row actions",
+    "actionsFor": "Actions for {name}",
+    "selectAll": "Select all rows",
+    "selectRow": "Select row"
+  },
+  "actions": {
+    "email": "Send email",
+    "emailDonor": "Email donor",
+    "reply": "Reply by email",
+    "replySubject": "Re: {topic}"
+  },
+  "catalog": {
+    "errors": {
+      "invalid": "Something in that change wasn’t valid. Check it and try again.",
+      "slugTaken": "Another campaign already uses that link name.",
+      "notFound": "That campaign no longer exists. Refresh the page.",
+      "hasGifts": "Gifts have come in through this campaign, so its link can’t change and it can’t be deleted.",
+      "lastFund": "At least one fund has to stay on.",
+      "noDatabase": "No database is connected.",
+      "unknown": "That didn’t save. Check your connection and try again."
     }
   }
 }

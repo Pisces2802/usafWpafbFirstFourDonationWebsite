@@ -78,6 +78,10 @@ export const useHeroVideo = (baseUrl?: string) => {
         src: `${baseUrl}/${isSmallScreen ? "hero-720" : "hero-1080"}.webm`,
         type: "video/webm",
       },
+      {
+        src: `${baseUrl}/hero-720.mp4`,
+        type: "video/mp4",
+      },
     ];
   }, [baseUrl, isSmallScreen]);
 

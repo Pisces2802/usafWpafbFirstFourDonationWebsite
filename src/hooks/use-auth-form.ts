@@ -59,6 +59,7 @@ export const useAuthForm = <TInput extends FieldValues, TOutput, TData extends o
 
   return {
     register: form.register,
+    control: form.control,
     reset: form.reset,
     submit,
     fieldError,

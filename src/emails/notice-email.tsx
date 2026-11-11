@@ -23,7 +23,7 @@ const colors = {
 };
 
 const font =
-  "'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
+  "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 
 export type NoticeEmailProps = {
   lang: string;

@@ -12,12 +12,36 @@ import { FrequencyToggle } from "@/components/donation/frequency-toggle";
 import { FundPicker } from "@/components/donation/fund-picker";
 import { TextField } from "@/components/donation/text-field";
 import { Checkbox } from "@/components/ui/checkbox";
+import type { FundId } from "@/config/donation";
 import { siteConfig } from "@/config/site";
+import { useAvailableFund } from "@/hooks/use-available-fund";
 import { DONATE_FIELD_IDS, type TributeType, useDonateForm } from "@/hooks/use-donate-form";
 import { useDonationTotals } from "@/hooks/use-donation-totals";
 import { useFormatMoney } from "@/hooks/use-format-money";
 import type { FeeRates } from "@/lib/fees";
+import type { CampaignProgress } from "@/lib/campaign-progress";
 import { cn } from "@/lib/utils";
+
+const CampaignProgressBar = ({ progress }: { progress: CampaignProgress }) => {
+  const ratio = progress.goalCents > 0 ? progress.raisedCents / progress.goalCents : 0;
+  const percent = Math.min(Math.round(ratio * 100), 100);
+  return (
+    <div className="flex flex-col gap-2">
+      <div
+        role="progressbar"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={percent}
+        className="bg-muted h-2 overflow-hidden rounded-full"
+      >
+        <div
+          className="bg-primary h-full rounded-full transition-[width] duration-500"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+    </div>
+  );
+};
 
 const TRIBUTE_TYPES = ["honour", "memory"] as const satisfies readonly TributeType[];
 
@@ -25,17 +49,21 @@ const checkboxRowClassName =
   "flex min-h-11 cursor-pointer items-start gap-3 py-2 [&_[data-slot=checkbox]]:mt-1";
 
 type DonateFormProps = {
+  funds: readonly FundId[];
   feeRates: FeeRates;
   isTaxDeductible: boolean;
   stripePublishableKey: string | null;
   turnstileSiteKey: string | null;
+  campaignProgress: CampaignProgress | null;
 };
 
 export const DonateForm = ({
+  funds,
   feeRates,
   isTaxDeductible,
   stripePublishableKey,
   turnstileSiteKey,
+  campaignProgress,
 }: DonateFormProps) => {
   const t = useTranslations("Donate");
   const locale = useLocale();
@@ -65,6 +93,7 @@ export const DonateForm = ({
     isCheckoutEnabled: stripePublishableKey !== null,
     requiresTurnstile: turnstileSiteKey !== null,
   });
+  useAvailableFund(funds);
   const totals = useDonationTotals(feeRates);
   const { frequency, amountCents, customError, selectFrequency } = amount;
 
@@ -88,10 +117,12 @@ export const DonateForm = ({
         <div className="flex min-w-0 flex-col gap-6">
           {errors.length > 0 && <ErrorSummary ref={errorSummaryRef} fields={errors} />}
 
+          {campaignProgress && <CampaignProgressBar progress={campaignProgress} />}
+
           <FormStep id="donate-step-gift" step={1} title={t("stepGift")}>
             <FrequencyToggle value={frequency} onChange={selectFrequency} className="sm:max-w-xs" />
             <AmountPicker amount={amount} inputId={DONATE_FIELD_IDS.amount} />
-            <FundPicker value={fundId} onChange={selectFund} />
+            <FundPicker funds={funds} value={fundId} onChange={selectFund} />
 
             <label className={cn(checkboxRowClassName, "border-t pt-6")}>
               <Checkbox checked={coverFees} onCheckedChange={toggleCoverFees} />

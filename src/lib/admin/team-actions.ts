@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import { type Db, getDb } from "@/db";
 import { type AdminUser, requireAdmin } from "@/lib/admin/access";
+import { personLabel, recordAudit } from "@/lib/admin/audit";
 import { createAuthLink, sendInviteEmail } from "@/lib/admin/auth/links";
 import { findAdminById } from "@/lib/admin/auth/queries";
 import { ADMIN_ROLES } from "@/lib/admin/permissions";
@@ -37,12 +38,19 @@ const invite = async (
   db: Db,
   actor: AdminUser,
   person: { id: number; name: string; email: string; role: (typeof ADMIN_ROLES)[number] },
+  resent = false,
 ) => {
   const link = await createAuthLink(db, person.id, "verify_email");
   const emailed = await sendInviteEmail(person, {
     link,
     role: person.role,
     invitedBy: actor.name,
+  });
+  await recordAudit(db, {
+    actor,
+    action: resent ? "team.invite_resent" : "team.invited",
+    target: personLabel(person),
+    details: { role: person.role, emailed },
   });
   return { ok: true as const, emailed, inviteLink: emailed ? null : link };
 };
@@ -65,18 +73,43 @@ export const resendInvite = async (id: unknown): Promise<InviteResult> => {
     const person = await findAdminById(db, parsed.data);
     if (!person || !person.isActive) return { ok: false, error: "notFound" };
     if (person.emailVerifiedAt) return { ok: false, error: "alreadySetUp" };
-    return invite(db, actor, person);
+    return invite(db, actor, person, true);
   });
 };
 
 export const changeAdminUserRole = async (id: unknown, role: unknown): Promise<TeamResult> => {
   const parsed = z.tuple([idSchema, z.enum(ADMIN_ROLES)]).safeParse([id, role]);
   if (!parsed.success) return { ok: false, error: "invalid" };
-  return teamChange((db) => updateAdminUserRole(db, ...parsed.data));
+  const [personId, newRole] = parsed.data;
+  return teamChange(async (db, actor) => {
+    const person = await findAdminById(db, personId);
+    const result = await updateAdminUserRole(db, personId, newRole);
+    if (result.ok && person && person.role !== newRole) {
+      await recordAudit(db, {
+        actor,
+        action: "team.role_changed",
+        target: personLabel(person),
+        details: { from: person.role, to: newRole },
+      });
+    }
+    return result;
+  });
 };
 
 export const setAdminUserAccess = async (id: unknown, isActive: unknown): Promise<TeamResult> => {
   const parsed = z.tuple([idSchema, z.boolean()]).safeParse([id, isActive]);
   if (!parsed.success) return { ok: false, error: "invalid" };
-  return teamChange((db) => setAdminUserActive(db, ...parsed.data));
+  const [personId, active] = parsed.data;
+  return teamChange(async (db, actor) => {
+    const person = await findAdminById(db, personId);
+    const result = await setAdminUserActive(db, personId, active);
+    if (result.ok && person && person.isActive !== active) {
+      await recordAudit(db, {
+        actor,
+        action: active ? "team.access_restored" : "team.access_removed",
+        target: personLabel(person),
+      });
+    }
+    return result;
+  });
 };

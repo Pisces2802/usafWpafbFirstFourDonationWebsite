@@ -7,42 +7,50 @@ import { SampleBadge } from "@/components/stories/sample-badge";
 import { StoryCard } from "@/components/stories/story-card";
 import { StoryPortrait } from "@/components/stories/story-portrait";
 import { buttonVariants } from "@/components/ui/button";
-import { getStory, stories } from "@/config/stories";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/metadata";
+import { getPublishedStories, getPublishedStory } from "@/lib/stories/queries";
 import { cn } from "@/lib/utils";
 
 type StoryPageProps = PageProps<"/[locale]/stories/[slug]">;
 
-export const generateStaticParams = () => stories.map(({ slug }) => ({ slug }));
+/**
+ * Stories published at build time are prerendered; ones published later render on first visit and
+ * are cached from then on. Cache Components needs at least one param, so with no stories yet a
+ * placeholder stands in and shows the not-found page.
+ */
+export const generateStaticParams = async () => {
+  const stories = await getPublishedStories("en");
+  return stories.length ? stories.map(({ slug }) => ({ slug })) : [{ slug: "__none__" }];
+};
 
 export const generateMetadata = async ({ params }: StoryPageProps): Promise<Metadata> => {
   const { locale, slug } = (await params) as { locale: Locale; slug: string };
-  const story = getStory(slug);
+  const story = await getPublishedStory(slug, locale);
   if (!story) return {};
 
-  const t = await getTranslations({ locale, namespace: "Stories" });
   return buildPageMetadata({
     locale,
     href: { pathname: "/stories/[slug]", params: { slug } },
-    title: t(`items.${story.slug}.title`),
-    description: t(`items.${story.slug}.summary`),
+    title: story.title,
+    description: story.summary,
   });
 };
 
 const StoryPage = async ({ params }: StoryPageProps) => {
   const { locale, slug } = (await params) as { locale: Locale; slug: string };
-  const story = getStory(slug);
+  const story = await getPublishedStory(slug, locale);
   if (!story) notFound();
 
   const t = await getTranslations("Stories");
   const tFunds = await getTranslations("Funds");
   const format = await getFormatter();
-  const { default: Body } = await story.body[locale]();
-  const name = t(`items.${story.slug}.name`);
+  const { name } = story;
   const fund = tFunds(`${story.fundId}.name`);
-  const otherStories = stories.filter((other) => other.slug !== story.slug);
+  const otherStories = (await getPublishedStories(locale)).filter(
+    (other) => other.slug !== story.slug,
+  );
 
   return (
     <>
@@ -61,16 +69,17 @@ const StoryPage = async ({ params }: StoryPageProps) => {
               <span className="text-primary font-semibold">{fund}</span>
               {story.isSample && <SampleBadge label={t("sampleBadge")} />}
             </div>
-            <h1 className="headline mt-4 text-4xl sm:text-5xl lg:text-6xl">
-              {t(`items.${story.slug}.title`)}
-            </h1>
+            <h1 className="headline mt-4 text-4xl sm:text-5xl lg:text-6xl">{story.title}</h1>
             <p className="mt-6 text-xl">
               <span className="font-semibold">{name}</span>
-              <span className="text-muted-foreground">, {t(`items.${story.slug}.role`)}</span>
+              <span className="text-muted-foreground">, {story.role}</span>
             </p>
             <p className="text-muted-foreground mt-2 text-sm">
               {t("publishedOn", {
-                date: format.dateTime(new Date(story.publishedAt), { dateStyle: "long" }),
+                date: format.dateTime(new Date(`${story.publishedOn}T00:00:00Z`), {
+                  dateStyle: "long",
+                  timeZone: "UTC",
+                }),
               })}
             </p>
           </div>
@@ -85,7 +94,8 @@ const StoryPage = async ({ params }: StoryPageProps) => {
 
         <div className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <div className="max-w-[65ch] min-w-0">
-            <Body />
+            {/* Sanitised when it was saved; see `sanitizeStoryHtml`. */}
+            <div className="story-body" dangerouslySetInnerHTML={{ __html: story.body }} />
           </div>
           <aside className="lg:pt-2">
             <div className="bg-card ring-foreground/10 rounded-xl p-6 ring-1 lg:sticky lg:top-28">
@@ -105,20 +115,22 @@ const StoryPage = async ({ params }: StoryPageProps) => {
         </div>
       </article>
 
-      <section aria-labelledby="more-stories-heading" className="bg-muted/60 border-t">
-        <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-8 lg:py-20">
-          <h2 id="more-stories-heading" className="headline text-4xl">
-            {t("moreStories")}
-          </h2>
-          <ul className="mt-10 grid gap-6 md:grid-cols-2">
-            {otherStories.map((other) => (
-              <li key={other.slug} className="flex">
-                <StoryCard story={other} headingLevel="h3" />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      {otherStories.length > 0 && (
+        <section aria-labelledby="more-stories-heading" className="bg-muted/60 border-t">
+          <div className="mx-auto w-full max-w-7xl px-4 py-16 sm:px-8 lg:py-20">
+            <h2 id="more-stories-heading" className="headline text-4xl">
+              {t("moreStories")}
+            </h2>
+            <ul className="mt-10 grid gap-6 md:grid-cols-2">
+              {otherStories.map((other) => (
+                <li key={other.slug} className="flex">
+                  <StoryCard story={other} headingLevel="h3" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
     </>
   );
 };

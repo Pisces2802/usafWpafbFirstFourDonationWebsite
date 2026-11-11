@@ -1,10 +1,11 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { ActionBand } from "@/components/layout/action-band";
 import { PageHeader } from "@/components/layout/page-header";
 import { StoryCard } from "@/components/stories/story-card";
-import { stories } from "@/config/stories";
+import type { Locale } from "@/i18n/routing";
 import { getPageMetadata } from "@/lib/metadata";
+import { getPublishedStories } from "@/lib/stories/queries";
 
 export const generateMetadata = ({ params }: PageProps<"/[locale]/stories">) =>
   getPageMetadata(params, {
@@ -17,6 +18,7 @@ export const generateMetadata = ({ params }: PageProps<"/[locale]/stories">) =>
 const StoriesPage = async () => {
   const t = await getTranslations("Stories");
   const tAbout = await getTranslations("About");
+  const stories = await getPublishedStories((await getLocale()) as Locale);
 
   return (
     <>

@@ -7,6 +7,15 @@ import { useTranslations } from "next-intl";
 import { adminNav, type AdminNavKey } from "@/config/admin-navigation";
 import { cn } from "@/lib/utils";
 
+const NAV_CLASS =
+  "bg-card border-b lg:sticky lg:top-16 lg:h-[calc(100svh-4rem)] lg:w-60 lg:shrink-0 lg:border-r lg:border-b-0";
+
+/**
+ * The empty sidebar shown while the role's sections load. It reads no URL, so pages under a
+ * dynamic segment, like a story's edit page, can still prerender around it.
+ */
+export const SidebarFallback = () => <nav aria-hidden="true" className={NAV_CLASS} />;
+
 const isActive = (pathname: string, href: string) =>
   href === "/admin" ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
 
@@ -19,10 +28,7 @@ export const Sidebar = ({ keys }: { keys: readonly AdminNavKey[] }) => {
   const pathname = usePathname();
 
   return (
-    <nav
-      aria-label={t("navLabel")}
-      className="bg-card border-b lg:sticky lg:top-16 lg:h-[calc(100svh-4rem)] lg:w-60 lg:shrink-0 lg:border-r lg:border-b-0"
-    >
+    <nav aria-label={t("navLabel")} className={NAV_CLASS}>
       <ul className="flex gap-1 overflow-x-auto px-2 py-2 lg:flex-col lg:px-3 lg:py-4">
         {adminNav
           .filter((item) => keys.includes(item.key))

@@ -2,8 +2,8 @@
 
 import { useTranslations } from "next-intl";
 
+import { PasswordField } from "@/components/admin/auth/password-field";
 import { AuthAlert, AuthSubmit } from "@/components/admin/auth/auth-parts";
-import { TextField } from "@/components/donation/text-field";
 import { useAuthForm } from "@/hooks/use-auth-form";
 import { acceptInvite, resetPassword } from "@/lib/admin/auth/actions";
 import { newPasswordSchema } from "@/lib/admin/auth/schema";
@@ -32,9 +32,8 @@ export const SetPasswordForm = ({ token, purpose, email }: SetPasswordFormProps)
     <form noValidate onSubmit={submit} className="flex flex-col gap-5">
       <AuthAlert>{error && t(`errors.${error}`)}</AuthAlert>
       <input type="email" name="username" autoComplete="username" value={email} readOnly hidden />
-      <TextField
+      <PasswordField
         id="new-password"
-        type="password"
         label={t("newPassword")}
         hint={t("passwordHint")}
         autoComplete="new-password"
@@ -42,9 +41,8 @@ export const SetPasswordForm = ({ token, purpose, email }: SetPasswordFormProps)
         error={message(fieldError("password"))}
         {...register("password")}
       />
-      <TextField
+      <PasswordField
         id="confirm-password"
-        type="password"
         label={t("confirmPassword")}
         autoComplete="new-password"
         error={message(fieldError("confirmPassword"))}

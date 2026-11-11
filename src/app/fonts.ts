@@ -1,4 +1,4 @@
-import { Archivo, Public_Sans } from "next/font/google";
+import { Archivo, Inter } from "next/font/google";
 
 export const archivo = Archivo({
   subsets: ["latin", "latin-ext"],
@@ -7,11 +7,11 @@ export const archivo = Archivo({
   display: "swap",
 });
 
-export const publicSans = Public_Sans({
+export const inter = Inter({
   subsets: ["latin", "latin-ext"],
-  variable: "--font-public-sans",
+  variable: "--font-inter",
   display: "swap",
 });
 
 /** Font variables for a root layout's `<html>` class. */
-export const fontVariables = `${archivo.variable} ${publicSans.variable}`;
+export const fontVariables = `${archivo.variable} ${inter.variable}`;

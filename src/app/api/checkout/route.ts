@@ -2,6 +2,8 @@ import { getTranslations } from "next-intl/server";
 import type Stripe from "stripe";
 
 import { type CheckoutError, checkoutRequestSchema } from "@/lib/donation-schema";
+import { readPlatformSettings } from "@/lib/admin/platform-settings";
+import { getActiveFunds } from "@/lib/fund-settings";
 import { getClientIp, isRateLimited } from "@/lib/rate-limit";
 import { verifyTurnstile } from "@/lib/turnstile";
 import { getPathname } from "@/i18n/navigation";
@@ -29,12 +31,14 @@ export const POST = async (request: Request) => {
 
   const stripe = getStripe();
   if (!stripe) return fail("unavailable", 503);
+  if ((await readPlatformSettings()).donationsPaused) return fail("unavailable", 503);
 
   const verification = await verifyTurnstile(parsed.data.turnstileToken, ip);
   if (verification === "unconfigured") return fail("unavailable", 503);
   if (verification === "failed") return fail("verification_failed", 403);
 
   const { donation, locale } = parsed.data;
+  if (!(await getActiveFunds()).includes(donation.fundId)) return fail("invalid", 400);
   const { feeCents } = grossUpCents(donation.amountCents, {
     pct: env.STRIPE_PCT_FEE,
     fixedCents: env.STRIPE_FIXED_FEE_CENTS,

@@ -1,13 +1,14 @@
 import { ArrowRight, Check } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { ActionBand } from "@/components/layout/action-band";
 import { PageHeader } from "@/components/layout/page-header";
 import { buttonVariants } from "@/components/ui/button";
-import { FUND_IDS } from "@/config/donation";
-import { stories } from "@/config/stories";
 import { Link } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
+import { getActiveFunds } from "@/lib/fund-settings";
 import { getPageMetadata } from "@/lib/metadata";
+import { getPublishedStories } from "@/lib/stories/queries";
 import { cn } from "@/lib/utils";
 
 const STEPS = ["idea", "plan", "run"] as const;
@@ -26,6 +27,8 @@ const ProgramsPage = async () => {
   const tFunds = await getTranslations("Funds");
   const tStories = await getTranslations("Stories");
   const tAbout = await getTranslations("About");
+  const funds = await getActiveFunds();
+  const stories = await getPublishedStories((await getLocale()) as Locale);
 
   return (
     <>
@@ -64,7 +67,7 @@ const ProgramsPage = async () => {
             {t("fundsHeading")}
           </h2>
           <ul className="mt-10 flex flex-col gap-6">
-            {FUND_IDS.map((id) => {
+            {funds.map((id) => {
               const story = stories.find((candidate) => candidate.fundId === id);
               const name = tFunds(`${id}.name`);
 
@@ -95,7 +98,7 @@ const ProgramsPage = async () => {
                             "text-primary",
                           )}
                         >
-                          {tStories("readStory", { name: tStories(`items.${story.slug}.name`) })}
+                          {tStories("readStory", { name: story.name })}
                           <ArrowRight aria-hidden="true" />
                         </Link>
                       )}
