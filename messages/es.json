@@ -30,7 +30,8 @@
     "donorPrivacy": "Privacidad de donantes",
     "terms": "Términos de uso",
     "donate": "Donar",
-    "thankYou": "Gracias"
+    "thankYou": "Gracias",
+    "manageGiving": "Gestiona tu donación mensual"
   },
   "Home": {
     "_reviewed": false,
@@ -126,6 +127,11 @@
     "submitting": "Abriendo el pago seguro…",
     "checkoutHeading": "Pago",
     "editGift": "Cambiar tu donación",
+    "paused": {
+      "heading": "Las donaciones en línea están en pausa por ahora",
+      "body": "En este momento no aceptamos donaciones en el sitio web. Escríbenos si quieres donar de otra forma o saber cuándo volveremos a aceptarlas.",
+      "cta": "Contáctanos"
+    },
     "checkoutStatus": {
       "verifying": "Todavía estamos verificando tu conexión. Inténtalo de nuevo en unos segundos.",
       "invalid": "Algo en el formulario no se procesó. Revisa tus datos e inténtalo de nuevo.",
@@ -146,7 +152,7 @@
     "confirmation": "{frequency, select, monthly {Tu donación mensual de {amount} para {fund} quedó activa y el pago de hoy se realizó.} other {Tu donación de {amount} para {fund} se realizó con éxito.}}",
     "tribute": "{type, select, memory {En memoria de {name}.} other {En honor de {name}.}}",
     "receipt": "Tu recibo va en camino a {email}.",
-    "manageMonthly": "Para cambiar o cancelar tu donación mensual, <link>escríbenos</link>.",
+    "manageMonthly": "Puedes <link>actualizar tu tarjeta o cancelar tu donación mensual</link> cuando quieras.",
     "shareHeading": "Compártelo",
     "shareBody": "¿Conoces a alguien que quiera ayudar? Envíale un enlace a {orgName}.",
     "share": "Compartir enlace",
@@ -179,7 +185,15 @@
     "tributeNote": "{type, select, memory {En memoria de {name}.} other {En honor de {name}.}}",
     "taxNote": "{orgName} es una organización sin fines de lucro 501(c)(3), EIN {ein}. No se entregaron bienes ni servicios a cambio de esta donación. Conserva este recibo para tu declaración de impuestos.",
     "plainNote": "Tu donación apoya eventos de moral, crecimiento profesional y proyectos comunitarios dirigidos por aviadores de rango inicial. Gracias por respaldarlos.",
-    "monthlyNote": "Esta donación se repite cada mes. Para cambiarla o cancelarla, escríbenos.",
+    "monthlyNote": "Esta donación se repite cada mes. Puedes actualizar tu tarjeta o cancelarla cuando quieras.",
+    "cancelSubject": "Tu donación mensual a {orgName} ha terminado",
+    "cancelPreview": "Tu donación mensual ha terminado y no se te volverá a cobrar.",
+    "cancelHeading": "Tu donación mensual ha terminado",
+    "cancelIntro": "Tu donación mensual a {orgName} ha terminado. No se te volverá a cobrar.",
+    "cancelThanks": "Gracias por cada donación que hiciste.",
+    "cancelRowAmount": "Monto mensual",
+    "cancelRowEnded": "Finalizó",
+    "cancelNote": "Si no esperabas esto, o quieres volver a donar, escríbenos.",
     "contactLink": "Contactar a {orgName}",
     "tributeSubject": "{type, select, memory {Una donación en memoria de {honoree}} other {Una donación en honor de {honoree}}}",
     "tributeBody": "{type, select, memory {{donor} hizo una donación a {orgName} en memoria de {honoree}.} other {{donor} hizo una donación a {orgName} en honor de {honoree}.}}",
@@ -196,7 +210,12 @@
     "rowInterests": "Quiere ayudar con",
     "rowAvailability": "Disponibilidad",
     "rowLanguage": "Idioma del sitio",
-    "noticeReplyNote": "Responde a este correo para contestar directamente a {name}."
+    "noticeReplyNote": "Responde a este correo para contestar directamente a {name}.",
+    "manageSubject": "Tu enlace para gestionar tu donación mensual a {orgName}",
+    "manageHeading": "Gestiona tu donación mensual",
+    "manageIntro": "Abre el enlace de abajo para actualizar tu tarjeta o cancelar tu donación mensual. Funciona durante {minutes} minutos.",
+    "manageNote": "Si no pediste esto, puedes ignorar este correo. Nada cambia a menos que alguien abra el enlace.",
+    "manageLink": "Gestionar mi donación mensual"
   },
   "Funds": {
     "_reviewed": false,
@@ -540,5 +559,27 @@
     "questionsHeading": "¿Preguntas sobre el dinero?",
     "questionsBody": "Pregúntanos lo que quieras sobre a dónde van las donaciones o cómo se gastan.",
     "questionsCta": "Haz una pregunta"
+  },
+  "ManageGiving": {
+    "_reviewed": false,
+    "lead": "Actualiza tu tarjeta o cancela tu donación mensual. Escribe tu correo y te enviaremos un enlace seguro.",
+    "formHeading": "Recibe tu enlace",
+    "email": "Correo electrónico",
+    "emailHint": "Usa la dirección con la que donaste.",
+    "submit": "Envíenme un enlace",
+    "successTitle": "Revisa tu correo",
+    "successBody": "Si hay una donación mensual a nombre de {email}, enviamos un enlace para gestionarla. El enlace funciona durante {minutes} minutos.",
+    "errors": {
+      "email": "Escribe un correo electrónico como nombre@ejemplo.com."
+    },
+    "linkExpired": "Ese enlace ya venció. Escribe tu correo para recibir uno nuevo.",
+    "linkFailed": "No pudimos abrir tu página de donaciones. Prueba el enlace otra vez, o escribe tu correo para recibir uno nuevo.",
+    "nextHeading": "Qué pasa después",
+    "next": {
+      "item1": "Te enviamos por correo un enlace que funciona durante {minutes} minutos.",
+      "item2": "El enlace abre una página segura de Stripe, nuestro procesador de pagos.",
+      "item3": "Ahí puedes actualizar tu tarjeta o cancelar tu donación mensual."
+    },
+    "help": "¿No llega el correo después de unos minutos? Revisa tu carpeta de spam, o <link>escríbenos</link>."
   }
 }

@@ -26,6 +26,15 @@ const contactLink = (chunks: React.ReactNode) => (
   </Link>
 );
 
+const manageLink = (chunks: React.ReactNode) => (
+  <Link
+    href="/manage-giving"
+    className="text-foreground font-semibold underline underline-offset-2"
+  >
+    {chunks}
+  </Link>
+);
+
 const ThankYouContent = async ({ params, searchParams }: ThankYouProps) => {
   const { locale } = (await params) as { locale: Locale };
   const { session_id: sessionId } = await searchParams;
@@ -72,7 +81,7 @@ const ThankYouContent = async ({ params, searchParams }: ThankYouProps) => {
           <li>{t("tribute", { type: gift.tribute.type, name: gift.tribute.honoreeName })}</li>
         )}
         {gift.email && <li>{t("receipt", { email: gift.email })}</li>}
-        {gift.frequency === "monthly" && <li>{t.rich("manageMonthly", { link: contactLink })}</li>}
+        {gift.frequency === "monthly" && <li>{t.rich("manageMonthly", { link: manageLink })}</li>}
       </ul>
 
       <div className="mt-12 max-w-3xl">

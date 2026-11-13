@@ -8,8 +8,14 @@ import { type AdminUser, requireAdmin } from "@/lib/admin/access";
 import { personLabel, recordAudit } from "@/lib/admin/audit";
 import { createAuthLink, sendInviteEmail } from "@/lib/admin/auth/links";
 import { findAdminById } from "@/lib/admin/auth/queries";
+import { sendSecurityNotice } from "@/lib/admin/auth/security-email";
 import { ADMIN_ROLES } from "@/lib/admin/permissions";
-import { createAdminUser, setAdminUserActive, updateAdminUserRole } from "@/lib/admin/team-queries";
+import {
+  createAdminUser,
+  resetAdminTwoFactor,
+  setAdminUserActive,
+  updateAdminUserRole,
+} from "@/lib/admin/team-queries";
 import { adminUserSchema, type InviteResult, type TeamResult } from "@/lib/admin/team-schema";
 
 const idSchema = z.number().int().positive();
@@ -110,6 +116,31 @@ export const setAdminUserAccess = async (id: unknown, isActive: unknown): Promis
         target: personLabel(person),
       });
     }
+    return result;
+  });
+};
+
+/**
+ * Clears someone's authenticator app and recovery codes, for when they've lost their phone. They're
+ * signed out everywhere and set up two-step verification again at their next sign-in; their
+ * password still protects the account in between. Owners reset their own from Settings instead.
+ */
+export const resetTwoFactor = async (id: unknown): Promise<TeamResult> => {
+  const parsed = idSchema.safeParse(id);
+  if (!parsed.success) return { ok: false, error: "invalid" };
+  return teamChange(async (db, actor) => {
+    if (parsed.data === actor.id) return { ok: false, error: "self" };
+    const person = await findAdminById(db, parsed.data);
+    if (!person) return { ok: false, error: "notFound" };
+
+    const result = await resetAdminTwoFactor(db, person.id);
+    if (!result.ok) return result;
+
+    await recordAudit(db, { actor, action: "team.two_factor_reset", target: personLabel(person) });
+    await sendSecurityNotice(person, "twoFactorReset", {
+      values: { ownerName: actor.name },
+      always: true,
+    });
     return result;
   });
 };

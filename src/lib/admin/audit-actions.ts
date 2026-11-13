@@ -22,6 +22,7 @@ export const AUDIT_ACTIONS = [
   "team.role_changed",
   "team.access_removed",
   "team.access_restored",
+  "team.two_factor_reset",
   "team.updated_from_cli",
   "data.exported",
   "campaign.created",

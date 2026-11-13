@@ -15,16 +15,31 @@ export type SecurityEvent =
   | "passwordChanged"
   | "passwordReset"
   | "twoFactorEnabled"
-  | "recoveryCodesRegenerated";
+  | "recoveryCodesRegenerated"
+  | "twoFactorReset";
 
 type Recipient = { email: string; notifySecurity: boolean; timeZone: string | null };
+
+type NoticeOptions = {
+  /** Values for the event's body message, like the name of the owner who made the change. */
+  values?: Record<string, string>;
+  /**
+   * Send even if they've turned security emails off. For changes someone else made to their
+   * account, which they'd otherwise have no way to hear about.
+   */
+  always?: boolean;
+};
 
 /**
  * Tells someone about a sign-in or security change on their account, if they haven't turned these
  * emails off. Sent after the response, so a slow email service doesn't hold up the action.
  */
-export const sendSecurityNotice = async (to: Recipient, event: SecurityEvent) => {
-  if (!to.notifySecurity) return;
+export const sendSecurityNotice = async (
+  to: Recipient,
+  event: SecurityEvent,
+  { values, always = false }: NoticeOptions = {},
+) => {
+  if (!to.notifySecurity && !always) return;
 
   const requestHeaders = await headers();
   const ip = getClientIp(requestHeaders) ?? t("auth.emails.security.unknownIp");
@@ -41,15 +56,15 @@ export const sendSecurityNotice = async (to: Recipient, event: SecurityEvent) =>
       subject: t(`auth.emails.security.${event}.subject`, { orgName: siteConfig.orgName }),
       heading: t(`auth.emails.security.${event}.heading`),
       paragraphs: [
-        t(`auth.emails.security.${event}.body`),
+        t(`auth.emails.security.${event}.body`, values),
         t("auth.emails.security.details", { when, ip }),
-        t("auth.emails.security.notYou"),
+        t(always ? "auth.emails.security.notExpected" : "auth.emails.security.notYou"),
       ],
       link: {
         label: t("auth.emails.security.button"),
         href: `${env.NEXT_PUBLIC_SITE_URL}/admin/settings?tab=security`,
       },
-      footer: [t("auth.emails.security.footer")],
+      footer: [t(always ? "auth.emails.security.footerAlways" : "auth.emails.security.footer")],
     }),
   );
 };

@@ -3,7 +3,12 @@
 import { useState, useTransition } from "react";
 
 import type { AdminRole } from "@/lib/admin/permissions";
-import { changeAdminUserRole, resendInvite, setAdminUserAccess } from "@/lib/admin/team-actions";
+import {
+  changeAdminUserRole,
+  resendInvite,
+  resetTwoFactor,
+  setAdminUserAccess,
+} from "@/lib/admin/team-actions";
 import type { TeamError, TeamResult } from "@/lib/admin/team-schema";
 import type { AdminTeamRow } from "@/lib/admin/team-queries";
 
@@ -12,10 +17,11 @@ export type TeamNotice =
   | { kind: "error"; error: TeamError | "unknown" }
   | { kind: "invite"; name: string; link: string | null }
   | { kind: "roleChanged"; name: string; role: AdminRole }
-  | { kind: "accessRemoved" | "accessRestored"; name: string };
+  | { kind: "accessRemoved" | "accessRestored" | "twoFactorReset"; name: string };
 
 /** Which dialog is open, and for whom. */
-export type TeamDialog = { kind: "role" | "removeAccess"; member: AdminTeamRow } | null;
+export type TeamDialogKind = "role" | "removeAccess" | "resetTwoFactor";
+export type TeamDialog = { kind: TeamDialogKind; member: AdminTeamRow } | null;
 
 /**
  * The Team table's row actions. One change runs at a time; the page re-renders with fresh data
@@ -52,8 +58,7 @@ export const useTeamActions = () => {
     notice,
     dismissNotice: () => setNotice(null),
     dialog,
-    openDialog: (kind: "role" | "removeAccess", member: AdminTeamRow) =>
-      setDialog({ kind, member }),
+    openDialog: (kind: TeamDialogKind, member: AdminTeamRow) => setDialog({ kind, member }),
     closeDialog: () => setDialog(null),
     changeRole: (member: AdminTeamRow, role: AdminRole) => {
       setDialog(null);
@@ -70,6 +75,14 @@ export const useTeamActions = () => {
         member,
         () => setAdminUserAccess(member.id, false),
         () => ({ kind: "accessRemoved", name: member.name }),
+      );
+    },
+    resetTwoFactor: (member: AdminTeamRow) => {
+      setDialog(null);
+      run(
+        member,
+        () => resetTwoFactor(member.id),
+        () => ({ kind: "twoFactorReset", name: member.name }),
       );
     },
     restoreAccess: (member: AdminTeamRow) =>

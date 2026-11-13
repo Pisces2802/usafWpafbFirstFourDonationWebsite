@@ -72,6 +72,18 @@ export const CONTACT_FIELDS = [
   "message",
 ] as const satisfies readonly (keyof ContactInput)[];
 
+/** Shared by the manage-giving form and `POST /api/manage-giving`. */
+export const manageGivingSchema = z.object({ email });
+
+export type ManageGivingInput = z.input<typeof manageGivingSchema>;
+
+export const MANAGE_GIVING_FIELDS = [
+  "email",
+] as const satisfies readonly (keyof ManageGivingInput)[];
+
+/** How long an emailed manage-giving link works. */
+export const MANAGE_LINK_MINUTES = 30;
+
 /** Wraps a form's fields with the request metadata every form endpoint needs. */
 export const formRequestSchema = <T extends z.ZodType>(form: T) =>
   z.object({

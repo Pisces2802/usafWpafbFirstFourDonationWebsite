@@ -5,7 +5,11 @@ import { useTranslations } from "next-intl";
 
 import { DataTable } from "@/components/admin/data-table";
 import { InviteNotice } from "@/components/admin/invite-notice";
-import { ChangeRoleDialog, RemoveAccessDialog } from "@/components/admin/team-dialogs";
+import {
+  ChangeRoleDialog,
+  RemoveAccessDialog,
+  ResetTwoFactorDialog,
+} from "@/components/admin/team-dialogs";
 import { createTeamColumns } from "@/config/columns/team";
 import { useColumnTools } from "@/hooks/use-column-tools";
 import { type TeamNotice, useTeamActions } from "@/hooks/use-team-actions";
@@ -61,6 +65,7 @@ export const TeamTable = ({ members, currentUserId }: TeamTableProps) => {
     onChangeRole: (member) => team.openDialog("role", member),
     onResendInvite: team.resendInvite,
     onRemoveAccess: (member) => team.openDialog("removeAccess", member),
+    onResetTwoFactor: (member) => team.openDialog("resetTwoFactor", member),
     onRestoreAccess: team.restoreAccess,
   });
 
@@ -87,6 +92,11 @@ export const TeamTable = ({ members, currentUserId }: TeamTableProps) => {
         member={team.dialog?.kind === "removeAccess" ? team.dialog.member : null}
         onClose={team.closeDialog}
         onConfirm={team.removeAccess}
+      />
+      <ResetTwoFactorDialog
+        member={team.dialog?.kind === "resetTwoFactor" ? team.dialog.member : null}
+        onClose={team.closeDialog}
+        onConfirm={team.resetTwoFactor}
       />
     </div>
   );

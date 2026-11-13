@@ -9,6 +9,8 @@ import { NoticeEmail } from "@/emails/notice-email";
 import { env } from "@/env";
 import { getPathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
+import { MANAGE_LINK_MINUTES } from "@/lib/form-schemas";
+import type { ManageLinkEmail } from "@/lib/manage-giving";
 import { MONEY_FORMAT } from "@/lib/money";
 
 export type GiftEmailData = {
@@ -26,6 +28,16 @@ export type GiftEmailData = {
   tribute: { type: "honour" | "memory"; honoreeName: string; notifyEmail: string | null } | null;
 };
 
+export type CancellationEmailData = {
+  locale: Locale;
+  donorEmail: string;
+  firstName: string;
+  fundId: FundId;
+  /** What was charged each month: the gift plus any card fees the donor covered. */
+  monthlyCents: number;
+  endedAt: Date;
+};
+
 let client: Resend | null = null;
 
 const getResend = () => {
@@ -34,7 +46,7 @@ const getResend = () => {
   return client;
 };
 
-const siteUrl = (locale: Locale, href: "/" | "/contact") =>
+const siteUrl = (locale: Locale, href: "/" | "/contact" | "/manage-giving") =>
   `${env.NEXT_PUBLIC_SITE_URL}${getPathname({ locale, href })}`;
 
 /**
@@ -92,7 +104,11 @@ export const sendReceipt = async (gift: GiftEmailData) => {
         paragraphs={[t("receiptIntro", { frequency, orgName })]}
         rows={rows}
         notes={notes}
-        link={{ label: t("contactLink", { orgName }), href: siteUrl(locale, "/contact") }}
+        link={
+          frequency === "monthly"
+            ? { label: t("manageLink"), href: siteUrl(locale, "/manage-giving") }
+            : { label: t("contactLink", { orgName }), href: siteUrl(locale, "/contact") }
+        }
         footer={[tFooter("disclaimer", { orgName })]}
       />
     ),
@@ -134,6 +150,81 @@ export const sendTributeNotice = async (gift: GiftEmailData) => {
         ]}
         notes={[t("tributeWhy", { donor })]}
         link={{ label: t("aboutLink", { orgName }), href: siteUrl(locale, "/") }}
+        footer={[tFooter("disclaimer", { orgName })]}
+      />
+    ),
+  });
+  if (error) throw new Error(`Resend rejected the email: ${error.message}`);
+};
+
+/** Tells a donor their monthly gift has ended and that they won't be charged again. */
+export const sendCancellationNotice = async (gift: CancellationEmailData) => {
+  const resend = getResend();
+  if (!resend || !env.EMAIL_FROM) return;
+
+  const { locale } = gift;
+  const { orgName } = siteConfig;
+  const t = await getTranslations({ locale, namespace: "Emails" });
+  const tFunds = await getTranslations({ locale, namespace: "Funds" });
+  const tFooter = await getTranslations({ locale, namespace: "Footer" });
+  const format = await getFormatter({ locale });
+
+  const { error } = await resend.emails.send({
+    from: env.EMAIL_FROM,
+    to: gift.donorEmail,
+    replyTo: env.ORG_NOTIFY_EMAIL,
+    subject: t("cancelSubject", { orgName }),
+    react: (
+      <NoticeEmail
+        lang={locale}
+        orgName={orgName}
+        preview={t("cancelPreview")}
+        heading={t("cancelHeading")}
+        paragraphs={[t("cancelIntro", { orgName }), t("cancelThanks")]}
+        rows={[
+          { label: t("rowFund"), value: tFunds(`${gift.fundId}.name`) },
+          {
+            label: t("cancelRowAmount"),
+            value: format.number(gift.monthlyCents / 100, MONEY_FORMAT),
+          },
+          {
+            label: t("cancelRowEnded"),
+            value: format.dateTime(gift.endedAt, { dateStyle: "long" }),
+          },
+        ]}
+        notes={[t("cancelNote")]}
+        link={{ label: t("contactLink", { orgName }), href: siteUrl(locale, "/contact") }}
+        footer={[tFooter("disclaimer", { orgName })]}
+      />
+    ),
+  });
+  if (error) throw new Error(`Resend rejected the email: ${error.message}`);
+};
+
+/** Emails a donor the short-lived link that opens their monthly gift in Stripe's billing portal. */
+export const sendManageGivingLink = async ({ locale, donorEmail, url }: ManageLinkEmail) => {
+  const resend = getResend();
+  if (!resend || !env.EMAIL_FROM) return;
+
+  const { orgName } = siteConfig;
+  const t = await getTranslations({ locale, namespace: "Emails" });
+  const tFooter = await getTranslations({ locale, namespace: "Footer" });
+  const subject = t("manageSubject", { orgName });
+
+  const { error } = await resend.emails.send({
+    from: env.EMAIL_FROM,
+    to: donorEmail,
+    replyTo: env.ORG_NOTIFY_EMAIL,
+    subject,
+    react: (
+      <NoticeEmail
+        lang={locale}
+        orgName={orgName}
+        preview={subject}
+        heading={t("manageHeading")}
+        paragraphs={[t("manageIntro", { minutes: MANAGE_LINK_MINUTES })]}
+        notes={[t("manageNote")]}
+        link={{ label: t("manageLink"), href: url }}
         footer={[tFooter("disclaimer", { orgName })]}
       />
     ),

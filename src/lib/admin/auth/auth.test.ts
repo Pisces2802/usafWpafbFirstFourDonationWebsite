@@ -90,7 +90,8 @@ describe("crypto", () => {
     expect(await verifyPassword("correct horse battery staple", hash)).toBe(true);
     expect(await verifyPassword("correct horse battery stapler", hash)).toBe(false);
     expect(await verifyPassword("anything", "not-a-hash")).toBe(false);
-  });
+    // Four full-cost scrypt runs; slow when the whole suite runs in parallel.
+  }, 30_000);
 
   it("encrypts secrets so they can't be read or altered without the key", () => {
     const stored = encryptSecret("JBSWY3DPEHPK3PXP");

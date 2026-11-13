@@ -1,14 +1,14 @@
 import "server-only";
 
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { hasLocale } from "next-intl";
 import type Stripe from "stripe";
 
 import { type Frequency, isFundId } from "@/config/donation";
 import type { Tx } from "@/db";
-import { campaigns, donations, donors, funds } from "@/db/schema";
+import { campaigns, donations, donors, funds, subscriptionCancellations } from "@/db/schema";
 import { routing } from "@/i18n/routing";
-import type { GiftEmailData } from "@/lib/emails";
+import type { CancellationEmailData, GiftEmailData } from "@/lib/emails";
 
 type GiftPlan = {
   kind: "gift";
@@ -31,7 +31,17 @@ type RefundPlan = {
   isFullRefund: boolean;
 };
 
-export type WebhookPlan = GiftPlan | RefundPlan;
+type CancellationPlan = {
+  kind: "cancellation";
+  subscriptionId: string;
+  cancelledAt: Date;
+  gift: Pick<CancellationEmailData, "locale" | "firstName" | "fundId" | "monthlyCents">;
+};
+
+export type WebhookPlan = GiftPlan | RefundPlan | CancellationPlan;
+
+/** What a recorded plan asks the route to email, once the transaction has committed. */
+export type WebhookOutcome = GiftPlan | { kind: "cancellation"; email: CancellationEmailData };
 
 const isTributeType = (value: unknown): value is "honour" | "memory" =>
   value === "honour" || value === "memory";
@@ -213,6 +223,23 @@ export const planWebhookEvent = async (
           }
         : null;
     }
+    case "customer.subscription.deleted": {
+      const subscription = event.data.object;
+      const metadata = readGiftMetadata(subscription.metadata, 0);
+      if (!metadata) return null;
+      const endedAt = subscription.ended_at ?? subscription.canceled_at;
+      return {
+        kind: "cancellation",
+        subscriptionId: subscription.id,
+        cancelledAt: endedAt ? new Date(endedAt * 1000) : occurredAt,
+        gift: {
+          locale: metadata.locale,
+          firstName: metadata.firstName,
+          fundId: metadata.fundId,
+          monthlyCents: metadata.amountCents + metadata.feeCoveredCents,
+        },
+      };
+    }
     default:
       return null;
   }
@@ -234,10 +261,45 @@ const findCampaignId = async (tx: Tx, slug: string | null) => {
 };
 
 /**
- * Writes a plan inside the caller's transaction. Returns the gift whose emails should go out, or
- * null when nothing new was recorded (a refund, or a gift already on file).
+ * Marks a monthly gift as ended. Returns the donor to tell, or null when the cancellation is
+ * already on file or no payment for that subscription was ever recorded.
  */
-export const applyWebhookPlan = async (tx: Tx, plan: WebhookPlan) => {
+const applyCancellation = async (
+  tx: Tx,
+  plan: CancellationPlan,
+): Promise<WebhookOutcome | null> => {
+  const inserted = await tx
+    .insert(subscriptionCancellations)
+    .values({ stripeSubscriptionId: plan.subscriptionId, cancelledAt: plan.cancelledAt })
+    .onConflictDoNothing()
+    .returning({ id: subscriptionCancellations.stripeSubscriptionId });
+  if (inserted.length === 0) return null;
+
+  const [donor] = await tx
+    .select({ email: donors.email })
+    .from(donations)
+    .innerJoin(donors, eq(donations.donorId, donors.id))
+    .where(eq(donations.stripeSubscriptionId, plan.subscriptionId))
+    .orderBy(desc(donations.createdAt))
+    .limit(1);
+  if (!donor) return null;
+
+  return {
+    kind: "cancellation",
+    email: { ...plan.gift, donorEmail: donor.email, endedAt: plan.cancelledAt },
+  };
+};
+
+/**
+ * Writes a plan inside the caller's transaction. Returns what should be emailed, or null when
+ * nothing new was recorded (a refund, or a gift or cancellation already on file).
+ */
+export const applyWebhookPlan = async (
+  tx: Tx,
+  plan: WebhookPlan,
+): Promise<WebhookOutcome | null> => {
+  if (plan.kind === "cancellation") return applyCancellation(tx, plan);
+
   if (plan.kind === "refund") {
     await tx
       .update(donations)

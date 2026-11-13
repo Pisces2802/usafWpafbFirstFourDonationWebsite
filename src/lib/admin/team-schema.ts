@@ -26,6 +26,8 @@ export const TEAM_ERRORS = [
   "lastOwner",
   "noDatabase",
   "alreadySetUp",
+  "noTwoFactor",
+  "self",
 ] as const;
 export type TeamError = (typeof TEAM_ERRORS)[number];
 

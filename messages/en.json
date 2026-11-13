@@ -30,7 +30,8 @@
     "donorPrivacy": "Donor privacy",
     "terms": "Terms of use",
     "donate": "Donate",
-    "thankYou": "Thank you"
+    "thankYou": "Thank you",
+    "manageGiving": "Manage your monthly gift"
   },
   "Home": {
     "_reviewed": true,
@@ -126,6 +127,11 @@
     "submitting": "Opening secure checkout…",
     "checkoutHeading": "Payment",
     "editGift": "Change your gift",
+    "paused": {
+      "heading": "Online giving is paused for now",
+      "body": "We aren't taking gifts on the website at the moment. Get in touch if you'd like to give another way, or to hear when giving reopens.",
+      "cta": "Contact us"
+    },
     "checkoutStatus": {
       "verifying": "We're still checking your connection. Try again in a few seconds.",
       "invalid": "Something in the form didn't go through. Check your details and try again.",
@@ -146,7 +152,7 @@
     "confirmation": "{frequency, select, monthly {Your monthly gift of {amount} to {fund} is set up, and today's payment went through.} other {Your gift of {amount} to {fund} went through.}}",
     "tribute": "{type, select, memory {Given in memory of {name}.} other {Given in honor of {name}.}}",
     "receipt": "A receipt is on its way to {email}.",
-    "manageMonthly": "To change or cancel your monthly gift, <link>contact us</link>.",
+    "manageMonthly": "You can <link>update your card or cancel your monthly gift</link> at any time.",
     "shareHeading": "Pass it on",
     "shareBody": "Know someone who'd want to help? Send them a link to {orgName}.",
     "share": "Share link",
@@ -179,7 +185,15 @@
     "tributeNote": "{type, select, memory {Given in memory of {name}.} other {Given in honor of {name}.}}",
     "taxNote": "{orgName} is a 501(c)(3) nonprofit organization, EIN {ein}. No goods or services were provided in exchange for this gift. Please keep this receipt for your tax records.",
     "plainNote": "Your gift supports morale events, professional growth and community projects run by junior enlisted Airmen. Thank you for backing them.",
-    "monthlyNote": "This gift repeats each month. To change or cancel it, contact us.",
+    "monthlyNote": "This gift repeats each month. You can update your card or cancel it at any time.",
+    "cancelSubject": "Your monthly gift to {orgName} has ended",
+    "cancelPreview": "Your monthly gift has ended, and you won't be charged again.",
+    "cancelHeading": "Your monthly gift has ended",
+    "cancelIntro": "Your monthly gift to {orgName} has ended. You won't be charged again.",
+    "cancelThanks": "Thank you for every gift you made.",
+    "cancelRowAmount": "Monthly amount",
+    "cancelRowEnded": "Ended",
+    "cancelNote": "If you didn't expect this, or you'd like to start giving again, contact us.",
     "contactLink": "Contact {orgName}",
     "tributeSubject": "{type, select, memory {A gift in memory of {honoree}} other {A gift in honor of {honoree}}}",
     "tributeBody": "{type, select, memory {{donor} made a gift to {orgName} in memory of {honoree}.} other {{donor} made a gift to {orgName} in honor of {honoree}.}}",
@@ -196,7 +210,12 @@
     "rowInterests": "Wants to help with",
     "rowAvailability": "Availability",
     "rowLanguage": "Site language",
-    "noticeReplyNote": "Reply to this email to answer {name} directly."
+    "noticeReplyNote": "Reply to this email to answer {name} directly.",
+    "manageSubject": "Your link to manage your monthly gift to {orgName}",
+    "manageHeading": "Manage your monthly gift",
+    "manageIntro": "Open the link below to update your card or cancel your monthly gift. It works for {minutes} minutes.",
+    "manageNote": "If you didn't ask for this, you can ignore this email. Nothing changes unless someone opens the link.",
+    "manageLink": "Manage my monthly gift"
   },
   "Funds": {
     "_reviewed": true,
@@ -540,5 +559,27 @@
     "questionsHeading": "Questions about the money?",
     "questionsBody": "Ask us anything about where gifts go or how they're spent.",
     "questionsCta": "Ask a question"
+  },
+  "ManageGiving": {
+    "_reviewed": true,
+    "lead": "Update your card or cancel your monthly gift. Enter your email and we'll send you a secure link.",
+    "formHeading": "Get your link",
+    "email": "Email",
+    "emailHint": "Use the address you gave with.",
+    "submit": "Email me a link",
+    "successTitle": "Check your email",
+    "successBody": "If there's a monthly gift under {email}, we've sent a link to manage it. The link works for {minutes} minutes.",
+    "errors": {
+      "email": "Enter an email address like name@example.com."
+    },
+    "linkExpired": "That link has expired. Enter your email to get a new one.",
+    "linkFailed": "We couldn't open your giving page. Try the link again, or enter your email to get a new one.",
+    "nextHeading": "What happens next",
+    "next": {
+      "item1": "We email you a link that works for {minutes} minutes.",
+      "item2": "The link opens a secure page run by Stripe, our payment processor.",
+      "item3": "There you can update your card or cancel your monthly gift."
+    },
+    "help": "No email after a few minutes? Check your spam folder, or <link>contact us</link>."
   }
 }

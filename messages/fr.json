@@ -30,7 +30,8 @@
     "donorPrivacy": "Confidentialité des donateurs",
     "terms": "Conditions d'utilisation",
     "donate": "Faire un don",
-    "thankYou": "Merci"
+    "thankYou": "Merci",
+    "manageGiving": "Gérer votre don mensuel"
   },
   "Home": {
     "_reviewed": false,
@@ -126,6 +127,11 @@
     "submitting": "Ouverture du paiement sécurisé…",
     "checkoutHeading": "Paiement",
     "editGift": "Modifier votre don",
+    "paused": {
+      "heading": "Les dons en ligne sont en pause pour le moment",
+      "body": "Nous n'acceptons pas de dons sur le site pour l'instant. Écrivez-nous si vous souhaitez donner autrement ou savoir quand les dons reprendront.",
+      "cta": "Nous contacter"
+    },
     "checkoutStatus": {
       "verifying": "Nous vérifions encore votre connexion. Réessayez dans quelques secondes.",
       "invalid": "Une information du formulaire n'est pas passée. Vérifiez vos coordonnées et réessayez.",
@@ -146,7 +152,7 @@
     "confirmation": "{frequency, select, monthly {Votre don mensuel de {amount} pour « {fund} » est en place, et le paiement d'aujourd'hui a bien été effectué.} other {Votre don de {amount} pour « {fund} » a bien été effectué.}}",
     "tribute": "{type, select, memory {À la mémoire de {name}.} other {En l'honneur de {name}.}}",
     "receipt": "Un reçu va être envoyé à {email}.",
-    "manageMonthly": "Pour modifier ou annuler votre don mensuel, <link>écrivez-nous</link>.",
+    "manageMonthly": "Vous pouvez <link>mettre à jour votre carte ou annuler votre don mensuel</link> à tout moment.",
     "shareHeading": "Faites passer le mot",
     "shareBody": "Vous connaissez quelqu'un qui voudrait aider ? Envoyez-lui un lien vers {orgName}.",
     "share": "Partager le lien",
@@ -179,7 +185,15 @@
     "tributeNote": "{type, select, memory {À la mémoire de {name}.} other {En l'honneur de {name}.}}",
     "taxNote": "{orgName} est un organisme sans but lucratif 501(c)(3), EIN {ein}. Aucun bien ni service n'a été fourni en échange de ce don. Conservez ce reçu pour votre déclaration d'impôts.",
     "plainNote": "Votre don soutient des événements de cohésion, du développement professionnel et des projets solidaires menés par de jeunes aviateurs. Merci de les soutenir.",
-    "monthlyNote": "Ce don est renouvelé chaque mois. Pour le modifier ou l'annuler, écrivez-nous.",
+    "monthlyNote": "Ce don est renouvelé chaque mois. Vous pouvez mettre à jour votre carte ou l'annuler à tout moment.",
+    "cancelSubject": "Votre don mensuel à {orgName} a pris fin",
+    "cancelPreview": "Votre don mensuel a pris fin et vous ne serez plus débité.",
+    "cancelHeading": "Votre don mensuel a pris fin",
+    "cancelIntro": "Votre don mensuel à {orgName} a pris fin. Vous ne serez plus débité.",
+    "cancelThanks": "Merci pour chacun de vos dons.",
+    "cancelRowAmount": "Montant mensuel",
+    "cancelRowEnded": "Terminé le",
+    "cancelNote": "Si vous ne vous y attendiez pas, ou si vous souhaitez recommencer à donner, écrivez-nous.",
     "contactLink": "Contacter {orgName}",
     "tributeSubject": "{type, select, memory {Un don à la mémoire de {honoree}} other {Un don en l'honneur de {honoree}}}",
     "tributeBody": "{type, select, memory {{donor} a fait un don à {orgName} à la mémoire de {honoree}.} other {{donor} a fait un don à {orgName} en l'honneur de {honoree}.}}",
@@ -196,7 +210,12 @@
     "rowInterests": "Souhaite aider pour",
     "rowAvailability": "Disponibilités",
     "rowLanguage": "Langue du site",
-    "noticeReplyNote": "Répondez à cet e-mail pour écrire directement à {name}."
+    "noticeReplyNote": "Répondez à cet e-mail pour écrire directement à {name}.",
+    "manageSubject": "Votre lien pour gérer votre don mensuel à {orgName}",
+    "manageHeading": "Gérer votre don mensuel",
+    "manageIntro": "Ouvrez le lien ci-dessous pour mettre à jour votre carte ou annuler votre don mensuel. Il est valable {minutes} minutes.",
+    "manageNote": "Si vous n'avez rien demandé, vous pouvez ignorer cet e-mail. Rien ne change tant que personne n'ouvre le lien.",
+    "manageLink": "Gérer mon don mensuel"
   },
   "Funds": {
     "_reviewed": false,
@@ -540,5 +559,27 @@
     "questionsHeading": "Des questions sur l'argent ?",
     "questionsBody": "Posez-nous toutes vos questions sur la destination et l'utilisation des dons.",
     "questionsCta": "Poser une question"
+  },
+  "ManageGiving": {
+    "_reviewed": false,
+    "lead": "Mettez à jour votre carte ou annulez votre don mensuel. Saisissez votre e-mail et nous vous enverrons un lien sécurisé.",
+    "formHeading": "Recevoir votre lien",
+    "email": "E-mail",
+    "emailHint": "Utilisez l'adresse avec laquelle vous avez donné.",
+    "submit": "M'envoyer un lien",
+    "successTitle": "Consultez vos e-mails",
+    "successBody": "S'il existe un don mensuel au nom de {email}, nous avons envoyé un lien pour le gérer. Le lien est valable {minutes} minutes.",
+    "errors": {
+      "email": "Saisissez une adresse e-mail comme nom@exemple.com."
+    },
+    "linkExpired": "Ce lien a expiré. Saisissez votre e-mail pour en recevoir un nouveau.",
+    "linkFailed": "Nous n'avons pas pu ouvrir votre page de dons. Réessayez le lien, ou saisissez votre e-mail pour en recevoir un nouveau.",
+    "nextHeading": "Et ensuite",
+    "next": {
+      "item1": "Nous vous envoyons par e-mail un lien valable {minutes} minutes.",
+      "item2": "Le lien ouvre une page sécurisée gérée par Stripe, notre prestataire de paiement.",
+      "item3": "Vous pouvez y mettre à jour votre carte ou annuler votre don mensuel."
+    },
+    "help": "Pas d'e-mail après quelques minutes ? Vérifiez vos courriers indésirables, ou <link>écrivez-nous</link>."
   }
 }

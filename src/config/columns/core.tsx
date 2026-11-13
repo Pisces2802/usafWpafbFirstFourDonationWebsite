@@ -2,7 +2,7 @@ import type { ColumnDef, Row, RowData } from "@tanstack/react-table";
 import { MoreVertical, type LucideIcon } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import Link from "next/link";
-import { useTimeZone, useTranslations } from "next-intl";
+import { useFormatter, useTimeZone, useTranslations } from "next-intl";
 import { Fragment, useState } from "react";
 import { cn } from "cn";
 
@@ -249,7 +249,8 @@ export const RelativeTimeCell = ({ date, className }: DateProps) => {
 };
 
 export const NumberCell = ({ value }: { value: number }) => {
-  return <span>{new Intl.NumberFormat().format(value)}</span>;
+  const format = useFormatter();
+  return <span>{format.number(value)}</span>;
 };
 
 export const PercentageCell = ({ value, decimals = 1 }: { value: number; decimals?: number }) => {

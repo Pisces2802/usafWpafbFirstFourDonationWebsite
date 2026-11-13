@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { cn } from "cn";
 
 import {
@@ -23,8 +24,6 @@ interface Props {
 
 const PAGE_SIZES = ["10", "20", "50", "100"];
 
-const numberFormat = new Intl.NumberFormat("en-NG");
-
 export const Pagination = ({
   page,
   pageSize,
@@ -33,25 +32,24 @@ export const Pagination = ({
   onPageSizeChange,
   className,
 }: Props) => {
+  const t = useTranslations("Admin.table.pagination");
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
   const start = total === 0 ? 0 : (page - 1) * pageSize + 1;
   const end = Math.min(page * pageSize, total);
 
   return (
     <nav
-      aria-label="Pagination"
+      aria-label={t("label")}
       className={cn(
         "border-border flex flex-wrap items-center justify-between gap-3 border-t px-5 py-3 text-sm",
         className,
       )}
     >
-      <p className="text-muted-foreground tabular-nums">
-        {numberFormat.format(start)}–{numberFormat.format(end)} of {numberFormat.format(total)}
-      </p>
+      <p className="text-muted-foreground tabular-nums">{t("range", { start, end, total })}</p>
       <div className="flex items-center gap-4">
         {onPageSizeChange && (
           <label className="text-muted-foreground hidden items-center gap-2 sm:flex">
-            Rows
+            {t("rows")}
             <Select
               onValueChange={(value) => onPageSizeChange(Number(value))}
               value={pageSize.toString()}
@@ -74,7 +72,7 @@ export const Pagination = ({
             type="button"
             variant="outline"
             size="icon-lg"
-            aria-label="Previous page"
+            aria-label={t("previous")}
             className="bg-card rounded-full"
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1}
@@ -82,13 +80,13 @@ export const Pagination = ({
             <ChevronLeft className="size-4" />
           </Button>
           <span className="min-w-16 text-center font-semibold tabular-nums">
-            {page} / {totalPages}
+            {t("page", { page, pages: totalPages })}
           </span>
           <Button
             type="button"
             variant="outline"
             size="icon-lg"
-            aria-label="Next page"
+            aria-label={t("next")}
             className="bg-card rounded-full"
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages}

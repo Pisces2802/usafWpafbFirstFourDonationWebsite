@@ -3,7 +3,9 @@ import { connection } from "next/server";
 import { Suspense } from "react";
 
 import { DonateForm } from "@/components/donation/donate-form";
+import { GivingPausedNotice } from "@/components/donation/giving-paused-notice";
 import { env } from "@/env";
+import { readPlatformSettings } from "@/lib/admin/platform-settings";
 import { getActiveCampaignProgress, getCampaignProgress } from "@/lib/campaign-progress";
 import { campaignSlugSchema } from "@/lib/donation-schema";
 import { getActiveFunds } from "@/lib/fund-settings";
@@ -22,6 +24,9 @@ const DonateContent = async ({ searchParams }: Pick<DonateProps, "searchParams">
   const params = await searchParams;
   // Opt into request time before `new Date()` so the active campaign reflects "now", not build time.
   await connection();
+
+  // The checkout route refuses gifts while giving is paused; say so before anyone fills in the form.
+  if ((await readPlatformSettings()).donationsPaused) return <GivingPausedNotice />;
 
   const funds = await getActiveFunds();
   const slugParsed = campaignSlugSchema.safeParse(params.campaign);
@@ -45,7 +50,7 @@ const DonateContent = async ({ searchParams }: Pick<DonateProps, "searchParams">
 
 const DonateSkeleton = () => (
   <div aria-hidden="true" className="grid animate-pulse gap-6 lg:grid-cols-[2fr_1fr]">
-    <div className="bg-muted h-[32rem] rounded-xl" />
+    <div className="bg-muted h-128 rounded-xl" />
     <div className="bg-muted h-80 rounded-xl" />
   </div>
 );

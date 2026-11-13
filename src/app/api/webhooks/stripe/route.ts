@@ -5,12 +5,12 @@ import { getDb } from "@/db";
 import { stripeEvents } from "@/db/schema";
 import { env } from "@/env";
 import { CAMPAIGN_PROGRESS_TAG } from "@/lib/campaign-progress";
-import { sendReceipt, sendTributeNotice } from "@/lib/emails";
+import { sendCancellationNotice, sendReceipt, sendTributeNotice } from "@/lib/emails";
 import { getStripe } from "@/lib/stripe";
 import { applyWebhookPlan, planWebhookEvent } from "@/lib/stripe-webhook";
 
 /**
- * Records gifts and refunds from Stripe. Each event id is stored in the same transaction as its
+ * Records gifts, refunds and ended monthly gifts from Stripe. Each event id is stored in the same transaction as its
  * changes, so retries and duplicate deliveries are skipped, and a failed write is retried by Stripe.
  * Emails go out only after the transaction commits.
  */
@@ -45,18 +45,22 @@ export const POST = async (request: Request) => {
         .onConflictDoNothing()
         .returning({ id: stripeEvents.id });
 
-      if (!isNew || !plan) return { isNew: Boolean(isNew), gift: null };
-      return { isNew: true, gift: await applyWebhookPlan(tx, plan) };
+      if (!isNew || !plan) return { isNew: Boolean(isNew), outcome: null };
+      return { isNew: true, outcome: await applyWebhookPlan(tx, plan) };
     });
 
     if (recorded.isNew && plan) revalidateTag(CAMPAIGN_PROGRESS_TAG, "max");
 
-    if (recorded.gift) {
-      const { email, sendTributeNotice: shouldNotify } = recorded.gift;
-      const results = await Promise.allSettled([
-        sendReceipt(email),
-        shouldNotify ? sendTributeNotice(email) : Promise.resolve(),
-      ]);
+    const { outcome } = recorded;
+    if (outcome) {
+      const results = await Promise.allSettled(
+        outcome.kind === "cancellation"
+          ? [sendCancellationNotice(outcome.email)]
+          : [
+              sendReceipt(outcome.email),
+              outcome.sendTributeNotice ? sendTributeNotice(outcome.email) : Promise.resolve(),
+            ],
+      );
       for (const result of results) {
         if (result.status === "rejected")
           console.error("Gift email failed", event.id, result.reason);

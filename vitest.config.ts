@@ -11,5 +11,7 @@ export default defineConfig({
   test: {
     environment: "node",
     include: ["src/**/*.test.{ts,tsx}"],
+    // Database tests migrate a fresh PGlite per test, which is slow when every file runs at once.
+    hookTimeout: 30_000,
   },
 });

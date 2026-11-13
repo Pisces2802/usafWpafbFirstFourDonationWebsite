@@ -23,6 +23,11 @@ export const routing = defineRouting({
     },
     "/get-involved": { en: "/get-involved", es: "/participa", fr: "/s-impliquer" },
     "/contact": { en: "/contact", es: "/contacto", fr: "/contact" },
+    "/manage-giving": {
+      en: "/manage-giving",
+      es: "/gestionar-donacion",
+      fr: "/gerer-mon-don",
+    },
     "/transparency": { en: "/transparency", es: "/transparencia", fr: "/transparence" },
     "/privacy": { en: "/privacy", es: "/privacidad", fr: "/confidentialite" },
     "/donor-privacy": {
