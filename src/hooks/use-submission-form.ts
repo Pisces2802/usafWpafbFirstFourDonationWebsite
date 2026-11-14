@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { type DefaultValues, type FieldValues, type Path, useForm } from "react-hook-form";
-import type { z } from "zod";
+import type { z } from "@/lib/zod";
 
 import { useFormSubmission } from "@/hooks/use-form-submission";
 
@@ -33,7 +33,8 @@ export const useSubmissionForm = <
 }: SubmissionFormOptions<TInput, TOutput, TField>) => {
   const submission = useFormSubmission<TOutput>({ endpoint, requiresTurnstile });
   const summaryRef = useRef<HTMLDivElement>(null);
-  const [invalidCount, setInvalidCount] = useState(0);
+  const [failedSubmits, setFailedSubmits] = useState(0);
+  const focusedFor = useRef(0);
   const [sent, setSent] = useState<TOutput | null>(null);
 
   const { register, handleSubmit, setValue, reset, formState } = useForm<TInput, unknown, TOutput>({
@@ -44,9 +45,13 @@ export const useSubmissionForm = <
     shouldFocusError: false,
   });
 
+  // React Hook Form renders the errors (and so the summary) a render after the failed submit, so
+  // focus moves on the first render where the summary exists, once per failed submit.
   useEffect(() => {
-    if (invalidCount > 0) summaryRef.current?.focus();
-  }, [invalidCount]);
+    if (failedSubmits === focusedFor.current || !summaryRef.current) return;
+    focusedFor.current = failedSubmits;
+    summaryRef.current.focus();
+  });
 
   const invalidFields = fields.filter((field) => field in formState.errors);
 
@@ -57,7 +62,7 @@ export const useSubmissionForm = <
         reset(defaultValues);
       }
     },
-    () => setInvalidCount((count) => count + 1),
+    () => setFailedSubmits((count) => count + 1),
   );
 
   const startOver = () => {

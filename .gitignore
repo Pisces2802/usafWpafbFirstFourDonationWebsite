@@ -31,6 +31,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
+.env*
 !.env.example
 
 # vercel
@@ -43,4 +44,9 @@ next-env.d.ts
 # others
 HANDOFF.md
 TASKS.md
-config.bat
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

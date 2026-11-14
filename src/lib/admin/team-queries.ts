@@ -1,9 +1,9 @@
 import "server-only";
 
-import { and, asc, desc, eq, or } from "drizzle-orm";
+import { and, asc, desc, eq, isNotNull, or, sql } from "drizzle-orm";
 
 import type { Db, Tx } from "@/db";
-import { adminUsers } from "@/db/schema";
+import { adminRecoveryCodes, adminSessions, adminUsers } from "@/db/schema";
 import type { AdminRole } from "@/lib/admin/permissions";
 import type { AdminUserValues, TeamResult } from "@/lib/admin/team-schema";
 
@@ -24,6 +24,8 @@ const teamColumns = {
   emailVerifiedAt: adminUsers.emailVerifiedAt,
   lastSignInAt: adminUsers.lastSignInAt,
   createdAt: adminUsers.createdAt,
+  /** Whether they have an authenticator app set up. The secret itself never leaves the server. */
+  hasTwoFactor: sql<boolean>`${adminUsers.totpSecret} is not null`.mapWith(Boolean),
 };
 
 /** Everyone with back-office access, active first, then by name. */
@@ -103,3 +105,29 @@ export const setAdminUserActive = (db: Db, id: number, isActive: boolean) =>
   changeKeepingAnOwner(db, id, isActive, (tx) =>
     tx.update(adminUsers).set({ isActive }).where(eq(adminUsers.id, id)),
   );
+
+/**
+ * Clears someone's authenticator app and recovery codes and ends all their sessions, so their next
+ * sign-in goes through two-factor setup again. Only for active people who have it set up.
+ */
+export const resetAdminTwoFactor = (db: Db, id: number): Promise<TeamResult> =>
+  db.transaction(async (tx) => {
+    const [user] = await tx
+      .update(adminUsers)
+      .set({ totpSecret: null, totpLastStep: null })
+      .where(
+        and(eq(adminUsers.id, id), eq(adminUsers.isActive, true), isNotNull(adminUsers.totpSecret)),
+      )
+      .returning({ id: adminUsers.id });
+    if (!user) {
+      const [exists] = await tx
+        .select({ id: adminUsers.id })
+        .from(adminUsers)
+        .where(and(eq(adminUsers.id, id), eq(adminUsers.isActive, true)));
+      return { ok: false, error: exists ? "noTwoFactor" : "notFound" } as const;
+    }
+
+    await tx.delete(adminRecoveryCodes).where(eq(adminRecoveryCodes.adminUserId, id));
+    await tx.delete(adminSessions).where(eq(adminSessions.adminUserId, id));
+    return { ok: true } as const;
+  });

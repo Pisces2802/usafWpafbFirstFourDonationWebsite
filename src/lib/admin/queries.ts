@@ -1,9 +1,29 @@
 import "server-only";
 
-import { and, count, countDistinct, desc, eq, gte, inArray, lt, max, sql } from "drizzle-orm";
+import {
+  and,
+  count,
+  countDistinct,
+  desc,
+  eq,
+  gte,
+  inArray,
+  lt,
+  max,
+  notInArray,
+  sql,
+} from "drizzle-orm";
 
 import type { Db } from "@/db";
-import { campaigns, contactMessages, donations, donors, funds, volunteers } from "@/db/schema";
+import {
+  campaigns,
+  contactMessages,
+  donations,
+  donors,
+  funds,
+  subscriptionCancellations,
+  volunteers,
+} from "@/db/schema";
 
 /** Upper bound on rows sent to a client-side table. Past this, the list needs server paging. */
 export const ADMIN_ROW_LIMIT = 5000;
@@ -25,8 +45,8 @@ export type AdminOverview = {
 
 /**
  * Headline numbers for the dashboard, optionally from `since` onwards. Net excludes the card fees
- * donors added and anything refunded. Monthly donors are subscriptions billed in the last 35 days,
- * since cancellations aren't recorded yet.
+ * donors added and anything refunded. Monthly donors are subscriptions billed in the last 35 days
+ * that haven't been cancelled.
  */
 export const getAdminOverview = async (
   db: Db,
@@ -54,6 +74,12 @@ export const getAdminOverview = async (
           eq(donations.frequency, "monthly"),
           eq(donations.status, "succeeded"),
           gte(donations.createdAt, monthlyFrom),
+          notInArray(
+            donations.stripeSubscriptionId,
+            db
+              .select({ id: subscriptionCancellations.stripeSubscriptionId })
+              .from(subscriptionCancellations),
+          ),
         ),
       ),
   ]);

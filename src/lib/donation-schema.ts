@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 import { donationConfig, FREQUENCIES, FUND_IDS } from "@/config/donation";
 import { routing } from "@/i18n/routing";

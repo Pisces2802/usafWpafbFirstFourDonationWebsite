@@ -27,10 +27,12 @@ export const FundsSection = ({ funds }: { funds: readonly FundId[] }) => {
             <p className="text-muted-foreground mt-3 flex-1">{t(`${id}.description`)}</p>
             <Link
               href={{ pathname: "/donate", query: { fund: id } }}
-              aria-label={t("giveToFundLabel", { fund: t(`${id}.name`) })}
               className="text-primary mt-6 inline-flex min-h-11 items-center gap-2 font-semibold outline-none after:absolute after:inset-0 after:rounded-xl"
             >
-              {t("giveToFund")}
+              <span>
+                {t("giveToFund")}
+                <span className="sr-only">: {t(`${id}.name`)}</span>
+              </span>
               <ArrowRight
                 aria-hidden="true"
                 className="size-4 transition-transform duration-200 group-hover/fund:translate-x-1"

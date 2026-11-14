@@ -5,8 +5,9 @@ import { migrate } from "drizzle-orm/pglite/migrator";
 import type Stripe from "stripe";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import type { Tx } from "@/db";
+import type { Db, Tx } from "@/db";
 import * as schema from "@/db/schema";
+import { getAdminOverview } from "@/lib/admin/queries";
 import { applyWebhookPlan, planWebhookEvent } from "@/lib/stripe-webhook";
 
 const metadata = {
@@ -57,6 +58,23 @@ const checkoutCompleted = event("checkout.session.completed", {
   customer: "cus_1",
   customer_email: "Sam@Example.com",
   customer_details: { email: "Sam@Example.com" },
+  metadata,
+});
+
+const monthlyInvoice = event("invoice.paid", {
+  id: "in_1",
+  number: "ABC-0001",
+  amount_paid: 7755,
+  customer: "cus_2",
+  customer_email: "pat@example.com",
+  billing_reason: "subscription_create",
+  parent: { subscription_details: { subscription: "sub_1", metadata } },
+});
+
+const subscriptionDeleted = event("customer.subscription.deleted", {
+  id: "sub_1",
+  ended_at: 1_790_500_000,
+  canceled_at: 1_790_400_000,
   metadata,
 });
 
@@ -130,6 +148,22 @@ describe("planWebhookEvent", () => {
     });
     expect(later).toMatchObject({ sendTributeNotice: false });
   });
+
+  it("plans the end of a monthly gift", async () => {
+    const plan = await planWebhookEvent(fakeStripe, subscriptionDeleted);
+
+    expect(plan).toEqual({
+      kind: "cancellation",
+      subscriptionId: "sub_1",
+      cancelledAt: new Date(1_790_500_000 * 1000),
+      gift: { locale: "fr", firstName: "Sam", fundId: "morale", monthlyCents: 7755 },
+    });
+  });
+
+  it("ignores ended subscriptions this site didn't create", async () => {
+    const foreign = event("customer.subscription.deleted", { id: "sub_9", metadata: {} });
+    expect(await planWebhookEvent(fakeStripe, foreign)).toBeNull();
+  });
 });
 
 describe("applyWebhookPlan", () => {
@@ -191,5 +225,46 @@ describe("applyWebhookPlan", () => {
       .from(schema.donations)
       .where(eq(schema.donations.stripePaymentIntentId, "pi_1"));
     expect(donation).toMatchObject({ refundedCents: 7755, status: "refunded" });
+  });
+
+  it("records an ended monthly gift once and names the donor to email", async () => {
+    await applyWebhookPlan(asTx(db), (await planWebhookEvent(fakeStripe, monthlyInvoice))!);
+    const plan = (await planWebhookEvent(fakeStripe, subscriptionDeleted))!;
+
+    const first = await applyWebhookPlan(asTx(db), plan);
+    const second = await applyWebhookPlan(asTx(db), plan);
+
+    expect(first).toEqual({
+      kind: "cancellation",
+      email: {
+        locale: "fr",
+        firstName: "Sam",
+        fundId: "morale",
+        monthlyCents: 7755,
+        donorEmail: "pat@example.com",
+        endedAt: new Date(1_790_500_000 * 1000),
+      },
+    });
+    expect(second).toBeNull();
+    expect(await db.$count(schema.subscriptionCancellations)).toBe(1);
+  });
+
+  it("records the end of a monthly gift that was never paid, without an email", async () => {
+    const plan = (await planWebhookEvent(fakeStripe, subscriptionDeleted))!;
+
+    expect(await applyWebhookPlan(asTx(db), plan)).toBeNull();
+    expect(await db.$count(schema.subscriptionCancellations)).toBe(1);
+  });
+
+  it("stops counting a cancelled monthly gift as an active monthly donor", async () => {
+    const now = new Date(1_790_600_000 * 1000);
+    await applyWebhookPlan(asTx(db), (await planWebhookEvent(fakeStripe, monthlyInvoice))!);
+    const before = await getAdminOverview(db as unknown as Db, { now });
+
+    await applyWebhookPlan(asTx(db), (await planWebhookEvent(fakeStripe, subscriptionDeleted))!);
+    const after = await getAdminOverview(db as unknown as Db, { now });
+
+    expect(before.monthlyDonorCount).toBe(1);
+    expect(after.monthlyDonorCount).toBe(0);
   });
 });

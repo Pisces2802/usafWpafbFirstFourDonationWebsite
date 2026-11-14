@@ -1,5 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { Mail, UserCheck, UserCog, UserX } from "lucide-react";
+import { KeyRound, Mail, UserCheck, UserCog, UserX } from "lucide-react";
 
 import type { DataTableFeatures } from "@/components/admin/data-table";
 import type { ColumnTools } from "@/hooks/use-column-tools";
@@ -20,6 +20,7 @@ type TeamColumnOptions = {
   onChangeRole: (member: AdminTeamRow) => void;
   onResendInvite: (member: AdminTeamRow) => void;
   onRemoveAccess: (member: AdminTeamRow) => void;
+  onResetTwoFactor: (member: AdminTeamRow) => void;
   onRestoreAccess: (member: AdminTeamRow) => void;
 };
 
@@ -32,6 +33,7 @@ export function createTeamColumns(
     onChangeRole,
     onResendInvite,
     onRemoveAccess,
+    onResetTwoFactor,
     onRestoreAccess,
   }: TeamColumnOptions,
 ) {
@@ -99,6 +101,13 @@ export function createTeamColumns(
           hidden: !member.isActive || Boolean(member.emailVerifiedAt),
           disabled: isPending,
           onClick: onResendInvite,
+        },
+        {
+          label: t("team.resetTwoFactor"),
+          icon: KeyRound,
+          hidden: !member.isActive || !member.hasTwoFactor || isSelf,
+          disabled: isPending,
+          onClick: onResetTwoFactor,
         },
         {
           label: t("team.removeAccess"),

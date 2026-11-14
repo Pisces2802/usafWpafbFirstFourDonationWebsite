@@ -1,14 +1,16 @@
 import { Archivo, Inter } from "next/font/google";
 
 export const archivo = Archivo({
-  subsets: ["latin", "latin-ext"],
+  // Only `latin` is preloaded; it covers Spanish and French. Other subsets load on demand.
+  subsets: ["latin"],
   axes: ["wdth"],
   variable: "--font-archivo",
   display: "swap",
 });
 
 export const inter = Inter({
-  subsets: ["latin", "latin-ext"],
+  // Only `latin` is preloaded; it covers Spanish and French. Other subsets load on demand.
+  subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });

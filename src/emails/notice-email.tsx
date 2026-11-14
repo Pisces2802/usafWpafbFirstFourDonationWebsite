@@ -67,7 +67,6 @@ export const NoticeEmail = ({
             {orgName}
           </Text>
         </Section>
-
         <Section style={{ padding: "32px" }}>
           <Heading
             as="h1"
@@ -83,7 +82,6 @@ export const NoticeEmail = ({
               {paragraph}
             </Text>
           ))}
-
           {rows.length > 0 && (
             <Section
               style={{
@@ -108,7 +106,6 @@ export const NoticeEmail = ({
               ))}
             </Section>
           )}
-
           {notes.map((note) => (
             <Text
               key={note}
@@ -117,7 +114,6 @@ export const NoticeEmail = ({
               {note}
             </Text>
           ))}
-
           {link && (
             <Text style={{ fontSize: 14, margin: "16px 0 0" }}>
               <Link href={link.href} style={{ color: colors.ultramarine, fontWeight: 600 }}>
@@ -125,7 +121,6 @@ export const NoticeEmail = ({
               </Link>
             </Text>
           )}
-
           <Hr style={{ borderColor: colors.rule, margin: "28px 0 16px" }} />
           {footer.map((line) => (
             <Text

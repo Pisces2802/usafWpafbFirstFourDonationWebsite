@@ -63,6 +63,10 @@ const localize =
     ...(content[locale] ?? content.en),
   });
 
+/** Slug and date of every published story, for the sitemap. */
+export const getPublishedStorySlugs = async () =>
+  (await listPublished()).map(({ slug, publishedOn }) => ({ slug, publishedOn }));
+
 export const getPublishedStories = async (locale: Locale) =>
   (await listPublished()).map(localize(locale));
 

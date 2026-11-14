@@ -93,6 +93,12 @@ export const donations = pgTable(
   ],
 );
 
+/** Monthly gifts that have ended, so they stop counting as active monthly donors. */
+export const subscriptionCancellations = pgTable("subscription_cancellations", {
+  stripeSubscriptionId: text().primaryKey(),
+  cancelledAt: timestamp({ withTimezone: true }).notNull(),
+});
+
 export const stripeEvents = pgTable("stripe_events", {
   id: text().primaryKey(),
   type: text().notNull(),

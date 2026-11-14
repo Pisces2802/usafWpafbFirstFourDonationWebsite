@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 import { ADMIN_ROLES } from "@/lib/admin/permissions";
 
@@ -26,6 +26,8 @@ export const TEAM_ERRORS = [
   "lastOwner",
   "noDatabase",
   "alreadySetUp",
+  "noTwoFactor",
+  "self",
 ] as const;
 export type TeamError = (typeof TEAM_ERRORS)[number];
 

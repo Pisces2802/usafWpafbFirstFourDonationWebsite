@@ -3,6 +3,7 @@
 import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
 import { ArrowDown, ArrowUp, ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { cn } from "cn";
 import { useAdminPreferences } from "@/components/admin/preferences-provider";
 import {
@@ -113,7 +114,7 @@ export function DataTable<TData extends RowData>({
   title,
   caption,
   footer,
-  empty = "Nothing matches. Try a different search or filter.",
+  empty,
   loading,
   pageSize: fixedPageSize,
   isRowActive,
@@ -124,6 +125,7 @@ export function DataTable<TData extends RowData>({
   className,
   tableClassName,
 }: Props<TData>) {
+  const t = useTranslations("Admin.table");
   const handleRowClick = onRowClick ?? (columns as Partial<ColumnsWithRowClick<TData>>).onRowClick;
 
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -185,7 +187,7 @@ export function DataTable<TData extends RowData>({
       {title && <h2 className="px-5 pt-5 pb-1 text-lg font-semibold sm:text-xl">{title}</h2>}
       {caption && (
         <p className="border-border text-muted-foreground border-b px-5 py-4 text-sm">
-          {loading ? "Loading…" : caption(total)}
+          {loading ? t("loading") : caption(total)}
         </p>
       )}
       <div className="overflow-x-auto">
@@ -292,7 +294,7 @@ export function DataTable<TData extends RowData>({
             ) : (
               <tr>
                 <td colSpan={columnCount} className="text-muted-foreground px-5 py-14 text-center">
-                  {empty}
+                  {empty ?? t("empty")}
                 </td>
               </tr>
             )}

@@ -101,12 +101,8 @@
           "name": "admin_audit_events_actor_id_admin_users_id_fk",
           "tableFrom": "admin_audit_events",
           "tableTo": "admin_users",
-          "columnsFrom": [
-            "actor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["actor_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -175,12 +171,8 @@
           "name": "admin_recovery_codes_admin_user_id_admin_users_id_fk",
           "tableFrom": "admin_recovery_codes",
           "tableTo": "admin_users",
-          "columnsFrom": [
-            "admin_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["admin_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -281,12 +273,8 @@
           "name": "admin_sessions_admin_user_id_admin_users_id_fk",
           "tableFrom": "admin_sessions",
           "tableTo": "admin_users",
-          "columnsFrom": [
-            "admin_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["admin_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -296,9 +284,7 @@
         "admin_sessions_tokenHash_unique": {
           "name": "admin_sessions_tokenHash_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token_hash"
-          ]
+          "columns": ["token_hash"]
         }
       },
       "policies": {},
@@ -376,12 +362,8 @@
           "name": "admin_tokens_admin_user_id_admin_users_id_fk",
           "tableFrom": "admin_tokens",
           "tableTo": "admin_users",
-          "columnsFrom": [
-            "admin_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["admin_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -391,9 +373,7 @@
         "admin_tokens_tokenHash_unique": {
           "name": "admin_tokens_tokenHash_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token_hash"
-          ]
+          "columns": ["token_hash"]
         }
       },
       "policies": {},
@@ -540,12 +520,8 @@
           "name": "admin_users_created_by_id_admin_users_id_fk",
           "tableFrom": "admin_users",
           "tableTo": "admin_users",
-          "columnsFrom": [
-            "created_by_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -555,9 +531,7 @@
         "admin_users_email_unique": {
           "name": "admin_users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},
@@ -615,9 +589,7 @@
         "campaigns_slug_unique": {
           "name": "campaigns_slug_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
+          "columns": ["slug"]
         }
       },
       "policies": {},
@@ -853,12 +825,8 @@
           "name": "donations_donor_id_donors_id_fk",
           "tableFrom": "donations",
           "tableTo": "donors",
-          "columnsFrom": [
-            "donor_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["donor_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -866,12 +834,8 @@
           "name": "donations_campaign_id_campaigns_id_fk",
           "tableFrom": "donations",
           "tableTo": "campaigns",
-          "columnsFrom": [
-            "campaign_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["campaign_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -879,12 +843,8 @@
           "name": "donations_fund_id_funds_id_fk",
           "tableFrom": "donations",
           "tableTo": "funds",
-          "columnsFrom": [
-            "fund_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["fund_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -894,16 +854,12 @@
         "donations_stripePaymentIntentId_unique": {
           "name": "donations_stripePaymentIntentId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_payment_intent_id"
-          ]
+          "columns": ["stripe_payment_intent_id"]
         },
         "donations_stripeInvoiceId_unique": {
           "name": "donations_stripeInvoiceId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_invoice_id"
-          ]
+          "columns": ["stripe_invoice_id"]
         }
       },
       "policies": {},
@@ -972,16 +928,12 @@
         "donors_email_unique": {
           "name": "donors_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "donors_stripeCustomerId_unique": {
           "name": "donors_stripeCustomerId_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "stripe_customer_id"
-          ]
+          "columns": ["stripe_customer_id"]
         }
       },
       "policies": {},
@@ -1026,9 +978,7 @@
         "funds_slug_unique": {
           "name": "funds_slug_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
+          "columns": ["slug"]
         }
       },
       "policies": {},
@@ -1086,12 +1036,8 @@
           "name": "platform_settings_updated_by_id_admin_users_id_fk",
           "tableFrom": "platform_settings",
           "tableTo": "admin_users",
-          "columnsFrom": [
-            "updated_by_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["updated_by_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -1238,12 +1184,8 @@
           "name": "stories_created_by_id_admin_users_id_fk",
           "tableFrom": "stories",
           "tableTo": "admin_users",
-          "columnsFrom": [
-            "created_by_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["created_by_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -1251,12 +1193,8 @@
           "name": "stories_updated_by_id_admin_users_id_fk",
           "tableFrom": "stories",
           "tableTo": "admin_users",
-          "columnsFrom": [
-            "updated_by_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["updated_by_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -1266,9 +1204,7 @@
         "stories_slug_unique": {
           "name": "stories_slug_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "slug"
-          ]
+          "columns": ["slug"]
         }
       },
       "policies": {},
@@ -1382,82 +1318,47 @@
     "public.admin_role": {
       "name": "admin_role",
       "schema": "public",
-      "values": [
-        "owner",
-        "treasurer",
-        "coordinator",
-        "viewer"
-      ]
+      "values": ["owner", "treasurer", "coordinator", "viewer"]
     },
     "public.admin_session_stage": {
       "name": "admin_session_stage",
       "schema": "public",
-      "values": [
-        "two_factor",
-        "active"
-      ]
+      "values": ["two_factor", "active"]
     },
     "public.admin_token_purpose": {
       "name": "admin_token_purpose",
       "schema": "public",
-      "values": [
-        "verify_email",
-        "reset_password"
-      ]
+      "values": ["verify_email", "reset_password"]
     },
     "public.contact_topic": {
       "name": "contact_topic",
       "schema": "public",
-      "values": [
-        "general",
-        "airmen",
-        "giving",
-        "partnering",
-        "other"
-      ]
+      "values": ["general", "airmen", "giving", "partnering", "other"]
     },
     "public.donation_status": {
       "name": "donation_status",
       "schema": "public",
-      "values": [
-        "succeeded",
-        "refunded",
-        "failed"
-      ]
+      "values": ["succeeded", "refunded", "failed"]
     },
     "public.frequency": {
       "name": "frequency",
       "schema": "public",
-      "values": [
-        "one_time",
-        "monthly"
-      ]
+      "values": ["one_time", "monthly"]
     },
     "public.story_status": {
       "name": "story_status",
       "schema": "public",
-      "values": [
-        "draft",
-        "published"
-      ]
+      "values": ["draft", "published"]
     },
     "public.tribute_type": {
       "name": "tribute_type",
       "schema": "public",
-      "values": [
-        "honour",
-        "memory"
-      ]
+      "values": ["honour", "memory"]
     },
     "public.volunteer_affiliation": {
       "name": "volunteer_affiliation",
       "schema": "public",
-      "values": [
-        "airman",
-        "military",
-        "family",
-        "community"
-      ]
+      "values": ["airman", "military", "family", "community"]
     }
   },
   "schemas": {},

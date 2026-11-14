@@ -85,10 +85,10 @@ const ProgramsPage = async () => {
                     <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:mt-auto lg:pt-6">
                       <Link
                         href={{ pathname: "/donate", query: { fund: id } }}
-                        aria-label={tFunds("giveToFundLabel", { fund: name })}
                         className={buttonVariants({ size: "touch" })}
                       >
                         {tFunds("giveToFund")}
+                        <span className="sr-only">: {name}</span>
                       </Link>
                       {story && (
                         <Link

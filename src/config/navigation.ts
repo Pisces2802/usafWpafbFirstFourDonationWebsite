@@ -8,6 +8,7 @@ export type NavItem = {
     | "stories"
     | "getInvolved"
     | "contact"
+    | "manageGiving"
     | "transparency"
     | "privacy"
     | "donorPrivacy"
@@ -21,7 +22,11 @@ export const mainNav: NavItem[] = [
   { href: "/get-involved", labelKey: "getInvolved" },
 ];
 
-export const footerExploreNav: NavItem[] = [...mainNav, { href: "/contact", labelKey: "contact" }];
+export const footerExploreNav: NavItem[] = [
+  ...mainNav,
+  { href: "/contact", labelKey: "contact" },
+  { href: "/manage-giving", labelKey: "manageGiving" },
+];
 
 export const footerLegalNav: NavItem[] = [
   { href: "/transparency", labelKey: "transparency" },

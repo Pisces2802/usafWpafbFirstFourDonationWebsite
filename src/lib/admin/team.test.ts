@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 import { migrate } from "drizzle-orm/pglite/migrator";
+import { eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import type { Db } from "@/db";
@@ -12,6 +13,7 @@ import {
   createAdminUser,
   findActiveAdminUser,
   listAdminUsers,
+  resetAdminTwoFactor,
   setAdminUserActive,
   updateAdminUserRole,
 } from "@/lib/admin/team-queries";
@@ -150,5 +152,70 @@ describe("team queries", () => {
 
     const names = (await listAdminUsers(db)).map((row) => row.name);
     expect(names).toEqual(["bea", "zed", "amy"]);
+  });
+
+  describe("resetAdminTwoFactor", () => {
+    const setUpTwoFactor = async (id: number) => {
+      await db
+        .update(schema.adminUsers)
+        .set({ totpSecret: "encrypted", totpLastStep: 42 })
+        .where(eq(schema.adminUsers.id, id));
+      await db.insert(schema.adminRecoveryCodes).values([
+        { adminUserId: id, codeHash: "a" },
+        { adminUserId: id, codeHash: "b" },
+      ]);
+      await db.insert(schema.adminSessions).values({
+        adminUserId: id,
+        tokenHash: `session-${id}`,
+        stage: "active",
+        expiresAt: new Date(Date.now() + 3_600_000),
+      });
+    };
+
+    const countFor = async (
+      table: typeof schema.adminRecoveryCodes | typeof schema.adminSessions,
+      id: number,
+    ) => (await db.select().from(table).where(eq(table.adminUserId, id))).length;
+
+    it("clears the app, recovery codes and sessions, and shows in the team list", async () => {
+      const owner = await add("owner@example.com", "owner");
+      const lost = await add("lost@example.com", "treasurer");
+      await setUpTwoFactor(owner.id);
+      await setUpTwoFactor(lost.id);
+
+      const before = await listAdminUsers(db);
+      expect(before.find((row) => row.id === lost.id)?.hasTwoFactor).toBe(true);
+
+      expect(await resetAdminTwoFactor(db, lost.id)).toEqual({ ok: true });
+
+      const [user] = await db
+        .select()
+        .from(schema.adminUsers)
+        .where(eq(schema.adminUsers.id, lost.id));
+      expect(user).toMatchObject({ totpSecret: null, totpLastStep: null });
+      expect(await countFor(schema.adminRecoveryCodes, lost.id)).toBe(0);
+      expect(await countFor(schema.adminSessions, lost.id)).toBe(0);
+      expect((await listAdminUsers(db)).find((row) => row.id === lost.id)?.hasTwoFactor).toBe(
+        false,
+      );
+
+      // Nobody else is touched.
+      expect(await countFor(schema.adminRecoveryCodes, owner.id)).toBe(2);
+      expect(await countFor(schema.adminSessions, owner.id)).toBe(1);
+    });
+
+    it("refuses people without two-step verification, without access, or unknown", async () => {
+      const fresh = await add("fresh@example.com", "viewer");
+      expect(await resetAdminTwoFactor(db, fresh.id)).toEqual({ ok: false, error: "noTwoFactor" });
+
+      await add("owner@example.com", "owner");
+      const gone = await add("gone@example.com", "viewer");
+      await setUpTwoFactor(gone.id);
+      await setAdminUserActive(db, gone.id, false);
+      expect(await resetAdminTwoFactor(db, gone.id)).toEqual({ ok: false, error: "notFound" });
+      expect(await countFor(schema.adminRecoveryCodes, gone.id)).toBe(2);
+
+      expect(await resetAdminTwoFactor(db, 999)).toEqual({ ok: false, error: "notFound" });
+    });
   });
 });

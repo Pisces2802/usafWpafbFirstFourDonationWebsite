@@ -1,6 +1,6 @@
 import "server-only";
 
-import type { z } from "zod";
+import type { z } from "@/lib/zod";
 
 import { getDb } from "@/db";
 import { isOrgNoticeConfigured } from "@/lib/emails";

@@ -17,7 +17,8 @@ export const LocaleSwitcher = ({ className }: { className?: string }) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger
-        aria-label={t("current", { language: t("locale", { locale }) })}
+        // Starts with the code on the button, so voice control users can say what they see.
+        aria-label={`${locale.toUpperCase()}, ${t("current", { language: t("locale", { locale }) })}`}
         className={cn(
           buttonVariants({ variant: "ghost", size: "touch" }),
           "px-3 text-white hover:bg-white/10 hover:text-white aria-expanded:bg-white/10 aria-expanded:text-white",

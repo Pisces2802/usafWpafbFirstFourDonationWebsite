@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 /** Rows-per-page choices, matching the table footer and the `admin_users_page_size` check. */
 export const PAGE_SIZES = ["10", "20", "50", "100"] as const;

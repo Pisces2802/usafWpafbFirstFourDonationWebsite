@@ -9,10 +9,8 @@ import { verifyTurnstile } from "@/lib/turnstile";
 import { getPathname } from "@/i18n/navigation";
 import { siteConfig } from "@/config/site";
 import { grossUpCents } from "@/lib/fees";
-import { getStripe } from "@/lib/stripe";
+import { getStripe, STRIPE_LOCALES } from "@/lib/stripe";
 import { env } from "@/env";
-
-const STRIPE_LOCALES = { en: "en", es: "es-419", fr: "fr" } as const;
 
 const fail = (error: CheckoutError, status: number) => Response.json({ error }, { status });
 

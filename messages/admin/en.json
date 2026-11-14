@@ -32,7 +32,7 @@
     "donors": "Donors",
     "average": "Average gift",
     "monthly": "Monthly donors",
-    "monthlyHint": "Billed in the last 35 days",
+    "monthlyHint": "Billed in the last 35 days, not cancelled",
     "gifts": "Gifts",
     "fees": "Card fees covered",
     "refunded": "Refunded",
@@ -438,7 +438,9 @@
       "lastOwner": "There has to be at least one owner with access. Make someone else an owner first.",
       "noDatabase": "Connect a database to manage the team.",
       "unknown": "That didn’t save. Try again.",
-      "alreadySetUp": "They’ve already set up their account."
+      "alreadySetUp": "They’ve already set up their account.",
+      "noTwoFactor": "They haven’t set up two-step verification, so there’s nothing to reset.",
+      "self": "To change your own authenticator app, go to Settings → Security."
     },
     "tabs": {
       "people": "People",
@@ -467,7 +469,14 @@
     "notices": {
       "roleChanged": "{name} is now {role}.",
       "accessRemoved": "Removed {name}’s access.",
-      "accessRestored": "Restored {name}’s access."
+      "accessRestored": "Restored {name}’s access.",
+      "twoFactorReset": "Reset {name}’s two-step verification. They’ll set it up again next time they sign in."
+    },
+    "resetTwoFactor": "Reset two-step verification",
+    "resetDialog": {
+      "title": "Reset {name}’s two-step verification?",
+      "body": "Use this if {name} lost or replaced the phone with their authenticator app. Their app and recovery codes stop working and they’re signed out everywhere. Next time they sign in with their password, they’ll set up an authenticator app again. We’ll email them to say you did this.",
+      "confirm": "Reset two-step verification"
     }
   },
   "roles": {
@@ -653,6 +662,13 @@
           "subject": "New recovery codes for your {orgName} account",
           "heading": "You made new recovery codes",
           "body": "New recovery codes were made for your back office account. The old ones no longer work."
+        },
+        "notExpected": "If you didn’t ask for this, tell another owner straight away.",
+        "footerAlways": "We always send this email, because someone else changed your account’s security.",
+        "twoFactorReset": {
+          "subject": "Two-step verification was reset on your {orgName} account",
+          "heading": "Your two-step verification was reset",
+          "body": "{ownerName}, an owner, reset two-step verification on your back office account. Your authenticator app and recovery codes no longer work, and you were signed out everywhere. Next time you sign in, you’ll set up an authenticator app again."
         }
       }
     }
@@ -830,7 +846,8 @@
         "role_changed": "Changed a role",
         "access_removed": "Removed access",
         "access_restored": "Restored access",
-        "updated_from_cli": "Added or updated from the command line"
+        "updated_from_cli": "Added or updated from the command line",
+        "two_factor_reset": "Reset someone’s two-step verification"
       },
       "data": {
         "exported": "Downloaded a CSV"
@@ -878,7 +895,17 @@
     "rowActions": "Row actions",
     "actionsFor": "Actions for {name}",
     "selectAll": "Select all rows",
-    "selectRow": "Select row"
+    "selectRow": "Select row",
+    "empty": "Nothing matches. Try a different search or filter.",
+    "loading": "Loading…",
+    "pagination": {
+      "label": "Pagination",
+      "range": "{start, number}–{end, number} of {total, number}",
+      "rows": "Rows",
+      "page": "{page, number} / {pages, number}",
+      "previous": "Previous page",
+      "next": "Next page"
+    }
   },
   "actions": {
     "email": "Send email",

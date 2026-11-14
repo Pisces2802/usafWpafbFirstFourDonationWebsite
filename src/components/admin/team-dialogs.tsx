@@ -140,3 +140,40 @@ export const RemoveAccessDialog = ({
     </Dialog>
   );
 };
+
+/** Asks before resetting someone's two-step verification, since it signs them out everywhere. */
+export const ResetTwoFactorDialog = ({
+  member,
+  onClose,
+  onConfirm,
+}: DialogProps & { onConfirm: (member: AdminTeamRow) => void }) => {
+  const t = useTranslations("Admin.team");
+
+  return (
+    <Dialog open={member !== null} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent closeLabel={t("close")} className="gap-5 p-5 sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-xl font-semibold">
+            {t("resetDialog.title", { name: member?.name ?? "" })}
+          </DialogTitle>
+          <DialogDescription>
+            {t("resetDialog.body", { name: member?.name ?? "" })}
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="-mx-5 -mb-5 p-5">
+          <DialogClose render={<Button type="button" variant="outline" size="touch" />}>
+            {t("cancel")}
+          </DialogClose>
+          <Button
+            type="button"
+            size="touch"
+            variant="destructive"
+            onClick={() => member && onConfirm(member)}
+          >
+            {t("resetDialog.confirm")}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
