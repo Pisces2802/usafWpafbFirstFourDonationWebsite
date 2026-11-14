@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { type DefaultValues, type FieldValues, type Path, useForm } from "react-hook-form";
-import type { z } from "zod";
+import type { z } from "@/lib/zod";
 
 import type { AuthError, AuthResult } from "@/lib/admin/auth/schema";
 

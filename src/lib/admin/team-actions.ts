@@ -1,7 +1,7 @@
 "use server";
 
 import { refresh } from "next/cache";
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 import { type Db, getDb } from "@/db";
 import { type AdminUser, requireAdmin } from "@/lib/admin/access";

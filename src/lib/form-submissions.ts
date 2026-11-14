@@ -1,7 +1,7 @@
 import "server-only";
 
 import { getTranslations } from "next-intl/server";
-import type { z } from "zod";
+import type { z } from "@/lib/zod";
 
 import type { Db } from "@/db";
 import { contactMessages, volunteers } from "@/db/schema";

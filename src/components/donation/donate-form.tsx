@@ -23,12 +23,26 @@ import type { CampaignProgress } from "@/lib/campaign-progress";
 import { cn } from "@/lib/utils";
 
 const CampaignProgressBar = ({ progress }: { progress: CampaignProgress }) => {
+  const t = useTranslations("Donate");
+  const formatMoney = useFormatMoney();
   const ratio = progress.goalCents > 0 ? progress.raisedCents / progress.goalCents : 0;
   const percent = Math.min(Math.round(ratio * 100), 100);
   return (
     <div className="flex flex-col gap-2">
+      <p id="campaign-progress-label" className="flex flex-wrap justify-between gap-x-4 text-sm">
+        <span className="font-semibold">
+          {t("campaignRaised", {
+            raised: formatMoney(progress.raisedCents),
+            goal: formatMoney(progress.goalCents),
+          })}
+        </span>
+        <span className="text-muted-foreground">
+          {t("campaignDonors", { count: progress.donorCount })}
+        </span>
+      </p>
       <div
         role="progressbar"
+        aria-labelledby="campaign-progress-label"
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={percent}

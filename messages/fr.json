@@ -139,7 +139,9 @@
       "verification_failed": "Nous n'avons pas pu confirmer cette demande. Actualisez la page et réessayez.",
       "unavailable": "Le paiement par carte n'est pas encore activé. Vos choix sont conservés pendant cette visite.",
       "failed": "Nous n'avons pas pu ouvrir le paiement et rien n'a été débité. Réessayez, ou écrivez-nous si le problème persiste."
-    }
+    },
+    "campaignRaised": "{raised} collectés sur {goal}",
+    "campaignDonors": "{count, plural, =0 {Soyez le premier à donner} one {# donateur} other {# donateurs}}"
   },
   "Checkout": {
     "_reviewed": false,
@@ -222,7 +224,6 @@
     "heading": "À quoi sert votre don",
     "lead": "Choisissez ce que finance votre don, ou laissez nos membres l'affecter là où il est le plus utile.",
     "giveToFund": "Soutenir ce fonds",
-    "giveToFundLabel": "Soutenir : {fund}",
     "general": {
       "name": "Là où les besoins sont les plus grands",
       "description": "Permet à nos membres d'affecter votre don au projet qui en a besoin en premier."

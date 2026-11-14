@@ -1,7 +1,7 @@
 "use server";
 
 import { refresh, updateTag } from "next/cache";
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 import { FUND_IDS } from "@/config/donation";
 import { type Db, getDb } from "@/db";

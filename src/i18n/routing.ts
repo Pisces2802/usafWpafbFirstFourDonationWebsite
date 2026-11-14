@@ -5,6 +5,9 @@ export const routing = defineRouting({
   defaultLocale: "en",
   localePrefix: "always",
   localeCookie: { name: "NEXT_LOCALE", maxAge: 60 * 60 * 24 * 365 },
+  // Page metadata and the sitemap carry hreflang, with x-default as `/en`. The proxy's own
+  // `Link` header would say x-default is `/`, a conflicting signal for search engines.
+  alternateLinks: false,
   pathnames: {
     "/": "/",
     "/donate": { en: "/donate", es: "/donar", fr: "/faire-un-don" },

@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 /** Error messages are keys into `Admin.auth.errors`, so forms can show translated text. */
 const email = z.string().trim().toLowerCase().pipe(z.email("email").max(254, "email"));

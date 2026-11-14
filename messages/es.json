@@ -139,7 +139,9 @@
       "verification_failed": "No pudimos confirmar esta solicitud. Actualiza la página e inténtalo de nuevo.",
       "unavailable": "Los pagos con tarjeta aún no están activados. Guardamos tus opciones durante esta visita.",
       "failed": "No pudimos abrir el pago y no se hizo ningún cargo. Inténtalo de nuevo o escríbenos si el problema continúa."
-    }
+    },
+    "campaignRaised": "{raised} recaudados de {goal}",
+    "campaignDonors": "{count, plural, =0 {Sé la primera persona en donar} one {# donante} other {# donantes}}"
   },
   "Checkout": {
     "_reviewed": false,
@@ -222,7 +224,6 @@
     "heading": "A dónde va tu donación",
     "lead": "Elige qué paga tu donación, o deja que nuestros miembros la destinen a donde más se necesite.",
     "giveToFund": "Dona a este fondo",
-    "giveToFundLabel": "Dona a {fund}",
     "general": {
       "name": "Donde más se necesite",
       "description": "Permite que nuestros miembros destinen tu donación al proyecto que la necesite primero."

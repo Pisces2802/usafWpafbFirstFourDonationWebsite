@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 import { ADMIN_ROLES } from "@/lib/admin/permissions";
 
