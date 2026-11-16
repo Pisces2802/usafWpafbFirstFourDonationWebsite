@@ -1,4 +1,3 @@
-import { ShieldCheck } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
@@ -16,12 +15,15 @@ import {
 } from "@/components/admin/settings-preference-forms";
 import { SettingsSection } from "@/components/admin/settings-section";
 import { SettingsTabs } from "@/components/admin/settings-tabs";
+import { TwoFactorSettings } from "@/components/admin/settings-two-factor";
 import { siteConfig } from "@/config/site";
 import { env } from "@/env";
 import { requireAdmin } from "@/lib/admin/access";
+import { emailCodesAvailable } from "@/lib/admin/auth/email-code";
 import { searchParam } from "@/lib/admin/auth/pages";
 import { countOtherSessions, countUnusedRecoveryCodes } from "@/lib/admin/auth/queries";
 import { readSession } from "@/lib/admin/auth/session";
+import { roleNeedsTwoFactor } from "@/lib/admin/auth/sign-in";
 import { adminMetadata } from "@/lib/admin/metadata";
 import { can } from "@/lib/admin/permissions";
 import { getPlatformSettingsForEditing } from "@/lib/admin/platform-settings";
@@ -39,7 +41,7 @@ const Settings = async ({ searchParams }: Pick<PageProps<"/admin/settings">, "se
   const user = await requireAdmin();
   const current = (await readSession())!;
   const person = current.user;
-  const canManagePlatform = can(user.role, "settings:manage");
+  const canManagePlatform = can(user, "settings:edit");
   const [remaining, otherSessions, platform, { tab }] = await Promise.all([
     countUnusedRecoveryCodes(current.db, user.id),
     countOtherSessions(current.db, user.id, current.session.id),
@@ -64,7 +66,7 @@ const Settings = async ({ searchParams }: Pick<PageProps<"/admin/settings">, "se
               </div>
               <div>
                 <dt className="text-muted-foreground">{t("settings.profile.role")}</dt>
-                <dd className="font-medium">{t(`roles.${user.role}.name`)}</dd>
+                <dd className="font-medium">{user.role.name}</dd>
               </div>
             </dl>
             <NameForm name={user.name} />
@@ -80,11 +82,17 @@ const Settings = async ({ searchParams }: Pick<PageProps<"/admin/settings">, "se
               <ChangePasswordForm email={user.email} />
             </SettingsSection>
             <SettingsSection id="settings-two-factor" title={t("settings.twoFactor.title")}>
-              <p className="mb-4 inline-flex items-center gap-2 text-sm font-medium">
-                <ShieldCheck aria-hidden="true" className="size-4 text-emerald-600" />
-                {t("settings.twoFactor.on")}
-              </p>
-              <RecoveryCodesPanel remaining={remaining} />
+              <TwoFactorSettings
+                email={user.email}
+                method={person.twoFactorMethod}
+                required={roleNeedsTwoFactor(current.role)}
+                emailAvailable={emailCodesAvailable()}
+              />
+              {person.twoFactorMethod && (
+                <div className="mt-6 border-t pt-6">
+                  <RecoveryCodesPanel remaining={remaining} />
+                </div>
+              )}
             </SettingsSection>
             <SettingsSection id="settings-sessions" title={t("settings.sessions.title")}>
               <SessionsPanel otherSessions={otherSessions} />
@@ -104,8 +112,8 @@ const Settings = async ({ searchParams }: Pick<PageProps<"/admin/settings">, "se
                 notifySecurity: person.notifySecurity,
               }}
               canSee={{
-                volunteers: can(user.role, "volunteers:view"),
-                messages: can(user.role, "messages:view"),
+                volunteers: can(user, "volunteers:read"),
+                messages: can(user, "messages:read"),
               }}
               canEmail={isEmailConfigured()}
             />

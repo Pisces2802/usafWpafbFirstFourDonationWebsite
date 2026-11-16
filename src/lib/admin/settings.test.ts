@@ -1,13 +1,19 @@
 import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 import { migrate } from "drizzle-orm/pglite/migrator";
+import { eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import type { Db } from "@/db";
 import * as schema from "@/db/schema";
 import { AUDIT_ACTIONS, auditCategory } from "@/lib/admin/audit-actions";
 import { listAuditEvents, personLabel, recordAudit } from "@/lib/admin/audit";
-import { ADMIN_PERMISSIONS, can } from "@/lib/admin/permissions";
+import {
+  ADMIN_PERMISSIONS,
+  BUILT_IN_ROLES,
+  can,
+  grantedPermissions,
+} from "@/lib/admin/permissions";
 import { getPlatformSettings, savePlatformSettings } from "@/lib/admin/platform-settings";
 import { platformSettingsSchema, preferencesSchema } from "@/lib/admin/settings-schema";
 import admin from "../../../messages/admin/en.json";
@@ -53,15 +59,42 @@ describe("audit actions and permissions", () => {
     }
   });
 
-  it("keeps platform settings and the audit log to owners", () => {
-    expect(can("owner", "settings:manage")).toBe(true);
-    expect(can("owner", "audit:view")).toBe(true);
-    for (const role of ["treasurer", "coordinator", "viewer"] as const) {
-      expect(can(role, "settings:manage")).toBe(false);
-      expect(can(role, "audit:view")).toBe(false);
+  it("keeps site settings to SuperAdmin and IdentityManager", () => {
+    for (const role of BUILT_IN_ROLES) {
+      const holder = { permissions: grantedPermissions(role) };
+      expect(can(holder, "settings:edit"), role.slug).toBe(
+        role.slug === "super-admin" || role.slug === "identity-manager",
+      );
+      expect(can(holder, "audit:read"), role.slug).toBe(
+        ["super-admin", "auditor", "identity-manager"].includes(role.slug),
+      );
+    }
+  });
+
+  it("never gives site settings to a role the group added", () => {
+    const custom = {
+      isSuper: false,
+      isBuiltIn: false,
+      permissions: ["settings:edit", "funds:read"],
+    };
+    expect([...grantedPermissions(custom)]).toEqual(["funds:read"]);
+    expect(grantedPermissions({ ...custom, isBuiltIn: true }).has("settings:edit")).toBe(true);
+  });
+
+  it("has a name for every permission group", () => {
+    for (const permission of ADMIN_PERMISSIONS) {
+      expect(admin.permissionGroups, permission).toHaveProperty([permission.split(":")[0]!]);
     }
   });
 });
+
+const superAdminId = async (db: Db) => {
+  const [role] = await db
+    .select({ id: schema.adminRoles.id })
+    .from(schema.adminRoles)
+    .where(eq(schema.adminRoles.slug, "super-admin"));
+  return role!.id;
+};
 
 describe("audit log and platform settings", () => {
   let db: Db;
@@ -73,7 +106,7 @@ describe("audit log and platform settings", () => {
     db = testDb as unknown as Db;
     [sam] = (await db
       .insert(schema.adminUsers)
-      .values({ name: "Sam", email: "sam@example.com", role: "owner" })
+      .values({ name: "Sam", email: "sam@example.com", roleId: await superAdminId(db) })
       .returning()) as [typeof schema.adminUsers.$inferSelect];
   });
 

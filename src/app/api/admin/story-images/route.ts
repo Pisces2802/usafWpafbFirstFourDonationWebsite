@@ -12,7 +12,9 @@ const error = (status: number, code: string) => Response.json({ error: code }, {
 export const POST = async () => {
   const user = await getAdminUser();
   if (!user) return error(401, "unauthorized");
-  if (!can(user.role, "stories:manage")) return error(403, "forbidden");
+  if (user.needsTwoFactorSetup || !(can(user, "stories:create") || can(user, "stories:edit"))) {
+    return error(403, "forbidden");
+  }
 
   const signed = signStoryImageUpload();
   if (!signed) return error(503, "notConfigured");

@@ -284,6 +284,7 @@ export const getDashboardInsights = async (
       .select({ slug: campaigns.slug, goalCents: campaigns.goalCents, raisedCents: netCents })
       .from(campaigns)
       .leftJoin(donations, and(eq(donations.campaignId, campaigns.id), counted))
+      .where(eq(campaigns.approval, "approved"))
       .groupBy(campaigns.id)
       .orderBy(desc(netCents), desc(campaigns.id))
       .limit(3),

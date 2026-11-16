@@ -73,9 +73,6 @@ export const NewsletterSignup = ({ variant, turnstileSiteKey }: NewsletterSignup
       <label htmlFor={id} className={cn("font-medium", isFooter ? "text-white" : "text-sm")}>
         {isFooter ? t("footerEmail") : t("email")}
       </label>
-      <p id={hintId} className="text-muted-foreground -mt-1 text-sm">
-        {t("hint")}
-      </p>
       <div className="flex flex-col gap-3 sm:flex-row">
         <Input
           id={id}
@@ -92,6 +89,9 @@ export const NewsletterSignup = ({ variant, turnstileSiteKey }: NewsletterSignup
           {status === "sending" ? tForms("sending") : t("submit")}
         </Button>
       </div>
+      <p id={hintId} className="text-muted-foreground text-xs">
+        {t("hint")}
+      </p>
       {error && (
         <p id={errorId} className={cn("text-sm", isFooter ? "text-white" : "text-destructive")}>
           {error}

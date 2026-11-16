@@ -36,7 +36,7 @@ const loadProgress = async (db: Db, campaign: CampaignRow): Promise<CampaignProg
   };
 };
 
-/** Progress for the campaign with this slug, whether or not it's running. */
+/** Progress for the approved campaign with this slug, whether or not it's running. */
 export const loadCampaignProgress = async (
   db: Db,
   slug: string,
@@ -44,7 +44,7 @@ export const loadCampaignProgress = async (
   const [campaign] = await db
     .select(campaignColumns)
     .from(campaigns)
-    .where(eq(campaigns.slug, slug));
+    .where(and(eq(campaigns.slug, slug), eq(campaigns.approval, "approved")));
   return campaign ? loadProgress(db, campaign) : null;
 };
 
@@ -61,6 +61,7 @@ export const loadActiveCampaignProgress = async (
     .from(campaigns)
     .where(
       and(
+        eq(campaigns.approval, "approved"),
         or(isNull(campaigns.startsAt), lte(campaigns.startsAt, now)),
         or(isNull(campaigns.endsAt), gte(campaigns.endsAt, now)),
       ),

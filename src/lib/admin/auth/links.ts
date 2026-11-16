@@ -6,8 +6,6 @@ import { env } from "@/env";
 import { randomToken, sha256 } from "@/lib/admin/auth/crypto";
 import { saveToken, type TokenPurpose } from "@/lib/admin/auth/queries";
 import { adminTranslator } from "@/lib/admin/translator";
-import { roleName } from "@/lib/admin/role-name";
-import type { AdminRole } from "@/lib/admin/permissions";
 import { sendAdminEmail } from "@/lib/emails";
 
 const TOKEN_TTL_MS: Record<TokenPurpose, number> = {
@@ -43,7 +41,7 @@ const t = adminTranslator;
  */
 export const sendInviteEmail = (
   to: { name: string; email: string },
-  { link, role, invitedBy }: { link: string; role: AdminRole; invitedBy: string },
+  { link, roleName, invitedBy }: { link: string; roleName: string; invitedBy: string },
 ) =>
   sendAdminEmail({
     to: to.email,
@@ -53,7 +51,7 @@ export const sendInviteEmail = (
       t("auth.emails.invite.added", {
         invitedBy,
         orgName: siteConfig.orgName,
-        role: roleName(role),
+        role: roleName,
       }),
       t("auth.emails.invite.instructions"),
     ],

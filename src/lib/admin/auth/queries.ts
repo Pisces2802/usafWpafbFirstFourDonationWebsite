@@ -3,9 +3,22 @@ import "server-only";
 import { and, count, eq, gt, isNull, lt, ne, or, sql } from "drizzle-orm";
 
 import type { Db } from "@/db";
-import { adminRecoveryCodes, adminSessions, adminTokens, adminUsers } from "@/db/schema";
+import {
+  adminRecoveryCodes,
+  adminRoles,
+  adminSessions,
+  adminTokens,
+  adminUsers,
+} from "@/db/schema";
 
-export const MAX_FAILED_SIGN_INS = 5;
+/**
+ * Wrong passwords are counted per account and network address: five from one address locks that
+ * address out of the account for 15 minutes, so someone who knows a team member's email can't
+ * keep them locked out from elsewhere. The account itself only locks after many more in a row,
+ * which takes a spread-out attack (each attempt also needs a Turnstile pass where it's set up).
+ */
+export const MAX_FAILED_SIGN_INS_PER_ADDRESS = 5;
+export const MAX_FAILED_SIGN_INS = 50;
 export const LOCKOUT_MS = 15 * 60_000;
 export const MAX_TWO_FACTOR_ATTEMPTS = 5;
 
@@ -26,7 +39,7 @@ export const findAdminById = async (db: Db, id: number) => {
   return user;
 };
 
-/** Counts a wrong password; the fifth in a row locks the account for 15 minutes. */
+/** Counts a wrong password against the account; the 50th in a row locks it for 15 minutes. */
 export const recordFailedSignIn = (db: Db, id: number, now = new Date()) =>
   db
     .update(adminUsers)
@@ -170,29 +183,63 @@ export const insertSession = async (
   return session!;
 };
 
-/** A live session and its person. Expired sessions, and people who've lost access, return nothing. */
+/**
+ * A live session, its person and their role. Expired sessions, and people who've lost access or
+ * whose account is locked, return nothing.
+ */
 export const findSession = async (db: Db, tokenHash: string, now = new Date()) => {
   const [row] = await db
-    .select({ session: adminSessions, user: adminUsers })
+    .select({ session: adminSessions, user: adminUsers, role: adminRoles })
     .from(adminSessions)
     .innerJoin(adminUsers, eq(adminSessions.adminUserId, adminUsers.id))
+    .innerJoin(adminRoles, eq(adminUsers.roleId, adminRoles.id))
     .where(
       and(
         eq(adminSessions.tokenHash, tokenHash),
         gt(adminSessions.expiresAt, now),
         eq(adminUsers.isActive, true),
+        isNull(adminUsers.suspendedAt),
       ),
     )
     .limit(1);
   return row;
 };
 
+/** Clears anything half-done on a session: a pending authenticator secret or an emailed code. */
+const CLEARED_SETUP = {
+  pendingTotpSecret: null,
+  emailCodeHash: null,
+  emailCodeExpiresAt: null,
+  failedAttempts: 0,
+} as const;
+
 /** Finishes the two-factor step: the session becomes signed in, with a new expiry. */
 export const promoteSession = (db: Db, id: number, expiresAt: Date) =>
   db
     .update(adminSessions)
-    .set({ stage: "active", expiresAt, pendingTotpSecret: null, failedAttempts: 0 })
+    .set({ stage: "active", expiresAt, ...CLEARED_SETUP })
     .where(eq(adminSessions.id, id));
+
+export const clearSessionSetup = (db: Db, id: number) =>
+  db.update(adminSessions).set(CLEARED_SETUP).where(eq(adminSessions.id, id));
+
+/** Keeps the HMAC of a code just emailed for this session; any earlier code stops working. */
+export const setEmailCode = (
+  db: Db,
+  sessionId: number,
+  { codeHash, expiresAt, sentAt }: { codeHash: string; expiresAt: Date; sentAt: Date },
+) =>
+  db
+    .update(adminSessions)
+    .set({ emailCodeHash: codeHash, emailCodeExpiresAt: expiresAt, emailCodeSentAt: sentAt })
+    .where(eq(adminSessions.id, sessionId));
+
+/** Uses up the session's emailed code, so it can't be entered twice. */
+export const clearEmailCode = (db: Db, sessionId: number) =>
+  db
+    .update(adminSessions)
+    .set({ emailCodeHash: null, emailCodeExpiresAt: null })
+    .where(eq(adminSessions.id, sessionId));
 
 export const deleteSession = (db: Db, id: number) =>
   db.delete(adminSessions).where(eq(adminSessions.id, id));
@@ -256,25 +303,46 @@ export const claimTotpStep = async (db: Db, adminUserId: number, step: number) =
   return updated.length > 0;
 };
 
-/** Saves a confirmed two-factor secret and a fresh set of recovery codes. */
+/**
+ * Saves someone's confirmed second step, replacing whatever they used before, with a fresh set of
+ * recovery codes. An authenticator app brings its encrypted secret and the step just used;
+ * emailed codes need neither.
+ */
 export const enableTwoFactor = (
   db: Db,
   {
     adminUserId,
-    encryptedSecret,
-    step,
+    method,
+    encryptedSecret = null,
+    step = null,
     recoveryCodeHashes,
-  }: { adminUserId: number; encryptedSecret: string; step: number; recoveryCodeHashes: string[] },
+  }: {
+    adminUserId: number;
+    method: "authenticator" | "email";
+    encryptedSecret?: string | null;
+    step?: number | null;
+    recoveryCodeHashes: string[];
+  },
 ) =>
   db.transaction(async (tx) => {
     await tx
       .update(adminUsers)
-      .set({ totpSecret: encryptedSecret, totpLastStep: step })
+      .set({ twoFactorMethod: method, totpSecret: encryptedSecret, totpLastStep: step })
       .where(eq(adminUsers.id, adminUserId));
     await tx.delete(adminRecoveryCodes).where(eq(adminRecoveryCodes.adminUserId, adminUserId));
     await tx
       .insert(adminRecoveryCodes)
       .values(recoveryCodeHashes.map((codeHash) => ({ adminUserId, codeHash })));
+  });
+
+/** Turns off someone's second step and deletes their recovery codes. */
+export const disableTwoFactor = (db: Db, adminUserId: number) =>
+  db.transaction(async (tx) => {
+    await tx
+      .update(adminUsers)
+      .set({ twoFactorMethod: null, totpSecret: null, totpLastStep: null })
+      .where(eq(adminUsers.id, adminUserId));
+    await tx.delete(adminRecoveryCodes).where(eq(adminRecoveryCodes.adminUserId, adminUserId));
   });
 
 export const replaceRecoveryCodes = (db: Db, adminUserId: number, hashes: string[]) =>

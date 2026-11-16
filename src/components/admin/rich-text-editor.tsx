@@ -309,9 +309,6 @@ const ImageAltControl = ({ editor, alt }: { editor: Editor; alt: string }) => {
           <label htmlFor={id} className="text-sm font-medium">
             {t("altLabel")}
           </label>
-          <p id={`${id}-hint`} className="text-muted-foreground text-sm">
-            {t("altHint")}
-          </p>
           <Input
             id={id}
             autoComplete="off"
@@ -321,6 +318,9 @@ const ImageAltControl = ({ editor, alt }: { editor: Editor; alt: string }) => {
             onChange={(event) => setValue(event.target.value)}
             className="h-9"
           />
+          <p id={`${id}-hint`} className="text-muted-foreground text-xs">
+            {t("altHint")}
+          </p>
           <div className="flex justify-end">
             <Button type="submit" size="sm">
               {t("apply")}

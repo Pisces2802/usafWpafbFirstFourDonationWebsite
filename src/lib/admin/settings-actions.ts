@@ -21,7 +21,7 @@ const changes = <T extends AuditDetails>(before: T, after: T): AuditDetails =>
   Object.fromEntries(Object.entries(after).filter(([key, value]) => before[key] !== value));
 
 /** The signed-in person's full row, for comparing before and after. */
-const currentPerson = async (permission?: "settings:manage") => {
+const currentPerson = async (permission?: "settings:edit") => {
   const actor = await requireAdmin(permission);
   const db = getDb();
   const person = db && (await findAdminById(db, actor.id));
@@ -72,7 +72,7 @@ export const updatePreferences = async (input: unknown): Promise<AuthResult> => 
 export const updatePlatformSettings = async (input: unknown): Promise<AuthResult> => {
   const parsed = platformSettingsSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "invalid" };
-  const current = await currentPerson("settings:manage");
+  const current = await currentPerson("settings:edit");
   if (!current) return { ok: false, error: "unavailable" };
   const { db, actor } = current;
 

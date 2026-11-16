@@ -42,11 +42,13 @@ type Notice =
 const StoryRow = ({
   story,
   isPending,
+  canEdit,
   onDelete,
 }: {
   story: AdminStoryRow;
   isPending: boolean;
-  onDelete: () => void;
+  canEdit: boolean;
+  onDelete: (() => void) | null;
 }) => {
   const t = useTranslations("Admin.stories");
   const tFunds = useTranslations("Funds");
@@ -118,14 +120,16 @@ const StoryRow = ({
       </div>
 
       <div className="flex flex-wrap gap-2 sm:justify-end">
-        <Link
-          href={`/admin/stories/${story.id}`}
-          aria-label={t("editFor", { title })}
-          className={buttonVariants({ variant: "outline", size: "sm" })}
-        >
-          <Pencil aria-hidden="true" />
-          {t("edit")}
-        </Link>
+        {canEdit && (
+          <Link
+            href={`/admin/stories/${story.id}`}
+            aria-label={t("editFor", { title })}
+            className={buttonVariants({ variant: "outline", size: "sm" })}
+          >
+            <Pencil aria-hidden="true" />
+            {t("edit")}
+          </Link>
+        )}
         {story.status === "published" && (
           <a
             href={`/en/stories/${story.slug}`}
@@ -138,25 +142,34 @@ const StoryRow = ({
             {t("view")}
           </a>
         )}
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          disabled={isPending}
-          aria-label={t("deleteFor", { title })}
-          className="text-destructive hover:text-destructive"
-          onClick={onDelete}
-        >
-          <Trash2 aria-hidden="true" />
-          {t("delete")}
-        </Button>
+        {onDelete && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            disabled={isPending}
+            aria-label={t("deleteFor", { title })}
+            className="text-destructive hover:text-destructive"
+            onClick={onDelete}
+          >
+            <Trash2 aria-hidden="true" />
+            {t("delete")}
+          </Button>
+        )}
       </div>
     </li>
   );
 };
 
 /** Every story with its status and languages, and links to write, edit or delete one. */
-export const StoriesBoard = ({ stories }: { stories: AdminStoryRow[] }) => {
+export const StoriesBoard = ({
+  stories,
+  abilities,
+}: {
+  stories: AdminStoryRow[];
+  /** What the signed-in person's role allows; the server actions check again. */
+  abilities: { create: boolean; edit: boolean; delete: boolean };
+}) => {
   const t = useTranslations("Admin.stories");
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
@@ -205,13 +218,15 @@ export const StoriesBoard = ({ stories }: { stories: AdminStoryRow[] }) => {
             </p>
           )}
         </div>
-        <Link
-          href="/admin/stories/new"
-          className={cn(buttonVariants({ size: "touch" }), "ml-auto")}
-        >
-          <Plus aria-hidden="true" />
-          {t("new")}
-        </Link>
+        {abilities.create && (
+          <Link
+            href="/admin/stories/new"
+            className={cn(buttonVariants({ size: "touch" }), "ml-auto")}
+          >
+            <Plus aria-hidden="true" />
+            {t("new")}
+          </Link>
+        )}
       </div>
 
       {stories.length ? (
@@ -221,7 +236,8 @@ export const StoriesBoard = ({ stories }: { stories: AdminStoryRow[] }) => {
               key={story.id}
               story={story}
               isPending={isPending && pendingId === story.id}
-              onDelete={() => setDeleting(story)}
+              canEdit={abilities.edit}
+              onDelete={abilities.delete ? () => setDeleting(story) : null}
             />
           ))}
         </ul>

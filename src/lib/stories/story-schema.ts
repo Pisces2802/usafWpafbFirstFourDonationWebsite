@@ -125,7 +125,13 @@ export const slugify = (text: string) =>
     .replace(/-+$/, "");
 
 /** Reasons a story change can be refused, keyed into `Admin.stories.errors`. */
-export const STORY_ERRORS = ["invalid", "slugTaken", "notFound", "noDatabase"] as const;
+export const STORY_ERRORS = [
+  "invalid",
+  "slugTaken",
+  "notFound",
+  "noDatabase",
+  "publishNotAllowed",
+] as const;
 export type StoryError = (typeof STORY_ERRORS)[number];
 export type StoryResult = { ok: true; id: number } | { ok: false; error: StoryError };
 

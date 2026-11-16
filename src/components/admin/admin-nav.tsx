@@ -7,7 +7,7 @@ import { can } from "@/lib/admin/permissions";
 export const AdminNav = async () => {
   const user = await getAdminUser();
   const keys = user
-    ? adminNav.filter((item) => !item.permission || can(user.role, item.permission))
+    ? adminNav.filter((item) => !item.permission || can(user, item.permission))
     : [];
   return <Sidebar keys={keys.map((item) => item.key)} />;
 };

@@ -13,6 +13,9 @@ const mismatch = { path: ["confirmPassword"], message: "passwordMismatch" };
 
 export const signInSchema = z.object({ email, password: currentPassword });
 
+/** Their current password, asked for again before changing how they sign in. */
+export const confirmPasswordSchema = z.object({ password: currentPassword });
+
 export const forgotPasswordSchema = z.object({ email });
 
 const passwordPair = { password: newPassword, confirmPassword: z.string() };
@@ -52,6 +55,14 @@ export const AUTH_ERRORS = [
   "wrongPassword",
   "linkInvalid",
   "verificationFailed",
+  /** Someone locked the account; it stays locked until they unlock it. */
+  "suspended",
+  /** Their role needs two-step verification, so it can't be turned off. */
+  "twoFactorRequired",
+  /** Emailed codes can't be sent right now. */
+  "emailUnavailable",
+  /** A code was emailed less than a minute ago. */
+  "codeCooldown",
 ] as const;
 export type AuthError = (typeof AUTH_ERRORS)[number];
 

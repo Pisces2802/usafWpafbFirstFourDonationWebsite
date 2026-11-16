@@ -9,7 +9,8 @@
  *   pnpm db:seed --seed 7   use a different random seed (the default always gives the same data)
  *
  * It won't run against production (NODE_ENV or VERCEL_ENV set to "production"). Funds and
- * campaigns are added only if missing, and are never removed.
+ * campaigns are added only if missing, and are never removed. Sample campaigns go in approved,
+ * with no creator, like campaigns from before approvals.
  *
  * Values must match the schema in src/db/schema.ts, FUND_IDS in src/config/donation.ts and the
  * enums in src/lib/form-schemas.ts.
@@ -163,10 +164,10 @@ const seed = async (tx) => {
     await tx`insert into funds (slug, sort_order) values (${slug}, ${i}) on conflict (slug) do nothing`;
   }
   await tx`
-    insert into campaigns (slug, goal_cents, starts_at, ends_at)
+    insert into campaigns (slug, goal_cents, starts_at, ends_at, approval)
     values
-      ('spring-morale', 500000, ${daysAgo(30)}, ${new Date(now + 30 * DAY)}),
-      ('holiday-2025', 300000, ${daysAgo(380)}, ${daysAgo(320)})
+      ('spring-morale', 500000, ${daysAgo(30)}, ${new Date(now + 30 * DAY)}, 'approved'),
+      ('holiday-2025', 300000, ${daysAgo(380)}, ${daysAgo(320)}, 'approved')
     on conflict (slug) do nothing`;
 
   const fundIds = Object.fromEntries(

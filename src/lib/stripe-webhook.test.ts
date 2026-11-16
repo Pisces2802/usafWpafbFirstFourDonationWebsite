@@ -171,7 +171,9 @@ describe("applyWebhookPlan", () => {
 
   beforeEach(async () => {
     db = await createDb();
-    await db.insert(schema.campaigns).values({ slug: "giving-day", goalCents: 1_000_000 });
+    await db
+      .insert(schema.campaigns)
+      .values({ slug: "giving-day", goalCents: 1_000_000, approval: "approved" });
   });
 
   it("records the donor, fund, campaign and gift", async () => {

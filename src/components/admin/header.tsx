@@ -19,9 +19,7 @@ const CurrentUser = async () => {
       <UserRound aria-hidden="true" className="size-4" />
       <span className="sr-only">{t("signedInAs", { name: user.name })}</span>
       <span aria-hidden="true">{user.name}</span>
-      <span className="bg-background/10 rounded-full px-2 py-0.5 text-xs">
-        {t(`roles.${user.role}.name`)}
-      </span>
+      <span className="bg-background/10 rounded-full px-2 py-0.5 text-xs">{user.role.name}</span>
     </span>
   );
 };

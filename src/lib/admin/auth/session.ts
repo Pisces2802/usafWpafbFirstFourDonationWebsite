@@ -24,7 +24,7 @@ const TWO_FACTOR_TTL_MS = 10 * 60_000;
 const activeTtlMs = async (db: Db) => (await readPlatformSettings(db)).sessionHours * 60 * 60_000;
 
 /**
- * Starts a session and sets its cookie. Call only from a server action or route handler. The cookie
+ * Starts a session, sets its cookie and returns the session row. Call only from a server action or route handler. The cookie
  * always lasts as long as a signed-in session; the database enforces the shorter two-factor limit,
  * so finishing setup can promote the session without setting the cookie again.
  */
@@ -34,7 +34,7 @@ export const startSession = async (db: Db, adminUserId: number, stage: SessionSt
   const expiresAt = new Date(Date.now() + (stage === "active" ? activeTtl : TWO_FACTOR_TTL_MS));
   const requestHeaders = await headers();
 
-  await insertSession(db, {
+  const session = await insertSession(db, {
     adminUserId,
     tokenHash: sha256(token),
     stage,
@@ -50,6 +50,7 @@ export const startSession = async (db: Db, adminUserId: number, stage: SessionSt
     path: "/",
     expires: new Date(Date.now() + activeTtl),
   });
+  return session;
 };
 
 /**

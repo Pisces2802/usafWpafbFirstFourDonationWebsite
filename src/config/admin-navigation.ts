@@ -39,26 +39,26 @@ export type AdminNavItem = {
 };
 
 export const adminNav: readonly AdminNavItem[] = [
-  { key: "dashboard", href: "/admin", icon: LayoutDashboard, permission: "dashboard:view" },
-  { key: "donations", href: "/admin/donations", icon: HandCoins, permission: "donations:view" },
-  { key: "donors", href: "/admin/donors", icon: Users, permission: "donors:view" },
+  { key: "dashboard", href: "/admin", icon: LayoutDashboard, permission: "dashboard:read" },
+  { key: "donations", href: "/admin/donations", icon: HandCoins, permission: "donations:read" },
+  { key: "donors", href: "/admin/donors", icon: Users, permission: "donors:read" },
   {
     key: "volunteers",
     href: "/admin/volunteers",
     icon: HeartHandshake,
-    permission: "volunteers:view",
+    permission: "volunteers:read",
   },
-  { key: "messages", href: "/admin/messages", icon: Inbox, permission: "messages:view" },
+  { key: "messages", href: "/admin/messages", icon: Inbox, permission: "messages:read" },
   {
     key: "subscribers",
     href: "/admin/subscribers",
     icon: MailCheck,
-    permission: "subscribers:view",
+    permission: "subscribers:read",
   },
-  { key: "campaigns", href: "/admin/campaigns", icon: Flag, permission: "campaigns:manage" },
-  { key: "funds", href: "/admin/funds", icon: PiggyBank, permission: "funds:manage" },
-  { key: "stories", href: "/admin/stories", icon: BookOpenText, permission: "stories:manage" },
-  { key: "team", href: "/admin/team", icon: UserCog, permission: "team:manage" },
-  { key: "audit", href: "/admin/audit-log", icon: ScrollText, permission: "audit:view" },
+  { key: "campaigns", href: "/admin/campaigns", icon: Flag, permission: "campaigns:read" },
+  { key: "funds", href: "/admin/funds", icon: PiggyBank, permission: "funds:read" },
+  { key: "stories", href: "/admin/stories", icon: BookOpenText, permission: "stories:read" },
+  { key: "team", href: "/admin/team", icon: UserCog, permission: "identity:read" },
+  { key: "audit", href: "/admin/audit-log", icon: ScrollText, permission: "audit:read" },
   { key: "settings", href: "/admin/settings", icon: Settings },
 ];

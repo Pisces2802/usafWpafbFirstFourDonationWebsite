@@ -3,7 +3,9 @@ import { Suspense } from "react";
 
 import { AdminPage, NoDatabase, TableSkeleton } from "@/components/admin/admin-page";
 import { FundsList } from "@/components/admin/funds-list";
+import { requireAdmin } from "@/lib/admin/access";
 import { loadFunds } from "@/lib/admin/data";
+import { can } from "@/lib/admin/permissions";
 import { adminMetadata } from "@/lib/admin/metadata";
 
 export const generateMetadata = adminMetadata("funds");
@@ -11,7 +13,8 @@ export const generateMetadata = adminMetadata("funds");
 const Funds = async () => {
   const funds = await loadFunds();
   if (!funds) return <NoDatabase />;
-  return <FundsList funds={funds} />;
+  const user = await requireAdmin();
+  return <FundsList funds={funds} canEdit={can(user, "funds:edit")} />;
 };
 
 const FundsPage = async () => {

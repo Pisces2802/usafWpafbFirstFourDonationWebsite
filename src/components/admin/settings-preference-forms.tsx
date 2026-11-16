@@ -55,7 +55,7 @@ const SwitchRow = ({ id, label, hint, checked, onCheckedChange }: SwitchRowProps
       <span id={`${id}-label`} className="font-medium">
         {label}
       </span>
-      <span id={`${id}-hint`} className="text-muted-foreground text-sm">
+      <span id={`${id}-hint`} className="text-muted-foreground text-xs">
         {hint}
       </span>
     </div>
@@ -85,11 +85,6 @@ const ChoiceField = ({ id, label, hint, value, onValueChange, items }: ChoiceFie
     <label id={`${id}-label`} htmlFor={id} className="text-sm font-medium">
       {label}
     </label>
-    {hint && (
-      <p id={`${id}-hint`} className="text-muted-foreground -mt-1 text-sm">
-        {hint}
-      </p>
-    )}
     <Select
       items={items}
       value={value}
@@ -113,6 +108,11 @@ const ChoiceField = ({ id, label, hint, value, onValueChange, items }: ChoiceFie
         ))}
       </SelectContent>
     </Select>
+    {hint && (
+      <p id={`${id}-hint`} className="text-muted-foreground text-xs">
+        {hint}
+      </p>
+    )}
   </div>
 );
 

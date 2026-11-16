@@ -2,12 +2,14 @@
 
 import { useState, useTransition } from "react";
 
-import type { AdminRole } from "@/lib/admin/permissions";
 import {
   changeAdminUserRole,
+  lockAccount,
   resendInvite,
   resetTwoFactor,
   setAdminUserAccess,
+  signOutEverywhere,
+  unlockAccount,
 } from "@/lib/admin/team-actions";
 import type { TeamError, TeamResult } from "@/lib/admin/team-schema";
 import type { AdminTeamRow } from "@/lib/admin/team-queries";
@@ -16,17 +18,22 @@ import type { AdminTeamRow } from "@/lib/admin/team-queries";
 export type TeamNotice =
   | { kind: "error"; error: TeamError | "unknown" }
   | { kind: "invite"; name: string; link: string | null }
-  | { kind: "roleChanged"; name: string; role: AdminRole }
-  | { kind: "accessRemoved" | "accessRestored" | "twoFactorReset"; name: string };
+  | { kind: "roleChanged" | "superAdminTransferred"; name: string; role: string }
+  | {
+      kind:
+        "accessRemoved" | "accessRestored" | "twoFactorReset" | "locked" | "unlocked" | "signedOut";
+      name: string;
+    };
 
 /** Which dialog is open, and for whom. */
-export type TeamDialogKind = "role" | "removeAccess" | "resetTwoFactor";
+export type TeamDialogKind =
+  "role" | "removeAccess" | "resetTwoFactor" | "lock" | "unlock" | "signOut" | "handOver";
 export type TeamDialog = { kind: TeamDialogKind; member: AdminTeamRow } | null;
 
 /**
  * The Team table's row actions. One change runs at a time; the page re-renders with fresh data
- * when it saves, and `notice` says what happened (or why it was refused, like removing the last
- * owner).
+ * when it saves, and `notice` says what happened (or why it was refused, like demoting the last
+ * SuperAdmin).
  */
 export const useTeamActions = () => {
   const [isPending, startTransition] = useTransition();
@@ -39,6 +46,7 @@ export const useTeamActions = () => {
     action: () => Promise<TeamResult<TData>>,
     done: (result: { ok: true } & TData) => TeamNotice,
   ) => {
+    setDialog(null);
     setPendingId(member.id);
     setNotice(null);
     startTransition(async () => {
@@ -53,6 +61,21 @@ export const useTeamActions = () => {
     });
   };
 
+  const simple =
+    (
+      kind: Exclude<
+        TeamNotice["kind"],
+        "error" | "invite" | "roleChanged" | "superAdminTransferred"
+      >,
+      action: (id: number) => Promise<TeamResult>,
+    ) =>
+    (member: AdminTeamRow) =>
+      run(
+        member,
+        () => action(member.id),
+        () => ({ kind, name: member.name }),
+      );
+
   return {
     pendingId: isPending ? pendingId : null,
     notice,
@@ -60,37 +83,33 @@ export const useTeamActions = () => {
     dialog,
     openDialog: (kind: TeamDialogKind, member: AdminTeamRow) => setDialog({ kind, member }),
     closeDialog: () => setDialog(null),
-    changeRole: (member: AdminTeamRow, role: AdminRole) => {
-      setDialog(null);
-      if (role === member.role) return;
+    changeRole: (member: AdminTeamRow, role: { id: number; name: string }) => {
+      if (role.id === member.roleId) {
+        setDialog(null);
+        return;
+      }
       run(
         member,
-        () => changeAdminUserRole(member.id, role),
-        () => ({ kind: "roleChanged", name: member.name, role }),
+        () => changeAdminUserRole(member.id, role.id),
+        () => ({ kind: "roleChanged", name: member.name, role: role.name }),
       );
     },
-    removeAccess: (member: AdminTeamRow) => {
-      setDialog(null);
+    lock: (member: AdminTeamRow, reason: string) =>
       run(
         member,
-        () => setAdminUserAccess(member.id, false),
-        () => ({ kind: "accessRemoved", name: member.name }),
-      );
-    },
-    resetTwoFactor: (member: AdminTeamRow) => {
-      setDialog(null);
-      run(
-        member,
-        () => resetTwoFactor(member.id),
-        () => ({ kind: "twoFactorReset", name: member.name }),
-      );
-    },
-    restoreAccess: (member: AdminTeamRow) =>
-      run(
-        member,
-        () => setAdminUserAccess(member.id, true),
-        () => ({ kind: "accessRestored", name: member.name }),
+        () => lockAccount(member.id, reason),
+        () => ({ kind: "locked", name: member.name }),
       ),
+    unlock: simple("unlocked", unlockAccount),
+    signOut: simple("signedOut", signOutEverywhere),
+    removeAccess: simple("accessRemoved", (id) => setAdminUserAccess(id, false)),
+    restoreAccess: simple("accessRestored", (id) => setAdminUserAccess(id, true)),
+    resetTwoFactor: simple("twoFactorReset", resetTwoFactor),
+    /** The hand-over dialog saves on its own, keeping a wrong password inside it; this closes it. */
+    handedOver: (member: AdminTeamRow, role: string) => {
+      setDialog(null);
+      setNotice({ kind: "superAdminTransferred", name: member.name, role });
+    },
     resendInvite: (member: AdminTeamRow) =>
       run(
         member,

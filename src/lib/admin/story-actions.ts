@@ -5,6 +5,7 @@ import { z } from "@/lib/zod";
 
 import { type Db, getDb } from "@/db";
 import { type AdminUser, requireAdmin } from "@/lib/admin/access";
+import { type AdminPermission, can } from "@/lib/admin/permissions";
 import { type AuditDetails, recordAudit } from "@/lib/admin/audit";
 import {
   createStory as insertStory,
@@ -33,9 +34,10 @@ const idSchema = z.number().int().positive();
  * story pages are refreshed.
  */
 const storyChange = async (
+  permission: AdminPermission,
   run: (db: Db, actor: AdminUser) => Promise<StoryResult>,
 ): Promise<StoryResult> => {
-  const actor = await requireAdmin("stories:manage");
+  const actor = await requireAdmin(permission);
   const db = getDb();
   if (!db) return { ok: false, error: "noDatabase" };
 
@@ -78,7 +80,10 @@ const summarize = (record: StoryRecord): AuditDetails => ({
 export const createStory = async (input: unknown): Promise<StoryResult> => {
   const record = toRecord(input);
   if (!record) return { ok: false, error: "invalid" };
-  return storyChange(async (db, actor) => {
+  return storyChange("stories:create", async (db, actor) => {
+    if (record.status === "published" && !can(actor, "stories:publish")) {
+      return { ok: false, error: "publishNotAllowed" };
+    }
     const result = await insertStory(db, record, actor.id);
     if (result.ok) {
       await recordAudit(db, {
@@ -96,9 +101,15 @@ export const updateStory = async (id: unknown, input: unknown): Promise<StoryRes
   const parsedId = idSchema.safeParse(id);
   const record = toRecord(input);
   if (!parsedId.success || !record) return { ok: false, error: "invalid" };
-  return storyChange(async (db, actor) => {
+  return storyChange("stories:edit", async (db, actor) => {
     const before = await findStory(db, parsedId.data);
     if (!before) return { ok: false, error: "notFound" };
+    // What's on the public site changes only with `stories:publish`: publishing, unpublishing, or
+    // editing a story that's already live.
+    const touchesSite = before.status === "published" || record.status === "published";
+    if (touchesSite && !can(actor, "stories:publish")) {
+      return { ok: false, error: "publishNotAllowed" };
+    }
     const result = await saveStory(db, parsedId.data, record, actor.id);
     if (result.ok) {
       const changes: AuditDetails = {};
@@ -123,7 +134,7 @@ export const updateStory = async (id: unknown, input: unknown): Promise<StoryRes
 export const deleteStory = async (id: unknown): Promise<StoryResult> => {
   const parsedId = idSchema.safeParse(id);
   if (!parsedId.success) return { ok: false, error: "invalid" };
-  return storyChange(async (db, actor) => {
+  return storyChange("stories:delete", async (db, actor) => {
     const before = await findStory(db, parsedId.data);
     const result = await removeStory(db, parsedId.data);
     if (result.ok && before) {

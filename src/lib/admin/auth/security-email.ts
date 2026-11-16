@@ -16,7 +16,13 @@ export type SecurityEvent =
   | "passwordReset"
   | "twoFactorEnabled"
   | "recoveryCodesRegenerated"
-  | "twoFactorReset";
+  | "twoFactorReset"
+  | "twoFactorChanged"
+  | "twoFactorTurnedOff"
+  | "accountLocked"
+  | "accountUnlocked"
+  | "superAdminReceived"
+  | "superAdminHandedOver";
 
 type Recipient = { email: string; notifySecurity: boolean; timeZone: string | null };
 
@@ -43,9 +49,13 @@ export const sendSecurityNotice = async (
 
   const requestHeaders = await headers();
   const ip = getClientIp(requestHeaders) ?? t("auth.emails.security.unknownIp");
+  // Spelled out field by field: Intl refuses timeZoneName alongside dateStyle or timeStyle.
   const when = new Intl.DateTimeFormat("en-US", {
-    dateStyle: "long",
-    timeStyle: "short",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
     timeZone: to.timeZone ?? siteConfig.timeZone,
     timeZoneName: "short",
   }).format(new Date());

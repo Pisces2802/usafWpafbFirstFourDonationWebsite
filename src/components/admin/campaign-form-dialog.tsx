@@ -33,16 +33,24 @@ type Field = (typeof CAMPAIGN_FIELDS)[number];
 
 const EMPTY: CampaignInput = { slug: "", goal: "", startsOn: "", endsOn: "" };
 
-const toInput = (campaign: AdminCampaignRow): CampaignInput => ({
-  slug: campaign.slug,
-  goal: String(campaign.goalCents / 100),
-  startsOn: toDateInput(campaign.startsAt),
-  endsOn: toDateInput(campaign.endsAt),
-});
+/** The form starts from the change that's waiting, if there is one, so edits build on it. */
+const toInput = (campaign: AdminCampaignRow): CampaignInput => {
+  const version = campaign.proposedChange ?? campaign;
+  const day = (value: Date | string | null) => toDateInput(value ? new Date(value) : null);
+  return {
+    slug: version.slug,
+    goal: String(version.goalCents / 100),
+    startsOn: day(version.startsAt),
+    endsOn: day(version.endsAt),
+  };
+};
+
+/** What saving did: created it, changed one that's waiting, asked for a change, or withdrew one. */
+export type CampaignSaved = "created" | "new" | "change" | "none";
 
 type CampaignFormProps = {
   campaign: AdminCampaignRow | null;
-  onSaved: (slug: string, isNew: boolean) => void;
+  onSaved: (slug: string, outcome: CampaignSaved) => void;
 };
 
 /** The form itself. It's keyed by campaign, so it starts fresh each time the dialog opens. */
@@ -73,9 +81,9 @@ const CampaignForm = ({ campaign, onSaved }: CampaignFormProps) => {
     try {
       const result = campaign
         ? await updateCampaign(campaign.id, input)
-        : await createCampaign(input);
+        : { ...(await createCampaign(input)), asked: "created" as const };
       if (result.ok) {
-        onSaved(values.slug, campaign === null);
+        onSaved(values.slug, result.asked);
       } else if (result.error === "slugTaken" || result.error === "hasGifts") {
         form.setError("slug", { type: result.error }, { shouldFocus: true });
       } else {
@@ -142,7 +150,7 @@ const CampaignForm = ({ campaign, onSaved }: CampaignFormProps) => {
           clearable
         />
       </div>
-      <p className="text-muted-foreground -mt-2 text-sm">{t("form.datesHint")}</p>
+      <p className="text-muted-foreground -mt-2 text-xs">{t("form.datesHint")}</p>
       {error && (
         <p role="alert" className="text-destructive text-sm">
           {tErrors(error)}
@@ -187,6 +195,11 @@ export const CampaignFormDialog = ({
           </DialogTitle>
           <DialogDescription>{t("form.description")}</DialogDescription>
         </DialogHeader>
+        {campaign?.approval === "approved" && (
+          <p className="bg-muted rounded-lg p-3 text-sm">
+            {t(campaign.proposedChange ? "form.changeWaiting" : "form.changesNeedApproval")}
+          </p>
+        )}
         {open && <CampaignForm key={campaign?.id ?? "new"} campaign={campaign} onSaved={onSaved} />}
       </DialogContent>
     </Dialog>

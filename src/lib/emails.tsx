@@ -328,12 +328,12 @@ type AdminEmail = {
   subject: string;
   heading: string;
   paragraphs: string[];
-  link: { label: string; href: string };
+  link?: { label: string; href: string };
   footer: string[];
 };
 
 /**
- * Sends a back-office account email (invite, password reset). Returns whether it was accepted.
+ * Sends a back-office account email (invite, password reset, sign-in code). Returns whether it was accepted.
  * Failures are logged, not thrown: the caller decides what to tell the person, and a password
  * reset must look the same whether or not the address belongs to someone.
  */
@@ -348,7 +348,9 @@ export const sendAdminEmail = async ({
   const resend = getResend();
   if (!resend || !env.EMAIL_FROM) {
     if (process.env.NODE_ENV === "development") {
-      console.info(`[admin email not sent: Resend isn't configured] ${subject}\n${link.href}`);
+      // Locally this is how set-up links and emailed sign-in codes reach the developer.
+      const body = link?.href ?? paragraphs.join("\n");
+      console.info(`[admin email not sent: Resend isn't configured] ${subject}\n${body}`);
     }
     return false;
   }

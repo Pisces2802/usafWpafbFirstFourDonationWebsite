@@ -15,8 +15,6 @@ import {
 
 type AdminUserField = (typeof ADMIN_USER_FIELDS)[number];
 
-const DEFAULT_VALUES: AdminUserInput = { name: "", email: "", role: "viewer" };
-
 export type AddedPerson = AdminUserValues & { inviteLink: string | null };
 
 /**
@@ -25,11 +23,19 @@ export type AddedPerson = AdminUserValues & { inviteLink: string | null };
  * link if the invite email couldn't be sent. `clear` resets the form and any error, for when
  * the dialog closes.
  */
-export const useAddAdminUserForm = ({ onAdded }: { onAdded: (added: AddedPerson) => void }) => {
+export const useAddAdminUserForm = ({
+  defaultRoleId,
+  onAdded,
+}: {
+  /** The role picked to start with; the least access on offer. */
+  defaultRoleId: number | null;
+  onAdded: (added: AddedPerson) => void;
+}) => {
+  const defaults: AdminUserInput = { name: "", email: "", roleId: defaultRoleId ?? "" };
   const [error, setError] = useState<TeamError | "unknown" | null>(null);
   const form = useForm<AdminUserInput, unknown, AdminUserValues>({
     resolver: zodResolver(adminUserSchema),
-    defaultValues: DEFAULT_VALUES,
+    defaultValues: defaults,
     mode: "onSubmit",
     reValidateMode: "onChange",
   });
@@ -39,7 +45,7 @@ export const useAddAdminUserForm = ({ onAdded }: { onAdded: (added: AddedPerson)
     try {
       const response = await addAdminUser(values);
       if (response.ok) {
-        form.reset(DEFAULT_VALUES);
+        form.reset(defaults);
         onAdded({ ...values, inviteLink: response.inviteLink });
       } else if (response.error === "emailTaken") {
         form.setError("email", { type: "emailTaken" }, { shouldFocus: true });
@@ -52,7 +58,7 @@ export const useAddAdminUserForm = ({ onAdded }: { onAdded: (added: AddedPerson)
   });
 
   const clear = () => {
-    form.reset(DEFAULT_VALUES);
+    form.reset(defaults);
     setError(null);
   };
 
