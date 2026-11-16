@@ -9,6 +9,7 @@ import {
   jsonb,
   pgEnum,
   pgTable,
+  primaryKey,
   serial,
   text,
   timestamp,
@@ -16,7 +17,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 import { ADMIN_ROLES } from "@/lib/admin/permissions";
-import { CONTACT_TOPICS, VOLUNTEER_AFFILIATIONS } from "@/lib/form-schemas";
+import { CONTACT_TOPICS, NEWSLETTER_STATUSES, VOLUNTEER_AFFILIATIONS } from "@/lib/form-schemas";
 import { STORY_STATUSES, type StoryContent } from "@/lib/stories/story-schema";
 
 export const frequency = pgEnum("frequency", ["one_time", "monthly"]);
@@ -28,6 +29,7 @@ export const adminRole = pgEnum("admin_role", ADMIN_ROLES);
 export const adminSessionStage = pgEnum("admin_session_stage", ["two_factor", "active"]);
 export const storyStatus = pgEnum("story_status", STORY_STATUSES);
 export const adminTokenPurpose = pgEnum("admin_token_purpose", ["verify_email", "reset_password"]);
+export const newsletterStatus = pgEnum("newsletter_status", NEWSLETTER_STATUSES);
 
 /** Names and descriptions live in the messages files, keyed by slug. */
 export const funds = pgTable("funds", {
@@ -126,6 +128,54 @@ export const contactMessages = pgTable("contact_messages", {
   locale: text().notNull(),
   createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
 });
+
+/**
+ * Request counts for rate limiting, shared by every server instance. One row per key per fixed
+ * window; the key (which usually holds an IP address) is stored only as a SHA-256 hash.
+ */
+export const rateLimits = pgTable(
+  "rate_limits",
+  {
+    keyHash: text().notNull(),
+    windowStart: timestamp({ withTimezone: true }).notNull(),
+    hits: integer().notNull().default(1),
+    /** When the window closes; rows past this are deleted from time to time. */
+    expiresAt: timestamp({ withTimezone: true }).notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.keyHash, table.windowStart] }),
+    index().on(table.expiresAt),
+  ],
+);
+
+/**
+ * Newsletter sign-ups from the footer. An address is `pending` until its owner follows the
+ * confirmation link, so only people who asked are ever `subscribed`. Unsubscribing keeps the row,
+ * so the address isn't added back by mistake. Emails are stored lowercase.
+ */
+export const newsletterSubscribers = pgTable(
+  "newsletter_subscribers",
+  {
+    id: serial().primaryKey(),
+    email: text().notNull().unique(),
+    status: newsletterStatus().notNull().default("pending"),
+    /** The language they signed up in, for the emails we send them. */
+    locale: text().notNull(),
+    /** When the last confirmation email went out, so repeat sign-ups can't flood an inbox. */
+    confirmationSentAt: timestamp({ withTimezone: true }),
+    confirmedAt: timestamp({ withTimezone: true }),
+    unsubscribedAt: timestamp({ withTimezone: true }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [
+    check("newsletter_subscribers_email_lowercase", sql`${table.email} = lower(${table.email})`),
+    index().on(table.status),
+  ],
+);
 
 /**
  * People who can open the back office. Emails are stored lowercase, so sign-in can match on them.

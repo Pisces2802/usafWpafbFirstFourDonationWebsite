@@ -9,8 +9,9 @@ import { NoticeEmail } from "@/emails/notice-email";
 import { env } from "@/env";
 import { getPathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { MANAGE_LINK_MINUTES } from "@/lib/form-schemas";
+import { MANAGE_LINK_MINUTES, NEWSLETTER_CONFIRM_DAYS } from "@/lib/form-schemas";
 import type { ManageLinkEmail } from "@/lib/manage-giving";
+import type { NewsletterConfirmEmail } from "@/lib/newsletter";
 import { MONEY_FORMAT } from "@/lib/money";
 
 export type GiftEmailData = {
@@ -225,6 +226,41 @@ export const sendManageGivingLink = async ({ locale, donorEmail, url }: ManageLi
         paragraphs={[t("manageIntro", { minutes: MANAGE_LINK_MINUTES })]}
         notes={[t("manageNote")]}
         link={{ label: t("manageLink"), href: url }}
+        footer={[tFooter("disclaimer", { orgName })]}
+      />
+    ),
+  });
+  if (error) throw new Error(`Resend rejected the email: ${error.message}`);
+};
+
+/** Asks someone to confirm a newsletter sign-up. Nothing is added to the list until they do. */
+export const sendNewsletterConfirmation = async ({
+  locale,
+  email,
+  url,
+}: NewsletterConfirmEmail) => {
+  const resend = getResend();
+  if (!resend || !env.EMAIL_FROM) return;
+
+  const { orgName } = siteConfig;
+  const t = await getTranslations({ locale, namespace: "Emails" });
+  const tFooter = await getTranslations({ locale, namespace: "Footer" });
+  const subject = t("newsletterSubject", { orgName });
+
+  const { error } = await resend.emails.send({
+    from: env.EMAIL_FROM,
+    to: email,
+    replyTo: env.ORG_NOTIFY_EMAIL,
+    subject,
+    react: (
+      <NoticeEmail
+        lang={locale}
+        orgName={orgName}
+        preview={subject}
+        heading={t("newsletterHeading")}
+        paragraphs={[t("newsletterIntro", { orgName, days: NEWSLETTER_CONFIRM_DAYS })]}
+        notes={[t("newsletterNote")]}
+        link={{ label: t("newsletterLink"), href: url }}
         footer={[tFooter("disclaimer", { orgName })]}
       />
     ),

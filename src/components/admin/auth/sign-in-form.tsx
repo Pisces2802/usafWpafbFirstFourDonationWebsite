@@ -5,17 +5,21 @@ import { useTranslations } from "next-intl";
 
 import { PasswordField } from "@/components/admin/auth/password-field";
 import { AuthAlert, AuthSubmit } from "@/components/admin/auth/auth-parts";
+import { useAuthTurnstile } from "@/components/admin/auth/auth-turnstile";
 import { TextField } from "@/components/donation/text-field";
 import { useAuthForm } from "@/hooks/use-auth-form";
 import { signIn } from "@/lib/admin/auth/actions";
 import { signInSchema } from "@/lib/admin/auth/schema";
 
-export const SignInForm = ({ next }: { next?: string }) => {
+type SignInFormProps = { next?: string; turnstileSiteKey: string | null };
+
+export const SignInForm = ({ next, turnstileSiteKey }: SignInFormProps) => {
   const t = useTranslations("Admin.auth");
+  const turnstile = useAuthTurnstile(turnstileSiteKey);
   const { register, submit, fieldError, error, isSubmitting } = useAuthForm({
     schema: signInSchema,
     defaultValues: { email: "", password: "" },
-    action: (values) => signIn(values, next),
+    action: (values) => signIn(values, next, turnstile.take()),
   });
   const message = (key: string | undefined) => key && t(`errors.${key}` as Parameters<typeof t>[0]);
 
@@ -47,6 +51,7 @@ export const SignInForm = ({ next }: { next?: string }) => {
           {t("signIn.forgot")}
         </Link>
       </div>
+      {turnstile.widget}
       <AuthSubmit
         isSubmitting={isSubmitting}
         label={t("signIn.submit")}

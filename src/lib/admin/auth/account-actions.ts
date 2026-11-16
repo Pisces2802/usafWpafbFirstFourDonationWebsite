@@ -56,7 +56,10 @@ export const changePassword = async (input: unknown): Promise<AuthResult> => {
 
   const ip = getClientIp(await headers()) ?? "unknown";
   if (
-    isRateLimited(`admin-password:${current.user.id}:${ip}`, { limit: 5, windowMs: 15 * 60_000 })
+    await isRateLimited(`admin-password:${current.user.id}:${ip}`, {
+      limit: 5,
+      windowMs: 15 * 60_000,
+    })
   ) {
     return { ok: false, error: "rateLimited" };
   }

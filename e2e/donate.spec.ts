@@ -32,7 +32,7 @@ for (const locale of LOCALES) {
       ]);
 
       await summary.getByRole("link", { name: Donate.errors.donor.email }).click();
-      await expect(page.getByRole("textbox", { name: Donate.email })).toBeFocused();
+      await expect(page.getByRole("textbox", { name: Donate.email, exact: true })).toBeFocused();
     });
 
     test("a valid monthly gift goes to checkout with the right details @mobile", async ({

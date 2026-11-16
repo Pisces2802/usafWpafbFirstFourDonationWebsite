@@ -84,6 +84,19 @@ export const MANAGE_GIVING_FIELDS = [
 /** How long an emailed manage-giving link works. */
 export const MANAGE_LINK_MINUTES = 30;
 
+/** Shared by the footer newsletter form, the /newsletter page and `POST /api/newsletter`. */
+export const newsletterSchema = z.object({ email });
+
+export type NewsletterInput = z.input<typeof newsletterSchema>;
+
+export const NEWSLETTER_FIELDS = ["email"] as const satisfies readonly (keyof NewsletterInput)[];
+
+export const NEWSLETTER_STATUSES = ["pending", "subscribed", "unsubscribed"] as const;
+export type NewsletterStatus = (typeof NEWSLETTER_STATUSES)[number];
+
+/** How long a newsletter confirmation link works. */
+export const NEWSLETTER_CONFIRM_DAYS = 7;
+
 /** Wraps a form's fields with the request metadata every form endpoint needs. */
 export const formRequestSchema = <T extends z.ZodType>(form: T) =>
   z.object({

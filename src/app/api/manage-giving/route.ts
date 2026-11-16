@@ -47,7 +47,9 @@ export const GET = async (request: NextRequest) => {
     Response.redirect(`${pageUrl(locale, "/manage-giving")}?link=${reason}`, 303);
 
   const ip = getClientIp(request.headers);
-  if (isRateLimited(`manage-giving-open:${ip ?? "unknown"}`, { limit: 10, windowMs: 60_000 })) {
+  if (
+    await isRateLimited(`manage-giving-open:${ip ?? "unknown"}`, { limit: 10, windowMs: 60_000 })
+  ) {
     return backToForm("failed");
   }
 

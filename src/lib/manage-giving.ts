@@ -75,7 +75,7 @@ export type ManageGivingDeps = {
   /** False when Stripe or email isn't set up, so a link could never be sent or opened. */
   canSend: boolean;
   siteUrl: string;
-  isRateLimited: () => boolean;
+  isRateLimited: () => boolean | Promise<boolean>;
   verify: (token: string | undefined) => Promise<TurnstileResult>;
   sendLink: (email: ManageLinkEmail) => Promise<void>;
 };
@@ -96,7 +96,7 @@ export const processManageGivingRequest = async (
   payload: unknown,
   deps: ManageGivingDeps,
 ): Promise<ManageGivingResult> => {
-  if (deps.isRateLimited()) return fail("rate_limited", 429);
+  if (await deps.isRateLimited()) return fail("rate_limited", 429);
 
   const parsed = formRequestSchema(manageGivingSchema).safeParse(payload);
   if (!parsed.success) return fail("invalid", 400);

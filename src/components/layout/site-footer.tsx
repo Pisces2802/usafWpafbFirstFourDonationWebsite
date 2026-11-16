@@ -1,9 +1,10 @@
 import { useTranslations } from "next-intl";
 
 import { Logo } from "@/components/brand/logo";
+import { NewsletterSignup } from "@/components/forms/newsletter-signup";
 import { LocaleLinks } from "@/components/layout/locale-links";
 import { footerExploreNav, footerLegalNav, type NavItem } from "@/config/navigation";
-import { siteConfig } from "@/config/site";
+import { siteConfig, socialLinks } from "@/config/site";
 import { env } from "@/env";
 import { Link } from "@/i18n/navigation";
 
@@ -38,8 +39,39 @@ export const SiteFooter = () => {
   return (
     <footer className="surface-night pb-28 md:pb-0">
       <div className="text-muted-foreground mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-8 md:grid-cols-[2fr_1fr_1fr_1fr]">
-        <div className="text-white">
-          <Logo />
+        <div className="flex flex-col gap-8">
+          <div className="text-white">
+            <Logo />
+          </div>
+
+          <section aria-labelledby="footer-newsletter" className="max-w-md">
+            <h2 id="footer-newsletter" className="font-condensed text-xl text-white">
+              {t("newsletterHeading")}
+            </h2>
+            <p className="mt-1 mb-4">{t("newsletterLead")}</p>
+            <NewsletterSignup
+              variant="footer"
+              turnstileSiteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? null}
+            />
+          </section>
+
+          {socialLinks.length > 0 && (
+            <nav aria-labelledby="footer-social">
+              <h2 id="footer-social" className="font-condensed text-xl text-white">
+                {t("socialHeading")}
+              </h2>
+              <ul className="mt-3 flex flex-wrap gap-x-6">
+                {socialLinks.map(({ label, href }) => (
+                  <li key={href}>
+                    <a href={href} rel="me noopener" target="_blank" className={linkClassName}>
+                      {label}
+                      <span className="sr-only"> {t("opensInNewTab")}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
         </div>
 
         <FooterNav id="footer-explore" heading={t("exploreHeading")} items={footerExploreNav} />

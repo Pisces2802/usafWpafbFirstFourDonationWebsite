@@ -80,7 +80,7 @@ export const notifyContactMessage = async (message: ContactMessage, locale: Loca
 export type FormSubmissionDeps<T> = {
   db: Db | null;
   canNotify: boolean;
-  isRateLimited: () => boolean;
+  isRateLimited: () => boolean | Promise<boolean>;
   verify: (token: string | undefined) => Promise<TurnstileResult>;
   save: (db: Db, data: T, locale: Locale) => Promise<unknown>;
   notify: (data: T, locale: Locale) => Promise<void>;
@@ -104,7 +104,7 @@ export const processFormSubmission = async <T>(
   schema: z.ZodType<T>,
   deps: FormSubmissionDeps<T>,
 ): Promise<FormSubmissionResult> => {
-  if (deps.isRateLimited()) return fail("rate_limited", 429);
+  if (await deps.isRateLimited()) return fail("rate_limited", 429);
 
   const parsed = formRequestSchema(schema).safeParse(payload);
   if (!parsed.success) return fail("invalid", 400);

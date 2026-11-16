@@ -10,6 +10,7 @@
     "donors": "Donors",
     "volunteers": "Volunteers",
     "messages": "Messages",
+    "subscribers": "Subscribers",
     "campaigns": "Campaigns",
     "funds": "Funds",
     "stories": "Stories",
@@ -119,6 +120,23 @@
       "email": "Email",
       "topic": "Topic",
       "message": "Message"
+    }
+  },
+  "subscribers": {
+    "lead": "Newsletter sign-ups from the site footer. People count once they confirm by email. The CSV has confirmed subscribers only, each with their own unsubscribe link for your mailing tool.",
+    "empty": "No sign-ups yet.",
+    "searchPlaceholder": "Search by email",
+    "columns": {
+      "date": "Signed up",
+      "email": "Email",
+      "status": "Status",
+      "changed": "Confirmed or left",
+      "language": "Language"
+    },
+    "status": {
+      "pending": "Waiting to confirm",
+      "subscribed": "Subscribed",
+      "unsubscribed": "Unsubscribed"
     }
   },
   "comingSoon": "Coming next",
@@ -389,7 +407,9 @@
     "interests": "Interests",
     "availability": "Availability",
     "topic": "Topic",
-    "message": "Message"
+    "message": "Message",
+    "confirmed": "Confirmed",
+    "unsubscribeLink": "Unsubscribe link"
   },
   "unavailable": "No database connected, so there is nothing to export.",
   "forbidden": {
@@ -507,6 +527,8 @@
     "volunteers:export": "Export volunteers",
     "messages:view": "Read contact messages",
     "messages:export": "Export messages",
+    "subscribers:view": "See newsletter subscribers",
+    "subscribers:export": "Export newsletter subscribers",
     "campaigns:manage": "Manage campaigns",
     "funds:manage": "Manage funds",
     "stories:manage": "Write and publish stories",
@@ -608,6 +630,7 @@
       "wrongCode": "That code didn’t work. Check the app and try again.",
       "wrongPassword": "Your current password isn’t right.",
       "linkInvalid": "This link has expired or was already used.",
+      "verificationFailed": "We couldn’t confirm you’re not a bot. Refresh the page and try again.",
       "unknown": "Something went wrong. Try again.",
       "timeZone": "Choose a time zone from the list."
     },

@@ -37,16 +37,16 @@ export const FundBreakdown = ({ byFund }: { byFund: AdminDashboardInsights["byFu
   );
 
   return (
-    <div className="flex flex-col items-center gap-6 sm:flex-row lg:flex-col xl:flex-row">
-      <div className="relative size-44 shrink-0">
-        <ChartContainer config={config} className="aspect-square size-44" aria-hidden="true">
+    <div className="flex flex-col items-center gap-17">
+      <div className="relative size-60 shrink-0">
+        <ChartContainer config={config} className="aspect-square size-60" aria-hidden="true">
           <PieChart>
             <Pie
               data={slices}
               dataKey="netCents"
               nameKey="name"
-              innerRadius={54}
-              outerRadius={84}
+              innerRadius={85}
+              outerRadius={120}
               paddingAngle={2}
               cornerRadius={4}
               stroke="var(--card)"
