@@ -1,11 +1,11 @@
 {
   "Metadata": {
-    "_reviewed": false,
+    "_reviewed": true,
     "title": "{orgName} | De aviadores, para aviadores",
     "description": "Apoya a los aviadores de rango E-⁠1 a E-⁠4 que organizan eventos de moral, crecimiento profesional y proyectos comunitarios unos para otros."
   },
   "Common": {
-    "_reviewed": false,
+    "_reviewed": true,
     "skipToContent": "Saltar al contenido principal",
     "close": "Cerrar",
     "homeLink": "Inicio de {orgName}",
@@ -13,13 +13,13 @@
     "donateNow": "Dona ahora"
   },
   "Header": {
-    "_reviewed": false,
+    "_reviewed": true,
     "mainNavLabel": "Principal",
     "openMenu": "Abrir menú",
     "menuTitle": "Menú"
   },
   "Pages": {
-    "_reviewed": false,
+    "_reviewed": true,
     "about": "Nosotros",
     "programs": "Programas",
     "stories": "Historias",
@@ -35,7 +35,7 @@
     "newsletter": "Boletín"
   },
   "Home": {
-    "_reviewed": false,
+    "_reviewed": true,
     "heroTitle": "Todo aviador necesita un compañero de ala. Sé uno.",
     "heroLead": "Somos aviadores de rango E-⁠1 a E-⁠4 que organizamos eventos de moral, desarrollo profesional y proyectos comunitarios unos para otros. Tu donación los hace posibles.",
     "pauseVideo": "Pausar el video de fondo",
@@ -43,7 +43,7 @@
     "volunteer": "Hazte voluntario"
   },
   "Footer": {
-    "_reviewed": false,
+    "_reviewed": true,
     "exploreHeading": "Explorar",
     "legalHeading": "Legal",
     "languageHeading": "Idioma",
@@ -55,19 +55,19 @@
     "opensInNewTab": "(se abre en una pestaña nueva)"
   },
   "LocaleSwitcher": {
-    "_reviewed": false,
+    "_reviewed": true,
     "label": "Idioma",
     "current": "Idioma: {language}",
     "locale": "{locale, select, en {English} es {Español} fr {Français} other {Desconocido}}"
   },
   "NotFound": {
-    "_reviewed": false,
+    "_reviewed": true,
     "title": "No encontramos esa página",
     "description": "Es posible que el enlace esté desactualizado o que la página se haya movido.",
     "backHome": "Ir a la página de inicio"
   },
   "QuickGive": {
-    "_reviewed": false,
+    "_reviewed": true,
     "heading": "Haz una donación",
     "frequencyLegend": "Frecuencia",
     "oneTime": "Única",
@@ -87,7 +87,7 @@
     "taxDeductible": "Deducible de impuestos en la medida permitida por la ley"
   },
   "Donate": {
-    "_reviewed": false,
+    "_reviewed": true,
     "title": "Haz una donación",
     "lead": "Tu donación paga eventos de moral, crecimiento profesional y proyectos comunitarios dirigidos por aviadores de rango inicial. Toma unos dos minutos.",
     "stepGift": "Tu donación",
@@ -149,11 +149,11 @@
     "campaignDonors": "{count, plural, =0 {Sé la primera persona en donar} one {# donante} other {# donantes}}"
   },
   "Checkout": {
-    "_reviewed": false,
+    "_reviewed": true,
     "productName": "Donación a {orgName}: {fund}"
   },
   "ThankYou": {
-    "_reviewed": false,
+    "_reviewed": true,
     "title": "Gracias, {name}.",
     "titleNoName": "Gracias.",
     "confirmation": "{frequency, select, monthly {Tu donación mensual de {amount} para {fund} quedó activa y el pago de hoy se realizó.} other {Tu donación de {amount} para {fund} se realizó con éxito.}}",
@@ -174,7 +174,7 @@
     "notFoundBody": "Si acabas de donar, revisa tu correo para ver el recibo. Si algo no se ve bien, <link>escríbenos</link> y lo resolvemos."
   },
   "Emails": {
-    "_reviewed": false,
+    "_reviewed": true,
     "receiptSubject": "{frequency, select, monthly {Recibo de tu donación mensual a {orgName}} other {Recibo de tu donación a {orgName}}}",
     "receiptPreview": "Gracias. Aquí está tu recibo por {amount}.",
     "receiptHeading": "Gracias, {name}.",
@@ -230,7 +230,7 @@
     "newsletterLink": "Confirmar mi correo"
   },
   "Funds": {
-    "_reviewed": false,
+    "_reviewed": true,
     "heading": "A dónde va tu donación",
     "lead": "Elige qué paga tu donación, o deja que nuestros miembros la destinen a donde más se necesite.",
     "giveToFund": "Dona a este fondo",
@@ -252,7 +252,7 @@
     }
   },
   "About": {
-    "_reviewed": false,
+    "_reviewed": true,
     "title": "Sobre {orgName}",
     "lead": "Una organización del nivel de aviadores, dirigida por aviadores, para aviadores de rango E-⁠1 a E-⁠4.",
     "missionHeading": "Por qué existimos",
@@ -308,7 +308,7 @@
     }
   },
   "Programs": {
-    "_reviewed": false,
+    "_reviewed": true,
     "title": "Programas",
     "lead": "Tres fondos, cada uno para una parte distinta de nuestra misión. Esto es lo que cubre cada uno y cómo se organiza un proyecto.",
     "howHeading": "Cómo se organiza un proyecto",
@@ -355,7 +355,7 @@
     "joinCta": "Escríbenos"
   },
   "Stories": {
-    "_reviewed": false,
+    "_reviewed": true,
     "title": "Historias",
     "lead": "Lo que tu apoyo hace posible, contado por los aviadores que estuvieron allí.",
     "sampleBadge": "Historia de ejemplo",
@@ -368,7 +368,7 @@
     "featuredHeading": "En sus palabras"
   },
   "WaysIn": {
-    "_reviewed": false,
+    "_reviewed": true,
     "heading": "Encuentra tu forma de participar",
     "tabsLabel": "Elige lo que te describe",
     "donors": {
@@ -414,24 +414,24 @@
     }
   },
   "Stats": {
-    "_reviewed": false,
+    "_reviewed": true,
     "heading": "Nuestro impacto",
     "volunteerHours": "{count, plural, one {hora de voluntariado} other {horas de voluntariado}}",
     "airmenReached": "{count, plural, one {aviador alcanzado} other {aviadores alcanzados}}",
     "eventsHeld": "{count, plural, one {evento realizado} other {eventos realizados}}"
   },
   "Partners": {
-    "_reviewed": false,
+    "_reviewed": true,
     "heading": "Nuestros aliados"
   },
   "VolunteerBand": {
-    "_reviewed": false,
+    "_reviewed": true,
     "title": "¿No puedes donar ahora? Dona tu tiempo.",
     "body": "Los aviadores dirigen todo lo que hacemos. Cuéntanos en qué eres bueno y te encontraremos un lugar.",
     "cta": "Hazte voluntario"
   },
   "Forms": {
-    "_reviewed": false,
+    "_reviewed": true,
     "optional": "opcional",
     "errorSummaryTitle": "{count, plural, one {Corrige 1 cosa para enviarlo} other {Corrige # cosas para enviarlo}}",
     "affiliations": {
@@ -467,7 +467,7 @@
     "privacy": "Solo usamos tus datos para responderte. Lee nuestra <link>política de privacidad</link>."
   },
   "Volunteer": {
-    "_reviewed": false,
+    "_reviewed": true,
     "heading": "Inscríbete como voluntario",
     "lead": "Cuéntanos un poco sobre ti y lo que te gustaría hacer. Toma alrededor de un minuto.",
     "name": "Tu nombre",
@@ -492,7 +492,7 @@
     }
   },
   "GetInvolved": {
-    "_reviewed": false,
+    "_reviewed": true,
     "lead": "Dona una tarde, una habilidad o una idea. Así puedes sumarte.",
     "waysHeading": "Formas de participar",
     "ways": {
@@ -514,7 +514,7 @@
     }
   },
   "Contact": {
-    "_reviewed": false,
+    "_reviewed": true,
     "lead": "Preguntas, ideas u ofertas de ayuda. Un miembro del grupo lee cada mensaje.",
     "formHeading": "Envíanos un mensaje",
     "name": "Tu nombre",
@@ -542,12 +542,12 @@
     "donateLink": "Haz una donación"
   },
   "Legal": {
-    "_reviewed": false,
+    "_reviewed": true,
     "lastUpdated": "Última actualización: {date}",
     "draftNotice": "Este es un borrador, escrito para mostrar cómo se verá esta página. {orgName} lo revisará, idealmente con asesoría legal, antes de lanzar el sitio."
   },
   "Transparency": {
-    "_reviewed": false,
+    "_reviewed": true,
     "lead": "A dónde van las donaciones, cuánto cuestan los pagos con tarjeta y cuándo verás nuestro primer informe.",
     "moneyHeading": "A dónde va tu donación",
     "moneyBody1": "Cada donación va al fondo que elijas. Las donaciones a “Donde más se necesite” van al proyecto que los miembros decidan que las necesita primero.",
@@ -572,7 +572,7 @@
     "questionsCta": "Haz una pregunta"
   },
   "ManageGiving": {
-    "_reviewed": false,
+    "_reviewed": true,
     "lead": "Actualiza tu tarjeta o cancela tu donación mensual. Escribe tu correo y te enviaremos un enlace seguro.",
     "formHeading": "Recibe tu enlace",
     "email": "Correo electrónico",
@@ -594,7 +594,7 @@
     "help": "¿No llega el correo después de unos minutos? Revisa tu carpeta de spam, o <link>escríbenos</link>."
   },
   "Newsletter": {
-    "_reviewed": false,
+    "_reviewed": true,
     "lead": "Lo que el grupo está planeando y lo que tus donaciones hicieron posible. Unos pocos correos al año, y puedes darte de baja cuando quieras.",
     "formHeading": "Suscríbete",
     "email": "Correo electrónico",
