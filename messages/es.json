@@ -31,7 +31,8 @@
     "terms": "Términos de uso",
     "donate": "Donar",
     "thankYou": "Gracias",
-    "manageGiving": "Gestiona tu donación mensual"
+    "manageGiving": "Gestiona tu donación mensual",
+    "newsletter": "Boletín"
   },
   "Home": {
     "_reviewed": false,
@@ -47,7 +48,11 @@
     "legalHeading": "Legal",
     "languageHeading": "Idioma",
     "taxStatus": "{orgName} es una organización sin fines de lucro 501(c)(3). EIN {ein}.",
-    "disclaimer": "{orgName} es una organización privada. No forma parte del Departamento de Defensa ni de ninguno de sus componentes y no tiene carácter gubernamental. No cuenta con el respaldo de la Fuerza Aérea de los EE. UU."
+    "disclaimer": "{orgName} es una organización privada. No forma parte del Departamento de Defensa ni de ninguno de sus componentes y no tiene carácter gubernamental. No cuenta con el respaldo de la Fuerza Aérea de los EE. UU.",
+    "newsletterHeading": "Recibe nuestras novedades",
+    "newsletterLead": "Lo que el grupo está planeando y lo que tus donaciones hicieron posible. Unos pocos correos al año.",
+    "socialHeading": "Síguenos",
+    "opensInNewTab": "(se abre en una pestaña nueva)"
   },
   "LocaleSwitcher": {
     "_reviewed": false,
@@ -217,7 +222,12 @@
     "manageHeading": "Gestiona tu donación mensual",
     "manageIntro": "Abre el enlace de abajo para actualizar tu tarjeta o cancelar tu donación mensual. Funciona durante {minutes} minutos.",
     "manageNote": "Si no pediste esto, puedes ignorar este correo. Nada cambia a menos que alguien abra el enlace.",
-    "manageLink": "Gestionar mi donación mensual"
+    "manageLink": "Gestionar mi donación mensual",
+    "newsletterSubject": "Confirma tu suscripción a {orgName}",
+    "newsletterHeading": "Un clic para confirmar",
+    "newsletterIntro": "Alguien, esperamos que tú, pidió recibir novedades de {orgName} por correo. Confirma con el botón de abajo. El enlace funciona durante {days} días.",
+    "newsletterNote": "¿No lo pediste? Ignora este correo y no volverás a saber de nosotros.",
+    "newsletterLink": "Confirmar mi correo"
   },
   "Funds": {
     "_reviewed": false,
@@ -582,5 +592,55 @@
       "item3": "Ahí puedes actualizar tu tarjeta o cancelar tu donación mensual."
     },
     "help": "¿No llega el correo después de unos minutos? Revisa tu carpeta de spam, o <link>escríbenos</link>."
+  },
+  "Newsletter": {
+    "_reviewed": false,
+    "lead": "Lo que el grupo está planeando y lo que tus donaciones hicieron posible. Unos pocos correos al año, y puedes darte de baja cuando quieras.",
+    "formHeading": "Suscríbete",
+    "email": "Correo electrónico",
+    "footerEmail": "Correo para recibir novedades",
+    "hint": "Te enviaremos un enlace para confirmar.",
+    "submit": "Suscribirme",
+    "sent": "Revisa tu bandeja de entrada. Enviamos un enlace a {email}. Ábrelo en los próximos {days} días para confirmar.",
+    "useAnother": "Usar otro correo",
+    "privacy": "Solo usamos tu correo para estas novedades. Consulta nuestra <link>política de privacidad</link>.",
+    "errors": {
+      "email": "Escribe un correo como nombre@ejemplo.com."
+    },
+    "working": "Un momento…",
+    "confirm": {
+      "prompt": "Confirma tu correo",
+      "lead": "Pulsa el botón para empezar a recibir nuestras novedades.",
+      "button": "Confirmar"
+    },
+    "confirmed": {
+      "title": "Ya estás suscrito",
+      "body": "Gracias. Cada correo que enviamos incluye un enlace para darte de baja."
+    },
+    "unsubscribe": {
+      "prompt": "Darse de baja",
+      "lead": "Pulsa el botón y dejaremos de enviarte novedades.",
+      "button": "Darme de baja"
+    },
+    "unsubscribed": {
+      "title": "Te has dado de baja",
+      "body": "No te enviaremos más novedades. Si donas, seguirás recibiendo tus recibos."
+    },
+    "problem": {
+      "invalid": {
+        "title": "Este enlace no funciona",
+        "body": "Puede que haya caducado o que se haya copiado incompleto. Vuelve a suscribirte en esta página para recibir uno nuevo."
+      },
+      "failed": {
+        "title": "Algo salió mal",
+        "body": "No pudimos hacerlo ahora. Espera un momento y vuelve a pulsar el botón."
+      }
+    },
+    "nextHeading": "Qué pasa después",
+    "next": {
+      "item1": "Te enviamos un enlace para comprobar que el correo es tuyo.",
+      "item2": "Cuando lo abras, recibirás unas pocas novedades al año.",
+      "item3": "Cada correo incluye un enlace para darte de baja."
+    }
   }
 }

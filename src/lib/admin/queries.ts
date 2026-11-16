@@ -21,6 +21,7 @@ import {
   donations,
   donors,
   funds,
+  newsletterSubscribers,
   subscriptionCancellations,
   volunteers,
 } from "@/db/schema";
@@ -163,6 +164,24 @@ export type AdminMessageRow = Awaited<ReturnType<typeof listContactMessages>>[nu
 /** Contact form messages, newest first. */
 export const listContactMessages = (db: Db, { limit = ADMIN_ROW_LIMIT }: { limit?: number } = {}) =>
   db.select().from(contactMessages).orderBy(desc(contactMessages.createdAt)).limit(limit);
+
+export type AdminSubscriberRow = Awaited<ReturnType<typeof listSubscribers>>[number];
+
+/** Newsletter sign-ups in every state, newest first. */
+export const listSubscribers = (db: Db, { limit = ADMIN_ROW_LIMIT }: { limit?: number } = {}) =>
+  db
+    .select({
+      id: newsletterSubscribers.id,
+      email: newsletterSubscribers.email,
+      status: newsletterSubscribers.status,
+      locale: newsletterSubscribers.locale,
+      confirmedAt: newsletterSubscribers.confirmedAt,
+      unsubscribedAt: newsletterSubscribers.unsubscribedAt,
+      createdAt: newsletterSubscribers.createdAt,
+    })
+    .from(newsletterSubscribers)
+    .orderBy(desc(newsletterSubscribers.createdAt))
+    .limit(limit);
 
 export type TrendRange = "daily" | "weekly" | "monthly";
 

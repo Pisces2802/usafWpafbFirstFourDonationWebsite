@@ -20,7 +20,7 @@ export const localizedPath = (href: Href, locale: Locale) => {
 
 /**
  * Public pages listed in the sitemap. Left out on purpose: the thank-you page (noindex, needs a
- * checkout session) and manage-giving (a utility page with nothing to find in search).
+ * checkout session), and manage-giving and newsletter (utility pages with nothing to find in search).
  */
 export const SITEMAP_PATHS = [
   "/",

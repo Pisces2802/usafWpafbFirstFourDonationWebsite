@@ -51,6 +51,7 @@ export const AUTH_ERRORS = [
   "wrongCode",
   "wrongPassword",
   "linkInvalid",
+  "verificationFailed",
 ] as const;
 export type AuthError = (typeof AUTH_ERRORS)[number];
 

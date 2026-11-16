@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { AuthAlert, AuthHeading, AuthSubmit } from "@/components/admin/auth/auth-parts";
+import { useAuthTurnstile } from "@/components/admin/auth/auth-turnstile";
 import { TextField } from "@/components/donation/text-field";
 import { useAuthForm } from "@/hooks/use-auth-form";
 import { requestPasswordReset } from "@/lib/admin/auth/actions";
@@ -19,13 +20,14 @@ const BackToSignIn = ({ label }: { label: string }) => (
   </Link>
 );
 
-export const ForgotPasswordForm = () => {
+export const ForgotPasswordForm = ({ turnstileSiteKey }: { turnstileSiteKey: string | null }) => {
   const t = useTranslations("Admin.auth");
+  const turnstile = useAuthTurnstile(turnstileSiteKey);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const { register, submit, fieldError, error, isSubmitting } = useAuthForm({
     schema: forgotPasswordSchema,
     defaultValues: { email: "" },
-    action: requestPasswordReset,
+    action: (values) => requestPasswordReset(values, turnstile.take()),
     onSuccess: (_result, values) => setSentTo(values.email),
   });
 
@@ -55,6 +57,7 @@ export const ForgotPasswordForm = () => {
           error={emailError && t(`errors.${emailError}` as Parameters<typeof t>[0])}
           {...register("email")}
         />
+        {turnstile.widget}
         <AuthSubmit
           isSubmitting={isSubmitting}
           label={t("forgot.submit")}

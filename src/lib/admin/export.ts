@@ -1,19 +1,35 @@
 import "server-only";
 
 import { getDb } from "@/db";
+import { env } from "@/env";
 import { requireAdmin } from "@/lib/admin/access";
 import { recordAudit } from "@/lib/admin/audit";
 import { adminTranslator } from "@/lib/admin/translator";
 import { type CsvColumn, toCsv } from "@/lib/admin/csv";
-import { loadDonations, loadDonors, loadMessages, loadVolunteers } from "@/lib/admin/data";
+import {
+  loadDonations,
+  loadDonors,
+  loadMessages,
+  loadSubscribers,
+  loadVolunteers,
+} from "@/lib/admin/data";
+import { getPathname } from "@/i18n/navigation";
+import { createUnsubscribeToken } from "@/lib/newsletter";
 import type {
   AdminDonationRow,
   AdminDonorRow,
   AdminMessageRow,
+  AdminSubscriberRow,
   AdminVolunteerRow,
 } from "@/lib/admin/queries";
 
-export const ADMIN_DATASETS = ["donations", "donors", "volunteers", "messages"] as const;
+export const ADMIN_DATASETS = [
+  "donations",
+  "donors",
+  "volunteers",
+  "messages",
+  "subscribers",
+] as const;
 export type AdminDataset = (typeof ADMIN_DATASETS)[number];
 
 export const isAdminDataset = (value: string): value is AdminDataset =>
@@ -73,6 +89,26 @@ const messageColumns = (h: Header): CsvColumn<AdminMessageRow>[] => [
   { header: h("language"), value: (row) => row.locale },
 ];
 
+/** Each person's own unsubscribe link, for the footer of emails sent from a mailing tool. */
+const unsubscribeUrl = (row: AdminSubscriberRow, secret: string) => {
+  const locale = row.locale === "es" || row.locale === "fr" ? row.locale : "en";
+  const query = new URLSearchParams({ unsubscribe: createUnsubscribeToken(row.email, secret) });
+  return `${env.NEXT_PUBLIC_SITE_URL}${getPathname({ locale, href: "/newsletter" })}?${query}`;
+};
+
+const subscriberColumns = (h: Header, secret: string): CsvColumn<AdminSubscriberRow>[] => [
+  { header: h("email"), value: (row) => row.email },
+  { header: h("language"), value: (row) => row.locale },
+  { header: h("confirmed"), value: (row) => row.confirmedAt },
+  { header: h("unsubscribeLink"), value: (row) => unsubscribeUrl(row, secret) },
+];
+
+/** Only people who confirmed, so a mailing tool fed this file never emails anyone else. */
+const loadConfirmedSubscribers = async () => {
+  const rows = await loadSubscribers();
+  return rows && rows.filter((row) => row.status === "subscribed");
+};
+
 /**
  * Builds a dataset's CSV, or null when there's no database. Needs the dataset's export permission,
  * and goes through the admin loaders, so the view permission is checked too.
@@ -107,5 +143,9 @@ const buildCsv = async (dataset: AdminDataset) => {
       return csvOf(await loadVolunteers(), volunteerColumns(h));
     case "messages":
       return csvOf(await loadMessages(), messageColumns(h));
+    case "subscribers":
+      // Without the secret there are no working unsubscribe links, so there's nothing to export.
+      if (!env.AUTH_SECRET) return null;
+      return csvOf(await loadConfirmedSubscribers(), subscriberColumns(h, env.AUTH_SECRET));
   }
 };

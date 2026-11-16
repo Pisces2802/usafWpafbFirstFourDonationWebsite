@@ -12,6 +12,7 @@ import {
   listContactMessages,
   listDonations,
   listDonors,
+  listSubscribers,
   listVolunteers,
 } from "@/lib/admin/queries";
 import { findStory, listStories } from "@/lib/admin/story-queries";
@@ -57,6 +58,11 @@ export const loadVolunteers = async () => {
 export const loadMessages = async () => {
   const { db } = await withAdminDb("messages:view");
   return db ? listContactMessages(db) : null;
+};
+
+export const loadSubscribers = async () => {
+  const { db } = await withAdminDb("subscribers:view");
+  return db ? listSubscribers(db) : null;
 };
 
 export const loadTeam = async () => {

@@ -31,7 +31,8 @@
     "terms": "Conditions d'utilisation",
     "donate": "Faire un don",
     "thankYou": "Merci",
-    "manageGiving": "Gérer votre don mensuel"
+    "manageGiving": "Gérer votre don mensuel",
+    "newsletter": "Infolettre"
   },
   "Home": {
     "_reviewed": false,
@@ -47,7 +48,11 @@
     "legalHeading": "Mentions légales",
     "languageHeading": "Langue",
     "taxStatus": "{orgName} est un organisme sans but lucratif 501(c)(3). EIN {ein}.",
-    "disclaimer": "{orgName} est une organisation privée. Elle ne fait pas partie du Département de la Défense ni d'aucune de ses composantes et n'a aucun statut gouvernemental. Elle n'est pas soutenue par l'U.S. Air Force."
+    "disclaimer": "{orgName} est une organisation privée. Elle ne fait pas partie du Département de la Défense ni d'aucune de ses composantes et n'a aucun statut gouvernemental. Elle n'est pas soutenue par l'U.S. Air Force.",
+    "newsletterHeading": "Recevez nos nouvelles",
+    "newsletterLead": "Ce que le groupe prépare, et ce que vos dons ont rendu possible. Quelques e-mails par an.",
+    "socialHeading": "Suivez-nous",
+    "opensInNewTab": "(s’ouvre dans un nouvel onglet)"
   },
   "LocaleSwitcher": {
     "_reviewed": false,
@@ -217,7 +222,12 @@
     "manageHeading": "Gérer votre don mensuel",
     "manageIntro": "Ouvrez le lien ci-dessous pour mettre à jour votre carte ou annuler votre don mensuel. Il est valable {minutes} minutes.",
     "manageNote": "Si vous n'avez rien demandé, vous pouvez ignorer cet e-mail. Rien ne change tant que personne n'ouvre le lien.",
-    "manageLink": "Gérer mon don mensuel"
+    "manageLink": "Gérer mon don mensuel",
+    "newsletterSubject": "Confirmez votre inscription aux nouvelles de {orgName}",
+    "newsletterHeading": "Un clic pour confirmer",
+    "newsletterIntro": "Quelqu’un, sans doute vous, a demandé à recevoir les nouvelles de {orgName} par e-mail. Confirmez avec le bouton ci-dessous. Le lien fonctionne pendant {days} jours.",
+    "newsletterNote": "Vous n’avez rien demandé ? Ignorez cet e-mail et vous n’aurez plus de nouvelles de nous.",
+    "newsletterLink": "Confirmer mon adresse"
   },
   "Funds": {
     "_reviewed": false,
@@ -582,5 +592,55 @@
       "item3": "Vous pouvez y mettre à jour votre carte ou annuler votre don mensuel."
     },
     "help": "Pas d'e-mail après quelques minutes ? Vérifiez vos courriers indésirables, ou <link>écrivez-nous</link>."
+  },
+  "Newsletter": {
+    "_reviewed": false,
+    "lead": "Ce que le groupe prépare, et ce que vos dons ont rendu possible. Quelques e-mails par an, et vous pouvez vous désinscrire quand vous voulez.",
+    "formHeading": "Inscription",
+    "email": "Adresse e-mail",
+    "footerEmail": "Adresse e-mail pour nos nouvelles",
+    "hint": "Nous vous enverrons un lien pour confirmer.",
+    "submit": "M’inscrire",
+    "sent": "Consultez votre boîte de réception. Nous avons envoyé un lien à {email}. Ouvrez-le dans les {days} jours pour confirmer.",
+    "useAnother": "Utiliser une autre adresse",
+    "privacy": "Nous n’utilisons votre adresse que pour ces nouvelles. Voir notre <link>politique de confidentialité</link>.",
+    "errors": {
+      "email": "Saisissez une adresse comme nom@exemple.com."
+    },
+    "working": "Un instant…",
+    "confirm": {
+      "prompt": "Confirmez votre adresse",
+      "lead": "Appuyez sur le bouton pour commencer à recevoir nos nouvelles.",
+      "button": "Confirmer"
+    },
+    "confirmed": {
+      "title": "Vous êtes inscrit",
+      "body": "Merci. Chaque e-mail que nous envoyons contient un lien de désinscription."
+    },
+    "unsubscribe": {
+      "prompt": "Se désinscrire",
+      "lead": "Appuyez sur le bouton et nous cesserons de vous envoyer nos nouvelles.",
+      "button": "Me désinscrire"
+    },
+    "unsubscribed": {
+      "title": "Vous êtes désinscrit",
+      "body": "Nous ne vous enverrons plus de nouvelles. Si vous donnez, vous recevrez toujours vos reçus."
+    },
+    "problem": {
+      "invalid": {
+        "title": "Ce lien ne fonctionne pas",
+        "body": "Il a peut-être expiré ou n’a été copié qu’en partie. Inscrivez-vous de nouveau sur cette page pour recevoir un nouveau lien."
+      },
+      "failed": {
+        "title": "Un problème est survenu",
+        "body": "Nous n’avons pas pu le faire pour l’instant. Patientez un instant et appuyez de nouveau sur le bouton."
+      }
+    },
+    "nextHeading": "Et ensuite",
+    "next": {
+      "item1": "Nous vous envoyons un lien pour vérifier que l’adresse est bien la vôtre.",
+      "item2": "Une fois ouvert, vous recevrez quelques nouvelles par an.",
+      "item3": "Chaque e-mail contient un lien de désinscription."
+    }
   }
 }

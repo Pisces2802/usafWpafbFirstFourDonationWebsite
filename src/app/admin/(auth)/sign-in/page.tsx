@@ -5,6 +5,7 @@ import { Suspense } from "react";
 
 import { AuthAlert, AuthHeading, AuthNotice } from "@/components/admin/auth/auth-parts";
 import { SignInForm } from "@/components/admin/auth/sign-in-form";
+import { env } from "@/env";
 import { safeNextPath } from "@/lib/admin/auth/cookie";
 import { isSignInAvailable, searchParam } from "@/lib/admin/auth/pages";
 import { readSession } from "@/lib/admin/auth/session";
@@ -26,7 +27,7 @@ const SignIn = async ({ searchParams }: Pick<PageProps<"/admin/sign-in">, "searc
   return (
     <div className="flex flex-col gap-5">
       {params.reset && <AuthNotice>{t("signIn.resetDone")}</AuthNotice>}
-      <SignInForm next={next} />
+      <SignInForm next={next} turnstileSiteKey={env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ?? null} />
     </div>
   );
 };

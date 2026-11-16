@@ -6,6 +6,7 @@ import QRCode from "qrcode";
 
 import { siteConfig } from "@/config/site";
 import { getDb } from "@/db";
+import { env } from "@/env";
 import { recordAudit } from "@/lib/admin/audit";
 import { safeNextPath } from "@/lib/admin/auth/cookie";
 import {
@@ -53,6 +54,7 @@ import {
 } from "@/lib/admin/auth/session";
 import { generateTotpSecret, totpUri, verifyTotp } from "@/lib/admin/auth/totp";
 import { getClientIp, isRateLimited } from "@/lib/rate-limit";
+import { verifyTurnstile } from "@/lib/turnstile";
 
 const FIFTEEN_MINUTES = 15 * 60_000;
 
@@ -61,15 +63,30 @@ const authDb = () => (isAuthConfigured() ? getDb() : null);
 const clientKey = async (scope: string) =>
   `admin-${scope}:${getClientIp(await headers()) ?? "unknown"}`;
 
+/**
+ * Turnstile for the signed-out forms. Checked only when a secret key is set: unlike the public
+ * forms, a missing key must never lock the team out of the back office.
+ */
+const passesTurnstile = async (token: unknown) => {
+  if (!env.TURNSTILE_SECRET_KEY) return true;
+  const ip = getClientIp(await headers());
+  return (await verifyTurnstile(typeof token === "string" ? token : undefined, ip)) === "ok";
+};
+
 /** Checks email and password, then starts the two-factor step. */
-export const signIn = async (input: unknown, next?: unknown): Promise<AuthResult> => {
+export const signIn = async (
+  input: unknown,
+  next?: unknown,
+  turnstileToken?: unknown,
+): Promise<AuthResult> => {
   const parsed = signInSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "invalid" };
   const db = authDb();
   if (!db) return { ok: false, error: "unavailable" };
-  if (isRateLimited(await clientKey("sign-in"), { limit: 20, windowMs: FIFTEEN_MINUTES })) {
+  if (await isRateLimited(await clientKey("sign-in"), { limit: 20, windowMs: FIFTEEN_MINUTES })) {
     return { ok: false, error: "rateLimited" };
   }
+  if (!(await passesTurnstile(turnstileToken))) return { ok: false, error: "verificationFailed" };
 
   const { email, password } = parsed.data;
   const user = await findAdminByEmail(db, email);
@@ -225,14 +242,18 @@ export const confirmTwoFactorSetup = async (
  * Emails a reset link if the address belongs to someone on the team. The answer is the same
  * either way, so the form can't be used to find out who has access.
  */
-export const requestPasswordReset = async (input: unknown): Promise<AuthResult> => {
+export const requestPasswordReset = async (
+  input: unknown,
+  turnstileToken?: unknown,
+): Promise<AuthResult> => {
   const parsed = forgotPasswordSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "invalid" };
   const db = authDb();
   if (!db) return { ok: false, error: "unavailable" };
-  if (isRateLimited(await clientKey("reset"), { limit: 5, windowMs: FIFTEEN_MINUTES })) {
+  if (await isRateLimited(await clientKey("reset"), { limit: 5, windowMs: FIFTEEN_MINUTES })) {
     return { ok: false, error: "rateLimited" };
   }
+  if (!(await passesTurnstile(turnstileToken))) return { ok: false, error: "verificationFailed" };
 
   const user = await findAdminByEmail(db, parsed.data.email);
   if (user?.isActive) {

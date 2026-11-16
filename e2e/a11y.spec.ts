@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 import { SITEMAP_PATHS } from "../src/lib/seo";
 import { LOCALES, path } from "./fixtures";
 
-const PAGES = [...SITEMAP_PATHS, "/manage-giving"] as const;
+const PAGES = [...SITEMAP_PATHS, "/manage-giving", "/newsletter"] as const;
 
 /** Automated WCAG 2.2 AA checks. They catch roughly a third of issues; keyboard and screen reader passes are still needed. */
 for (const locale of LOCALES) {

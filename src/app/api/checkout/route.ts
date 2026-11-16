@@ -20,7 +20,7 @@ const fail = (error: CheckoutError, status: number) => Response.json({ error }, 
  */
 export const POST = async (request: Request) => {
   const ip = getClientIp(request.headers);
-  if (isRateLimited(`checkout:${ip ?? "unknown"}`, { limit: 5, windowMs: 60_000 })) {
+  if (await isRateLimited(`checkout:${ip ?? "unknown"}`, { limit: 5, windowMs: 60_000 })) {
     return fail("rate_limited", 429);
   }
 

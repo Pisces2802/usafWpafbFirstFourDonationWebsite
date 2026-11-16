@@ -31,7 +31,8 @@
     "terms": "Terms of use",
     "donate": "Donate",
     "thankYou": "Thank you",
-    "manageGiving": "Manage your monthly gift"
+    "manageGiving": "Manage your monthly gift",
+    "newsletter": "Newsletter"
   },
   "Home": {
     "_reviewed": true,
@@ -47,7 +48,11 @@
     "legalHeading": "Legal",
     "languageHeading": "Language",
     "taxStatus": "{orgName} is a 501(c)(3) nonprofit organisation. EIN {ein}.",
-    "disclaimer": "{orgName} is a private organization. It is not part of the Department of Defense or any of its components and has no governmental status. It is not endorsed by the U.S. Air Force."
+    "disclaimer": "{orgName} is a private organization. It is not part of the Department of Defense or any of its components and has no governmental status. It is not endorsed by the U.S. Air Force.",
+    "newsletterHeading": "Get our updates",
+    "newsletterLead": "What the group is planning, and what your gifts made possible. A few emails a year.",
+    "socialHeading": "Follow us",
+    "opensInNewTab": "(opens in a new tab)"
   },
   "LocaleSwitcher": {
     "_reviewed": true,
@@ -217,7 +222,12 @@
     "manageHeading": "Manage your monthly gift",
     "manageIntro": "Open the link below to update your card or cancel your monthly gift. It works for {minutes} minutes.",
     "manageNote": "If you didn't ask for this, you can ignore this email. Nothing changes unless someone opens the link.",
-    "manageLink": "Manage my monthly gift"
+    "manageLink": "Manage my monthly gift",
+    "newsletterSubject": "Confirm your {orgName} updates",
+    "newsletterHeading": "One click to confirm",
+    "newsletterIntro": "Someone, hopefully you, asked to get email updates from {orgName}. Confirm with the button below. The link works for {days} days.",
+    "newsletterNote": "Didn't ask for this? Ignore this email and you won't hear from us.",
+    "newsletterLink": "Confirm my email"
   },
   "Funds": {
     "_reviewed": true,
@@ -582,5 +592,55 @@
       "item3": "There you can update your card or cancel your monthly gift."
     },
     "help": "No email after a few minutes? Check your spam folder, or <link>contact us</link>."
+  },
+  "Newsletter": {
+    "_reviewed": true,
+    "lead": "What the group is planning, and what your gifts made possible. A few emails a year, and you can leave whenever you like.",
+    "formHeading": "Sign up",
+    "email": "Email",
+    "footerEmail": "Email for updates",
+    "hint": "We'll email you a link to confirm.",
+    "submit": "Sign up",
+    "sent": "Check your inbox. We've sent a link to {email}. Open it within {days} days to confirm.",
+    "useAnother": "Use a different email",
+    "privacy": "We only use your email for these updates. See our <link>privacy policy</link>.",
+    "errors": {
+      "email": "Enter an email address like name@example.com."
+    },
+    "working": "One moment…",
+    "confirm": {
+      "prompt": "Confirm your email",
+      "lead": "Press the button to start getting our updates.",
+      "button": "Confirm"
+    },
+    "confirmed": {
+      "title": "You're signed up",
+      "body": "Thanks. Every email we send has a link to unsubscribe."
+    },
+    "unsubscribe": {
+      "prompt": "Unsubscribe",
+      "lead": "Press the button and we'll stop sending you updates.",
+      "button": "Unsubscribe"
+    },
+    "unsubscribed": {
+      "title": "You're unsubscribed",
+      "body": "We won't send you any more updates. If you give, you'll still get your receipts."
+    },
+    "problem": {
+      "invalid": {
+        "title": "This link doesn't work",
+        "body": "It may have expired or been copied only in part. Sign up again on this page to get a new link."
+      },
+      "failed": {
+        "title": "Something went wrong",
+        "body": "We couldn't do that just now. Wait a moment and press the button again."
+      }
+    },
+    "nextHeading": "What happens next",
+    "next": {
+      "item1": "We email you a link to check the address is yours.",
+      "item2": "Once you open it, you'll get a few updates a year.",
+      "item3": "Every email has a link to unsubscribe."
+    }
   }
 }

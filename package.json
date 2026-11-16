@@ -17,6 +17,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "admin:create": "node scripts/create-admin.mjs",
+    "db:seed": "node scripts/seed.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "e2e": "playwright test",

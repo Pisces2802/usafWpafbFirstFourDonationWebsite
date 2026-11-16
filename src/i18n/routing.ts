@@ -31,6 +31,7 @@ export const routing = defineRouting({
       es: "/gestionar-donacion",
       fr: "/gerer-mon-don",
     },
+    "/newsletter": { en: "/newsletter", es: "/boletin", fr: "/infolettre" },
     "/transparency": { en: "/transparency", es: "/transparencia", fr: "/transparence" },
     "/privacy": { en: "/privacy", es: "/privacidad", fr: "/confidentialite" },
     "/donor-privacy": {

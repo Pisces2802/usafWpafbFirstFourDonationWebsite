@@ -4,6 +4,7 @@ import {
   HeartHandshake,
   Inbox,
   LayoutDashboard,
+  MailCheck,
   BookOpenText,
   type LucideIcon,
   PiggyBank,
@@ -21,6 +22,7 @@ export type AdminNavKey =
   | "donors"
   | "volunteers"
   | "messages"
+  | "subscribers"
   | "campaigns"
   | "funds"
   | "stories"
@@ -47,6 +49,12 @@ export const adminNav: readonly AdminNavItem[] = [
     permission: "volunteers:view",
   },
   { key: "messages", href: "/admin/messages", icon: Inbox, permission: "messages:view" },
+  {
+    key: "subscribers",
+    href: "/admin/subscribers",
+    icon: MailCheck,
+    permission: "subscribers:view",
+  },
   { key: "campaigns", href: "/admin/campaigns", icon: Flag, permission: "campaigns:manage" },
   { key: "funds", href: "/admin/funds", icon: PiggyBank, permission: "funds:manage" },
   { key: "stories", href: "/admin/stories", icon: BookOpenText, permission: "stories:manage" },

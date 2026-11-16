@@ -9,9 +9,11 @@ type TableSearchProps = {
   id: string;
   value: string;
   onChange: (value: string) => void;
+  /** Overrides the default "name or email" hint for tables searched on other fields. */
+  placeholder?: string;
 };
 
-export const TableSearch = ({ id, value, onChange }: TableSearchProps) => {
+export const TableSearch = ({ id, value, onChange, placeholder }: TableSearchProps) => {
   const t = useTranslations("Admin");
 
   return (
@@ -28,7 +30,7 @@ export const TableSearch = ({ id, value, onChange }: TableSearchProps) => {
         type="search"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder={t("searchPlaceholder")}
+        placeholder={placeholder ?? t("searchPlaceholder")}
         className="bg-card h-11 pr-3 pl-9 md:text-base"
       />
     </div>

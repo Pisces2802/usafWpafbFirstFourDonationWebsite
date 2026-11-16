@@ -1,9 +1,9 @@
+import { useFormatter, useTimeZone, useTranslations } from "next-intl";
 import type { ColumnDef, Row, RowData } from "@tanstack/react-table";
 import { MoreVertical, type LucideIcon } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
-import Link from "next/link";
-import { useFormatter, useTimeZone, useTranslations } from "next-intl";
 import { Fragment, useState } from "react";
+import Link from "next/link";
 import { cn } from "cn";
 
 import { ColumnsWithRowClick, DataTableFeatures } from "@/components/admin/data-table";
@@ -279,14 +279,14 @@ const STATUS_DEFAULTS: Record<string, StatusVariant> = {
 };
 
 export const STATUS_STYLES: Record<StatusVariant, string> = {
-  amber: "bg-amber-100 text-amber-600 border-amber-300",
-  danger: "bg-red-100 text-red-600 border-red-300",
+  amber: "bg-amber-100 text-amber-900 border-amber-300",
+  danger: "bg-red-100 text-red-900 border-red-300",
   draft: "bg-muted text-muted-foreground border-border",
-  info: "bg-blue-100 text-blue-600 border-blue-300",
+  info: "bg-blue-100 text-blue-900 border-blue-300",
   neutral: "bg-muted text-muted-foreground border-border",
   outline: "bg-transparent text-foreground border-foreground",
-  success: "bg-green-100 text-green-600 border-green-300",
-  warning: "bg-yellow-100 text-yellow-600 border-yellow-300",
+  success: "bg-green-100 text-green-900 border-green-300",
+  warning: "bg-yellow-100 text-yellow-900 border-yellow-300",
 };
 
 interface StatusCellProps<TStatus extends string> {
@@ -320,7 +320,9 @@ export const StatusCell = <TStatus extends string>({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium capitalize",
+        "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium",
+        // Translated labels keep their own casing; only raw statuses get title case.
+        !label && "capitalize",
         STATUS_STYLES[variant],
         className,
       )}
