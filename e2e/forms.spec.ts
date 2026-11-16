@@ -15,7 +15,9 @@ test("volunteer sign-up validates, then sends what was entered @mobile", async (
   expect(sent).toHaveLength(0);
 
   await page.getByRole("textbox", { name: Volunteer.name }).fill("Jordan Lee");
-  await page.getByRole("textbox", { name: Volunteer.email, exact: true }).fill("jordan@example.com");
+  await page
+    .getByRole("textbox", { name: Volunteer.email, exact: true })
+    .fill("jordan@example.com");
   await page.getByText(Forms.affiliations.airman, { exact: true }).click();
   await page.getByText(Forms.interests.events, { exact: true }).click();
   await page.getByText(Forms.interests.mentoring, { exact: true }).click();
