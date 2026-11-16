@@ -24,12 +24,12 @@ const FieldChrome = ({ id, label, hint, error, className, children }: FieldChrom
     <label htmlFor={id} className="text-sm font-medium">
       {label}
     </label>
+    {children(describe(id, hint, error))}
     {hint && (
-      <p id={`${id}-hint`} className="text-muted-foreground -mt-1 text-sm">
+      <p id={`${id}-hint`} className="text-muted-foreground text-xs">
         {hint}
       </p>
     )}
-    {children(describe(id, hint, error))}
     {error && (
       <p id={`${id}-error`} className="text-destructive text-sm">
         {error}
@@ -149,11 +149,6 @@ export const ChoiceField = ({
   return (
     <fieldset aria-describedby={describedBy} className={cn("flex flex-col gap-2", className)}>
       <legend className="mb-2 text-sm font-medium">{legend}</legend>
-      {hint && (
-        <p id={`${name}-hint`} className="text-muted-foreground -mt-1 text-sm">
-          {hint}
-        </p>
-      )}
       <div className="grid gap-2 sm:grid-cols-2">
         {options.map((option) => (
           <label
@@ -175,6 +170,11 @@ export const ChoiceField = ({
           </label>
         ))}
       </div>
+      {hint && (
+        <p id={`${name}-hint`} className="text-muted-foreground text-xs">
+          {hint}
+        </p>
+      )}
       {error && (
         <p id={`${name}-error`} className="text-destructive text-sm">
           {error}

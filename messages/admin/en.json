@@ -141,22 +141,19 @@
   },
   "comingSoon": "Coming next",
   "campaigns": {
-    "lead": "Time-limited appeals with a goal, like a giving day. Share a campaign link and every gift made through it counts towards the goal.",
+    "lead": "Time-limited appeals with a goal, like a giving day. Share a campaign link and every gift made through it counts towards the goal. New campaigns, and changes to approved ones, need someone other than whoever asked to approve them.",
     "new": "New campaign",
     "emptyTitle": "No campaigns yet",
     "emptyBody": "Create one with a goal and optional dates, then share its donate link. Gifts made through the link count towards the goal.",
     "status": {
       "upcoming": "Upcoming",
       "live": "Live",
-      "ended": "Ended"
+      "ended": "Ended",
+      "pending": "Waiting for approval",
+      "rejected": "Turned down"
     },
     "goal": "Goal {goal}",
     "progressLabel": "Progress towards the {name} goal",
-    "donors": "Donors",
-    "gifts": "Gifts",
-    "donorCount": "{count, plural, one {# donor} other {# donors}}",
-    "giftCount": "{count, plural, one {# gift} other {# gifts}}",
-    "datesLabel": "Dates",
     "dates": {
       "range": "{start} – {end}",
       "from": "From {start}",
@@ -164,20 +161,23 @@
       "open": "No dates set"
     },
     "copyLink": "Copy link",
-    "copied": "Copied",
-    "copyLinkFor": "Copy the donate link for {name}",
     "edit": "Edit",
-    "editFor": "Edit {name}",
     "delete": "Delete",
-    "deleteFor": "Delete {name}",
     "deleteDialog": {
       "title": "Delete {name}?",
       "body": "No gifts have come in through this campaign yet. Its link will stop showing progress, though gifts made through it will still go through."
     },
     "notices": {
-      "created": "Created {name}.",
-      "updated": "Saved {name}.",
-      "deleted": "Deleted {name}."
+      "created": "Sent {name} for approval. It goes on the site once someone else approves it.",
+      "updated": "Saved {name}. Nothing’s waiting for approval.",
+      "deleted": "Deleted {name}.",
+      "copied": "Copied the donate link for {name}.",
+      "resubmitted": "Saved {name}. It’s waiting for approval again.",
+      "approved": "Approved {name}. It’s on the site now.",
+      "rejected": "Turned down {name}.",
+      "changeRequested": "Sent the changes to {name} for approval. It stays as it is on the site until someone else approves them.",
+      "changeApproved": "Approved the changes to {name}. They’re on the site now.",
+      "changeRejected": "Turned down the changes to {name}."
     },
     "form": {
       "createTitle": "New campaign",
@@ -201,7 +201,46 @@
         "startsOn": "Enter a valid date.",
         "endsOn": "Enter a valid date.",
         "endsBeforeStart": "The end date can’t be before the start date."
-      }
+      },
+      "changesNeedApproval": "This campaign is approved, so your changes wait for someone else to approve them. Until then it stays as it is on the site.",
+      "changeWaiting": "This shows the change that’s waiting for approval. Saving replaces it; saving it back to how the campaign is now withdraws it."
+    },
+    "columns": {
+      "campaign": "Campaign",
+      "status": "Status",
+      "raised": "Raised",
+      "donors": "Donors",
+      "gifts": "Gifts",
+      "dates": "Dates"
+    },
+    "review": "Review",
+    "approval": {
+      "waitingForOthers": "Someone else who can approve campaigns has to approve it.",
+      "askedBy": "Asked by {name}",
+      "rejectedBy": "Turned down by {name}. Change it to ask again.",
+      "rejectedWhy": "Turned down by {name}: {reason}. Change it to ask again.",
+      "changeWaitingForOthers": "Your change is waiting for someone else to approve it.",
+      "changeAskedBy": "Change waiting for approval, asked by {name}",
+      "changeRejectedBy": "Change turned down by {name}.",
+      "changeRejectedWhy": "Change turned down by {name}: {reason}"
+    },
+    "reviewDialog": {
+      "title": "Review {name}",
+      "body": "Check the details before it goes on the site. You can’t review a campaign you set up or changed.",
+      "link": "Link",
+      "goal": "Goal",
+      "dates": "Dates",
+      "askedBy": "Asked by",
+      "note": "Reason for turning it down",
+      "noteHint": "Optional. Shown to whoever asked, so they can fix it.",
+      "approve": "Approve",
+      "reject": "Turn down",
+      "changeTitle": "Review changes to {name}",
+      "changeBody": "Approving changes the campaign on the site to the new version. You can’t review a change you asked for.",
+      "field": "Detail",
+      "now": "Now",
+      "proposed": "Proposed",
+      "unchanged": "No change"
     }
   },
   "funds": {
@@ -257,7 +296,8 @@
       "slugTaken": "Another story already uses that link name.",
       "notFound": "That story no longer exists. Go back to the list.",
       "noDatabase": "No database is connected.",
-      "unknown": "That didn’t save. Check your connection and try again."
+      "unknown": "That didn’t save. Check your connection and try again.",
+      "publishNotAllowed": "Your role can save drafts but can’t change what’s on the site. Ask someone who can publish stories."
     },
     "backToStories": "All stories",
     "newTitle": "New story",
@@ -295,6 +335,7 @@
       "publishedOnHint": "Shown on the story, and used to order the list.",
       "published": "Published",
       "publishedHint": "Drafts aren’t on the site.",
+      "publishNotAllowedHint": "Your role can save drafts. Someone who can publish stories puts them on the site.",
       "isFeatured": "Feature on the home page",
       "isFeaturedHint": "Replaces the story featured now. With none featured, the newest is shown.",
       "isSample": "Sample story",
@@ -414,12 +455,12 @@
   "unavailable": "No database connected, so there is nothing to export.",
   "forbidden": {
     "title": "No access",
-    "body": "Your role doesn’t include this page. Ask an owner if you need it.",
+    "body": "Your role doesn’t include this page. Ask someone who manages the team if you need it.",
     "back": "Go to the dashboard"
   },
   "team": {
-    "lead": "Who can open the back office and what each person’s role lets them do. Only owners see this page.",
-    "pendingSignIn": "They’ll get an email with a link to confirm their address, choose a password and set up two-step verification.",
+    "lead": "Who can open the back office, what each role lets them do, and account security.",
+    "pendingSignIn": "They’ll get an email with a link to confirm their address and choose a password. Roles that manage people or account security also set up two-step verification.",
     "addHeading": "Add a person",
     "name": "Name",
     "email": "Email",
@@ -431,7 +472,8 @@
       "name": "Name",
       "role": "Role",
       "lastSignIn": "Last signed in",
-      "access": "Access"
+      "access": "Access",
+      "twoFactor": "Two-step"
     },
     "you": "You",
     "never": "Never",
@@ -443,24 +485,37 @@
     "restoreAccessFor": "Restore access for {name}",
     "saving": "Saving…",
     "empty": "No one has been added yet.",
-    "rolesHeading": "What each role can do",
-    "rolesLead": "Roles are set in the code, so changing what a role can do goes through review like any other change.",
-    "permissionColumn": "Can",
-    "granted": "Yes",
-    "notGranted": "No",
+    "rolesHeading": "Roles",
+    "rolesLead": "A role is a set of permissions. Built-in roles are fixed; add your own for a different mix. To keep duties apart, downloads, site settings, role changes and two-step resets stay in built-in roles, and a role that manages access can’t also see people’s details or change fundraising. There’s one SuperAdmin at a time. Anyone whose role can manage people or account security must use two-step verification.",
     "errors": {
       "name": "Enter their name.",
       "email": "Enter a valid email address.",
-      "role": "Choose a role.",
       "invalid": "That change wasn’t valid. Reload the page and try again.",
       "emailTaken": "Someone with that email is already on the team. Change their role in the list instead.",
       "notFound": "That person is no longer on the team. Reload the page.",
-      "lastOwner": "There has to be at least one owner with access. Make someone else an owner first.",
       "noDatabase": "Connect a database to manage the team.",
       "unknown": "That didn’t save. Try again.",
       "alreadySetUp": "They’ve already set up their account.",
       "noTwoFactor": "They haven’t set up two-step verification, so there’s nothing to reset.",
-      "self": "To change your own authenticator app, go to Settings → Security."
+      "self": "You can’t do that to your own account. Your own security settings are in Settings → Security.",
+      "roleId": "Choose a role.",
+      "lastSuperAdmin": "The SuperAdmin can’t be locked, turned off or given another role. They can hand SuperAdmin to someone else first.",
+      "notLocked": "That account isn’t locked.",
+      "outranked": "They have access you don’t, so you can’t change their account. Ask a SuperAdmin.",
+      "roleNotAllowed": "That role has permissions you don’t have, so you can’t give it out or change it.",
+      "roleNameTaken": "There’s already a role with that name.",
+      "roleBuiltIn": "Built-in roles can’t be changed or deleted. Add a role of your own instead.",
+      "roleSuperAdmin": "SuperAdmin always has every permission and can’t be changed.",
+      "roleInUse": "People still have this role. Give them another role first.",
+      "ownRole": "You can’t change your own role’s permissions. Ask someone else who manages roles.",
+      "roleName": "Give the role a name.",
+      "roleDescription": "Keep the description under 200 characters.",
+      "dutyConflict": "This role mixes duties that should be split between people: managing access, and seeing people’s details or changing fundraising.",
+      "superAdminTaken": "There’s already a SuperAdmin. They can hand the role over from the Team page.",
+      "wrongPassword": "Your password isn’t right.",
+      "rateLimited": "Too many wrong passwords. Wait 15 minutes and try again.",
+      "notSuperAdmin": "Only the SuperAdmin can hand the role over.",
+      "memberLocked": "This person’s account is locked. Unlock it before making them SuperAdmin."
     },
     "tabs": {
       "people": "People",
@@ -490,51 +545,150 @@
       "roleChanged": "{name} is now {role}.",
       "accessRemoved": "Removed {name}’s access.",
       "accessRestored": "Restored {name}’s access.",
-      "twoFactorReset": "Reset {name}’s two-step verification. They’ll set it up again next time they sign in."
+      "twoFactorReset": "Reset {name}’s two-step verification. They’ll set it up again next time they sign in.",
+      "locked": "Locked {name}’s account. They’ve been signed out everywhere.",
+      "unlocked": "Unlocked {name}’s account.",
+      "signedOut": "Signed {name} out everywhere.",
+      "roleCreated": "Added the {role} role.",
+      "roleUpdated": "Saved the {role} role.",
+      "roleDeleted": "Deleted the {role} role.",
+      "superAdminTransferred": "{name} is now the SuperAdmin, and you’re {role}."
     },
     "resetTwoFactor": "Reset two-step verification",
     "resetDialog": {
       "title": "Reset {name}’s two-step verification?",
-      "body": "Use this if {name} lost or replaced the phone with their authenticator app. Their app and recovery codes stop working and they’re signed out everywhere. Next time they sign in with their password, they’ll set up an authenticator app again. We’ll email them to say you did this.",
+      "body": "Use this if {name} lost their phone or can’t get to their email. Their second step and recovery codes stop working and they’re signed out everywhere. If their role needs two-step verification, they’ll set it up again next time they sign in. We’ll email them to say you did this.",
       "confirm": "Reset two-step verification"
-    }
-  },
-  "roles": {
-    "owner": {
-      "name": "Owner",
-      "description": "Everything, including adding people and changing roles."
     },
-    "treasurer": {
-      "name": "Treasurer",
-      "description": "Gifts and donors with their exports, plus campaigns and funds."
+    "roleHint": "You can only give out roles whose permissions you have yourself.",
+    "locked": "Locked",
+    "twoFactorBadge": {
+      "authenticator": "App",
+      "email": "Email codes",
+      "none": "No two-step"
     },
-    "coordinator": {
-      "name": "Coordinator",
-      "description": "Volunteers and messages with their exports, plus stories."
+    "lockAccount": "Lock account",
+    "unlockAccount": "Unlock account",
+    "signOutEverywhere": "Sign out everywhere",
+    "lockDialog": {
+      "title": "Lock {name}’s account?",
+      "body": "Use this if their password or email might be in someone else’s hands. {name} is signed out on every device at once and can’t sign in until someone unlocks the account. We’ll email them to say you did this.",
+      "reason": "Reason (optional)",
+      "reasonHint": "Kept with the lock and in the audit log, e.g. “Laptop stolen 12 May”.",
+      "confirm": "Lock account"
     },
-    "viewer": {
-      "name": "Viewer",
-      "description": "Dashboard totals only. No names or contact details."
+    "unlockDialog": {
+      "title": "Unlock {name}’s account?",
+      "body": "{name} will be able to sign in again. If their password may have been seen by someone else, ask them to reset it first.",
+      "lockedSince": "Locked {date}.",
+      "reason": "Reason given: {reason}",
+      "confirm": "Unlock account"
+    },
+    "signOutDialog": {
+      "title": "Sign {name} out everywhere?",
+      "body": "{name} is signed out on every device. They can sign straight back in with their password and second step.",
+      "confirm": "Sign out everywhere"
+    },
+    "roles": {
+      "new": "New role",
+      "edit": "Edit",
+      "editFor": "Edit the {role} role",
+      "delete": "Delete",
+      "deleteFor": "Delete the {role} role",
+      "builtIn": "Built-in",
+      "everything": "Every permission",
+      "members": "{count, plural, =0 {No one} one {# person} other {# people}}",
+      "permissionCount": "{count, plural, one {# permission} other {# permissions}}",
+      "needsTwoFactor": "Needs two-step verification",
+      "yours": "Your role",
+      "form": {
+        "createTitle": "New role",
+        "editTitle": "Edit {role}",
+        "name": "Name",
+        "description": "Description",
+        "descriptionHint": "One line on what this role is for.",
+        "permissions": "Permissions",
+        "permissionsHint": "Choosing anything in an area also lets them see it. You can only give permissions you have yourself.",
+        "securityHint": "People with any of these must use two-step verification.",
+        "save": "Save role",
+        "create": "Add role",
+        "saving": "Saving…",
+        "viewTitle": "{role}",
+        "viewHint": "Built-in roles can’t be changed. Add a role of your own for a different mix.",
+        "dutiesNote": "To keep duties apart, some permissions are only in built-in roles, and a role can’t both manage access and see people’s details or change fundraising.",
+        "builtInOnly": {
+          "platform": "Only SuperAdmin and IdentityManager change site settings.",
+          "export": "Downloads of whole lists are only in built-in roles.",
+          "roles": "Only built-in roles can change what roles allow.",
+          "takeover": "Only built-in roles can reset someone’s two-step verification."
+        },
+        "conflicts": {
+          "accessAndData": "Can’t be in the same role as managing access and seeing people’s details.",
+          "accessAndFundraising": "Can’t be in the same role as managing access and changing fundraising."
+        },
+        "notYours": "You don’t have this permission, so you can’t give it."
+      },
+      "deleteDialog": {
+        "title": "Delete the {role} role?",
+        "body": "This can’t be undone. No one has this role at the moment.",
+        "confirm": "Delete role"
+      },
+      "view": "View permissions",
+      "viewFor": "View the {role} role’s permissions",
+      "columns": {
+        "role": "Role",
+        "people": "People",
+        "permissions": "Permissions",
+        "twoFactor": "Two-step"
+      },
+      "twoFactorRequired": "Required",
+      "twoFactorOptional": "Optional",
+      "empty": "No roles yet."
+    },
+    "handOverSuperAdmin": "Make SuperAdmin",
+    "handOverDialog": {
+      "title": "Make {name} the SuperAdmin?",
+      "body": "There’s one SuperAdmin at a time, so you’ll hand it to {name} and take another role. Only they will then be able to hand it on.",
+      "yourRole": "Your new role",
+      "yourRoleHint": "What you’ll be able to do afterwards.",
+      "password": "Your password",
+      "confirm": "Hand over SuperAdmin"
     }
   },
   "permissions": {
-    "dashboard:view": "See dashboard totals",
-    "donations:view": "See gifts",
+    "dashboard:read": "See dashboard totals",
+    "donations:read": "See gifts",
     "donations:export": "Export gifts",
-    "donors:view": "See donors and their contact details",
+    "donors:read": "See donors and their contact details",
     "donors:export": "Export donors",
-    "volunteers:view": "See volunteer sign-ups",
+    "volunteers:read": "See volunteer sign-ups",
     "volunteers:export": "Export volunteers",
-    "messages:view": "Read contact messages",
+    "messages:read": "Read contact messages",
     "messages:export": "Export messages",
-    "subscribers:view": "See newsletter subscribers",
+    "subscribers:read": "See newsletter subscribers",
     "subscribers:export": "Export newsletter subscribers",
-    "campaigns:manage": "Manage campaigns",
-    "funds:manage": "Manage funds",
-    "stories:manage": "Write and publish stories",
-    "team:manage": "Add people and change roles",
-    "settings:manage": "Change platform settings",
-    "audit:view": "See the audit log"
+    "campaigns:read": "See campaigns",
+    "campaigns:create": "Create campaigns",
+    "campaigns:edit": "Change campaigns",
+    "campaigns:delete": "Delete campaigns",
+    "funds:read": "See funds",
+    "funds:edit": "Show, hide and reorder funds",
+    "stories:read": "See stories",
+    "stories:create": "Write new stories",
+    "stories:edit": "Change stories",
+    "stories:publish": "Publish stories, and change live ones",
+    "stories:delete": "Delete stories",
+    "settings:edit": "Change platform settings",
+    "audit:read": "See the audit log",
+    "identity:read": "See the team",
+    "identity:create": "Add people and resend invites",
+    "identity:edit": "Change someone’s role",
+    "identity:deactivate": "Remove and restore access",
+    "identity:roles": "Create, change and delete roles",
+    "auth:lock": "Lock and unlock accounts",
+    "auth:reset-2fa": "Reset someone’s two-step verification",
+    "auth:sessions": "Sign someone out everywhere",
+    "campaigns:approve": "Approve or turn down new campaigns and changes (not their own)"
   },
   "signOut": "Sign out",
   "auth": {
@@ -549,7 +703,7 @@
     "unavailable": "Sign-in isn’t set up yet. The site needs a database and AUTH_SECRET.",
     "signIn": {
       "title": "Sign in",
-      "lead": "For members of the team. You’ll need your authenticator app too.",
+      "lead": "For members of the team.",
       "submit": "Sign in",
       "submitting": "Signing in…",
       "forgot": "Forgot your password?",
@@ -580,7 +734,7 @@
     },
     "linkInvalid": {
       "title": "This link doesn’t work",
-      "body": "It may have expired or already been used. Ask an owner to send a new invite, or reset your password if you’ve set one before.",
+      "body": "It may have expired or already been used. Ask someone who manages the team to send a new invite, or reset your password if you’ve set one before.",
       "reset": "Reset your password",
       "signIn": "Back to sign in"
     },
@@ -594,12 +748,17 @@
       "useApp": "Use your authenticator app instead",
       "recoveryLead": "Enter one of the recovery codes you saved when you set up two-step verification. Each one works once.",
       "recoveryCode": "Recovery code",
-      "lostAccess": "Lost your phone and your recovery codes? Ask an owner to reset your two-step verification.",
-      "startOver": "Sign in again"
+      "lostAccess": "Lost your phone, your email and your recovery codes? Ask someone who manages the team to reset your two-step verification.",
+      "startOver": "Sign in again",
+      "emailLead": "We emailed a 6-digit code to {email}. It works for 10 minutes.",
+      "resend": "Send a new code",
+      "resending": "Sending…",
+      "resent": "We sent a new code.",
+      "useEmail": "Use an emailed code instead"
     },
     "setup": {
       "title": "Set up two-step verification",
-      "lead": "Everyone on the team uses an authenticator app, because the back office holds donors’ details.",
+      "lead": "Choose how you’ll confirm it’s you after your password.",
       "step1": "Scan this code with an authenticator app such as Google Authenticator, Microsoft Authenticator, 1Password or Authy.",
       "qrAlt": "QR code for your authenticator app",
       "manual": "Can’t scan it? Enter this key instead:",
@@ -612,7 +771,25 @@
       "codesLead": "If you lose your phone, each of these codes signs you in once. Keep them somewhere safe, like a password manager. You won’t see them again.",
       "copyCodes": "Copy codes",
       "download": "Download",
-      "continue": "I’ve saved them, continue"
+      "continue": "I’ve saved them, continue",
+      "required": "Your role can manage people or account security, so it needs two-step verification.",
+      "optional": "Recommended: the back office holds donors’ details. You can change this later in Settings.",
+      "choose": {
+        "authenticator": "Authenticator app",
+        "authenticatorHint": "A code from an app on your phone, such as Google Authenticator, Microsoft Authenticator, 1Password or Authy. Works offline.",
+        "email": "Email me a code",
+        "emailHint": "A code sent to {email} each time you sign in.",
+        "skip": "Not now",
+        "skipHint": "Sign in with just your password.",
+        "continue": "Continue",
+        "back": "Choose another way"
+      },
+      "emailStep": "We’ll email a 6-digit code to {email} to check it reaches you.",
+      "sendCode": "Email me a code",
+      "sending": "Sending…",
+      "emailSent": "We sent a code to {email}. It works for 10 minutes.",
+      "passwordStep": "Enter your current password to change how you sign in.",
+      "passwordContinue": "Continue"
     },
     "errors": {
       "email": "Enter a valid email address.",
@@ -627,12 +804,16 @@
       "rateLimited": "Too many attempts. Wait a few minutes and try again.",
       "unavailable": "Sign-in isn’t set up yet.",
       "expired": "That took too long or had too many wrong codes. Sign in again.",
-      "wrongCode": "That code didn’t work. Check the app and try again.",
+      "wrongCode": "That code didn’t work. Check it and try again.",
       "wrongPassword": "Your current password isn’t right.",
       "linkInvalid": "This link has expired or was already used.",
       "verificationFailed": "We couldn’t confirm you’re not a bot. Refresh the page and try again.",
       "unknown": "Something went wrong. Try again.",
-      "timeZone": "Choose a time zone from the list."
+      "timeZone": "Choose a time zone from the list.",
+      "suspended": "This account is locked. Ask someone who manages the team to unlock it.",
+      "twoFactorRequired": "Your role needs two-step verification, so you can switch methods but not turn it off.",
+      "emailUnavailable": "We can’t send emails right now. Use an authenticator app or a recovery code instead.",
+      "codeCooldown": "We just sent a code. Wait a minute before asking for another."
     },
     "emails": {
       "invite": {
@@ -653,13 +834,13 @@
       "security": {
         "unknownIp": "an unknown address",
         "details": "When: {when}. From: {ip}.",
-        "notYou": "If this wasn’t you, change your password now and tell an owner.",
+        "notYou": "If this wasn’t you, change your password now and tell someone who manages the team.",
         "button": "Review security settings",
         "footer": "You get these emails because security alerts are on in your back office settings.",
         "signedIn": {
           "subject": "New sign-in to the {orgName} back office",
           "heading": "You signed in",
-          "body": "Your back office account was just signed in to with your password and authenticator app."
+          "body": "Your back office account was just signed in to."
         },
         "recoveryCodeUsed": {
           "subject": "A recovery code was used on your {orgName} account",
@@ -679,20 +860,57 @@
         "twoFactorEnabled": {
           "subject": "Two-step verification is on for your {orgName} account",
           "heading": "Two-step verification is on",
-          "body": "An authenticator app was set up for your back office account. You’ll need a code from it each time you sign in."
+          "body": "Two-step verification was turned on for your back office account. You’ll need it each time you sign in."
         },
         "recoveryCodesRegenerated": {
           "subject": "New recovery codes for your {orgName} account",
           "heading": "You made new recovery codes",
           "body": "New recovery codes were made for your back office account. The old ones no longer work."
         },
-        "notExpected": "If you didn’t ask for this, tell another owner straight away.",
+        "notExpected": "If you didn’t expect this, tell someone who manages the team straight away.",
         "footerAlways": "We always send this email, because someone else changed your account’s security.",
         "twoFactorReset": {
           "subject": "Two-step verification was reset on your {orgName} account",
           "heading": "Your two-step verification was reset",
-          "body": "{ownerName}, an owner, reset two-step verification on your back office account. Your authenticator app and recovery codes no longer work, and you were signed out everywhere. Next time you sign in, you’ll set up an authenticator app again."
+          "body": "{ownerName} reset two-step verification on your back office account. Your second step and recovery codes no longer work, and you were signed out everywhere. If your role needs it, you’ll set it up again next time you sign in."
+        },
+        "twoFactorChanged": {
+          "subject": "You changed how you sign in to {orgName}",
+          "heading": "Your two-step verification changed",
+          "body": "Your back office account now uses a different second step, with new recovery codes. The old ones no longer work."
+        },
+        "twoFactorTurnedOff": {
+          "subject": "Two-step verification is off for your {orgName} account",
+          "heading": "Two-step verification is off",
+          "body": "Your back office account now signs in with just your password."
+        },
+        "accountLocked": {
+          "subject": "Your {orgName} back office account was locked",
+          "heading": "Your account was locked",
+          "body": "{ownerName} locked your back office account, for example because your password may be known to someone else. You were signed out everywhere and can’t sign in until it’s unlocked."
+        },
+        "accountUnlocked": {
+          "subject": "Your {orgName} back office account was unlocked",
+          "heading": "Your account was unlocked",
+          "body": "{ownerName} unlocked your back office account, so you can sign in again."
+        },
+        "superAdminReceived": {
+          "subject": "You’re now the SuperAdmin for {orgName}",
+          "heading": "You’re now the SuperAdmin",
+          "body": "{ownerName} handed SuperAdmin to you, so you can now do everything in the back office. There’s one SuperAdmin at a time; you can hand it on from the Team page."
+        },
+        "superAdminHandedOver": {
+          "subject": "You handed over SuperAdmin for {orgName}",
+          "heading": "You handed over SuperAdmin",
+          "body": "{memberName} is now the SuperAdmin, and your role is {role}."
         }
+      },
+      "code": {
+        "subject": "{code} is your {orgName} sign-in code",
+        "heading": "Your sign-in code",
+        "body": "Your code is {code}.",
+        "expiry": "It works for 10 minutes, and only on the device where you asked for it.",
+        "footer": "If you didn’t try to sign in, someone may know your password. Change it now in Settings → Security."
       }
     }
   },
@@ -702,7 +920,7 @@
       "title": "Profile",
       "name": "Name",
       "email": "Email",
-      "emailHint": "Ask an owner if your email needs to change.",
+      "emailHint": "Ask someone who manages the team if your email needs to change.",
       "role": "Role",
       "save": "Save name",
       "saving": "Saving…",
@@ -717,12 +935,29 @@
     },
     "twoFactor": {
       "title": "Two-step verification",
-      "on": "On, with an authenticator app.",
       "remaining": "{count, plural, =0 {You have no recovery codes left. Make new ones now.} one {# recovery code left.} other {# recovery codes left.}}",
       "regenerate": "Make new recovery codes",
       "regenerating": "Making…",
       "regenerateHint": "Your old codes stop working.",
-      "done": "Done"
+      "done": "Done",
+      "lead": "A second step after your password, so a stolen password isn’t enough to get in.",
+      "current": {
+        "authenticator": "On, with an authenticator app.",
+        "email": "On, with codes emailed to {email}.",
+        "none": "Off. You sign in with just your password."
+      },
+      "required": "Your role needs two-step verification. You can switch methods but not turn it off.",
+      "useAuthenticator": "Use an authenticator app",
+      "switchAuthenticator": "Switch to a new authenticator app",
+      "useEmail": "Use emailed codes",
+      "turnOff": "Turn off",
+      "turnOffTitle": "Turn off two-step verification?",
+      "turnOffBody": "You’ll sign in with just your password, and your recovery codes stop working.",
+      "turnOffConfirm": "Turn off",
+      "dialogTitle": "Change how you sign in",
+      "turnedOff": "Two-step verification is off.",
+      "changed": "Two-step verification is on.",
+      "cancel": "Cancel"
     },
     "sessions": {
       "title": "Signed-in devices",
@@ -809,6 +1044,7 @@
       "auth": "Sign-in",
       "account": "Account",
       "team": "Team",
+      "role": "Roles",
       "data": "Data",
       "platform": "Platform",
       "campaign": "Campaigns",
@@ -817,7 +1053,9 @@
     },
     "methods": {
       "authenticator": "Authenticator app",
-      "recovery_code": "Recovery code"
+      "recovery_code": "Recovery code",
+      "email": "Emailed code",
+      "password": "Password only"
     },
     "details": {
       "method": "With",
@@ -842,18 +1080,26 @@
       "status": "Status",
       "fund": "Fund",
       "languages": "Languages",
-      "featured": "Featured"
+      "featured": "Featured",
+      "reason": "Reason",
+      "permissions": "Permissions",
+      "name": "Name",
+      "from": "From",
+      "to": "To",
+      "formerSuperAdminRole": "Their new role",
+      "approval": "Approval"
     },
     "actions": {
       "auth": {
         "signed_in": "Signed in",
         "sign_in_failed": "Wrong email or password",
-        "sign_in_locked": "Tried to sign in while locked",
+        "sign_in_locked": "Tried to sign in during a wrong-password lock",
         "two_factor_failed": "Too many wrong codes",
         "signed_out": "Signed out",
         "invite_accepted": "Accepted invite and set a password",
         "password_reset": "Reset password from an emailed link",
-        "two_factor_enabled": "Turned on two-step verification"
+        "two_factor_enabled": "Turned on two-step verification",
+        "sign_in_while_locked": "Tried to sign in to a locked account"
       },
       "account": {
         "name_changed": "Changed their name",
@@ -861,7 +1107,9 @@
         "recovery_codes_regenerated": "Made new recovery codes",
         "other_sessions_ended": "Signed out other devices",
         "notifications_changed": "Changed email notifications",
-        "preferences_changed": "Changed display preferences"
+        "preferences_changed": "Changed display preferences",
+        "two_factor_changed": "Changed their two-step verification",
+        "two_factor_turned_off": "Turned off two-step verification"
       },
       "team": {
         "invited": "Added a person",
@@ -870,7 +1118,11 @@
         "access_removed": "Removed access",
         "access_restored": "Restored access",
         "updated_from_cli": "Added or updated from the command line",
-        "two_factor_reset": "Reset someone’s two-step verification"
+        "two_factor_reset": "Reset someone’s two-step verification",
+        "locked": "Locked an account",
+        "unlocked": "Unlocked an account",
+        "signed_out": "Signed someone out everywhere",
+        "super_admin_transferred": "Handed over SuperAdmin"
       },
       "data": {
         "exported": "Downloaded a CSV"
@@ -881,7 +1133,13 @@
       "campaign": {
         "created": "Created a campaign",
         "updated": "Changed a campaign",
-        "deleted": "Deleted a campaign"
+        "deleted": "Deleted a campaign",
+        "approved": "Approved a campaign",
+        "rejected": "Turned down a campaign",
+        "change_requested": "Asked to change a campaign",
+        "change_withdrawn": "Withdrew a campaign change",
+        "change_approved": "Approved a campaign change",
+        "change_rejected": "Turned down a campaign change"
       },
       "fund": {
         "turned_on": "Showed a fund on the site",
@@ -892,6 +1150,11 @@
         "created": "Created a story",
         "updated": "Changed a story",
         "deleted": "Deleted a story"
+      },
+      "role": {
+        "created": "Added a role",
+        "updated": "Changed a role’s permissions",
+        "deleted": "Deleted a role"
       }
     }
   },
@@ -944,7 +1207,31 @@
       "hasGifts": "Gifts have come in through this campaign, so its link can’t change and it can’t be deleted.",
       "lastFund": "At least one fund has to stay on.",
       "noDatabase": "No database is connected.",
-      "unknown": "That didn’t save. Check your connection and try again."
+      "unknown": "That didn’t save. Check your connection and try again.",
+      "ownCampaign": "You asked for this, so someone else has to approve it.",
+      "notPending": "This campaign isn’t waiting for approval any more. Refresh the page.",
+      "reviewOutdated": "This campaign changed after you opened it. Refresh the page and review it again."
     }
+  },
+  "permissionGroups": {
+    "dashboard": "Dashboard",
+    "donations": "Gifts",
+    "donors": "Donors",
+    "volunteers": "Volunteers",
+    "messages": "Messages",
+    "subscribers": "Subscribers",
+    "campaigns": "Campaigns",
+    "funds": "Funds",
+    "stories": "Stories",
+    "settings": "Platform settings",
+    "audit": "Audit log",
+    "identity": "People and roles",
+    "auth": "Account security"
+  },
+  "legacyRoles": {
+    "owner": "Owner (now SuperAdmin)",
+    "treasurer": "Treasurer (now Finance)",
+    "coordinator": "Coordinator",
+    "viewer": "Viewer"
   }
 }

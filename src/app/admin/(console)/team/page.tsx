@@ -2,7 +2,6 @@ import { getTranslations } from "next-intl/server";
 import { Suspense } from "react";
 
 import { AdminPage, NoDatabase, TableSkeleton } from "@/components/admin/admin-page";
-import { RolesReference } from "@/components/admin/roles-reference";
 import { TeamTabs } from "@/components/admin/team-tabs";
 import { loadTeam } from "@/lib/admin/data";
 import { adminMetadata } from "@/lib/admin/metadata";
@@ -13,13 +12,7 @@ const Team = async () => {
   const team = await loadTeam();
   if (!team) return <NoDatabase />;
 
-  return (
-    <TeamTabs
-      members={team.members}
-      currentUserId={team.currentUserId}
-      roles={<RolesReference />}
-    />
-  );
+  return <TeamTabs members={team.members} roles={team.roles} viewer={team.viewer} />;
 };
 
 const TeamPage = async () => {

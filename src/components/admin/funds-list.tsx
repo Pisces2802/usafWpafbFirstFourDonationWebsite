@@ -18,7 +18,14 @@ import { cn } from "@/lib/utils";
  * The funds donors choose from, in the order they see them. Each can be switched off (at least
  * one stays on) or moved up and down; changes save straight away and reach the site at once.
  */
-export const FundsList = ({ funds }: { funds: AdminFundRow[] }) => {
+export const FundsList = ({
+  funds,
+  canEdit,
+}: {
+  funds: AdminFundRow[];
+  /** Whether the signed-in person can change funds; read-only roles see the controls disabled. */
+  canEdit: boolean;
+}) => {
   const t = useTranslations("Admin.funds");
   const tFunds = useTranslations("Funds");
   const format = useFormatter();
@@ -77,7 +84,7 @@ export const FundsList = ({ funds }: { funds: AdminFundRow[] }) => {
                   type="button"
                   variant="outline"
                   size="icon-sm"
-                  disabled={index === 0 || action.isPending}
+                  disabled={!canEdit || index === 0 || action.isPending}
                   aria-label={t("moveUp", { name })}
                   onClick={() => move(index, -1)}
                 >
@@ -90,7 +97,7 @@ export const FundsList = ({ funds }: { funds: AdminFundRow[] }) => {
                   type="button"
                   variant="outline"
                   size="icon-sm"
-                  disabled={index === shown.length - 1 || action.isPending}
+                  disabled={!canEdit || index === shown.length - 1 || action.isPending}
                   aria-label={t("moveDown", { name })}
                   onClick={() => move(index, 1)}
                 >
@@ -155,7 +162,7 @@ export const FundsList = ({ funds }: { funds: AdminFundRow[] }) => {
                   <Switch
                     id={switchId}
                     checked={fund.isActive}
-                    disabled={isLastOn || action.isPending}
+                    disabled={!canEdit || isLastOn || action.isPending}
                     onCheckedChange={(checked) => toggle(fund, checked)}
                   />
                 </div>

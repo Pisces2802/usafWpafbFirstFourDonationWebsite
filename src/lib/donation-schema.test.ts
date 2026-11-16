@@ -58,6 +58,30 @@ describe("donationSchema", () => {
     expect(campaign("Spring 2027")).toBe(false);
     expect(campaign("a".repeat(65))).toBe(false);
   });
+
+  it("keeps links, email addresses and markup out of names that go into emails", () => {
+    const named = (firstName: string, honoreeName = "Sgt. Maria O'Neil-Peña") =>
+      donationSchema.safeParse({
+        ...valid,
+        donor: { ...valid.donor, firstName },
+        tribute: { type: "memory", honoreeName },
+      }).success;
+
+    for (const name of ["Ana", "J. R.", "Jean-Luc", "Zoë", "李", "Mary Ann"]) {
+      expect(named(name), name).toBe(true);
+    }
+    for (const name of [
+      "https://evil.example",
+      "Visit www.example",
+      "bit.ly/x",
+      "evil.com",
+      "me@example.com",
+      "<b>Ana</b>",
+    ]) {
+      expect(named(name), name).toBe(false);
+      expect(named("Ana", name), `honoree ${name}`).toBe(false);
+    }
+  });
 });
 
 describe("getDonationErrors", () => {

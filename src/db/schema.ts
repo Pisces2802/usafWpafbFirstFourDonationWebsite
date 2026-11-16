@@ -16,7 +16,6 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
-import { ADMIN_ROLES } from "@/lib/admin/permissions";
 import { CONTACT_TOPICS, NEWSLETTER_STATUSES, VOLUNTEER_AFFILIATIONS } from "@/lib/form-schemas";
 import { STORY_STATUSES, type StoryContent } from "@/lib/stories/story-schema";
 
@@ -25,11 +24,14 @@ export const donationStatus = pgEnum("donation_status", ["succeeded", "refunded"
 export const tributeType = pgEnum("tribute_type", ["honour", "memory"]);
 export const volunteerAffiliation = pgEnum("volunteer_affiliation", VOLUNTEER_AFFILIATIONS);
 export const contactTopic = pgEnum("contact_topic", CONTACT_TOPICS);
-export const adminRole = pgEnum("admin_role", ADMIN_ROLES);
+/** How someone confirms it's them after their password. No row value means they don't use one. */
+export const adminTwoFactorMethod = pgEnum("admin_two_factor_method", ["authenticator", "email"]);
 export const adminSessionStage = pgEnum("admin_session_stage", ["two_factor", "active"]);
 export const storyStatus = pgEnum("story_status", STORY_STATUSES);
 export const adminTokenPurpose = pgEnum("admin_token_purpose", ["verify_email", "reset_password"]);
 export const newsletterStatus = pgEnum("newsletter_status", NEWSLETTER_STATUSES);
+/** Where a new campaign is in its two-person sign-off. Only approved ones reach the public site. */
+export const campaignApproval = pgEnum("campaign_approval", ["pending", "approved", "rejected"]);
 
 /** Names and descriptions live in the messages files, keyed by slug. */
 export const funds = pgTable("funds", {
@@ -39,13 +41,57 @@ export const funds = pgTable("funds", {
   sortOrder: integer().notNull().default(0),
 });
 
-export const campaigns = pgTable("campaigns", {
-  id: serial().primaryKey(),
-  slug: text().notNull().unique(),
-  goalCents: integer().notNull(),
-  startsAt: timestamp({ withTimezone: true }),
-  endsAt: timestamp({ withTimezone: true }),
-});
+/** A change to an approved campaign, waiting for someone else to approve it. Dates are ISO strings. */
+export type CampaignChange = {
+  slug: string;
+  goalCents: number;
+  startsAt: string | null;
+  endsAt: string | null;
+};
+
+/**
+ * A new campaign needs two people: whoever creates it (or changes it while it waits) asks, and
+ * someone else with `campaigns:approve` approves or turns it down. Until it's approved it isn't
+ * on the site and gifts don't count towards it. Changes to an approved campaign wait the same
+ * way in `proposedChange` while the live campaign stays as it is. The database refuses an
+ * approval by whoever asked, and any change to an approved campaign that skips this.
+ */
+export const campaigns = pgTable(
+  "campaigns",
+  {
+    id: serial().primaryKey(),
+    slug: text().notNull().unique(),
+    goalCents: integer().notNull(),
+    startsAt: timestamp({ withTimezone: true }),
+    endsAt: timestamp({ withTimezone: true }),
+    approval: campaignApproval().notNull().default("pending"),
+    /** Who created it. Null for campaigns from before approvals, or added outside the app. */
+    createdById: integer().references((): AnyPgColumn => adminUsers.id),
+    /** Who last asked for approval: the creator, or whoever last changed it while it waited. */
+    requestedById: integer().references((): AnyPgColumn => adminUsers.id),
+    requestedAt: timestamp({ withTimezone: true }),
+    reviewedById: integer().references((): AnyPgColumn => adminUsers.id),
+    reviewedAt: timestamp({ withTimezone: true }),
+    /** Why it was turned down, shown to whoever asked. */
+    reviewNote: text(),
+    /** A change to the approved campaign that's waiting for approval, or null. */
+    proposedChange: jsonb().$type<CampaignChange>(),
+    changeRequestedById: integer().references((): AnyPgColumn => adminUsers.id),
+    changeRequestedAt: timestamp({ withTimezone: true }),
+    changeReviewedById: integer().references((): AnyPgColumn => adminUsers.id),
+    changeReviewedAt: timestamp({ withTimezone: true }),
+    /** Why the last change was turned down, shown to whoever asked until they ask again. */
+    changeReviewNote: text(),
+  },
+  (table) => [
+    check(
+      "campaigns_approved_by_someone_else",
+      // Campaigns from before approvals have no creator and count as approved by nobody.
+      sql`${table.approval} <> 'approved' or (${table.createdById} is null and ${table.requestedById} is null) or (${table.reviewedById} is not null and ${table.reviewedById} is distinct from ${table.createdById} and ${table.reviewedById} is distinct from ${table.requestedById})`,
+    ),
+    index().on(table.approval),
+  ],
+);
 
 export const donors = pgTable("donors", {
   id: serial().primaryKey(),
@@ -178,6 +224,35 @@ export const newsletterSubscribers = pgTable(
 );
 
 /**
+ * Named sets of permissions. Permission names are defined in code (`src/lib/admin/permissions.ts`),
+ * which also ignores any stored name it no longer knows. Built-in roles have a slug; SuperAdmin
+ * (`is_super`) holds every permission, including ones added later, and can't be changed.
+ */
+export const adminRoles = pgTable(
+  "admin_roles",
+  {
+    id: serial().primaryKey(),
+    /** Set for the built-in roles only, so code and scripts can find them by a stable key. */
+    slug: text().unique(),
+    name: text().notNull(),
+    description: text().notNull().default(""),
+    permissions: text()
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
+    isSuper: boolean().notNull().default(false),
+    isBuiltIn: boolean().notNull().default(false),
+    createdById: integer().references((): AnyPgColumn => adminUsers.id, { onDelete: "set null" }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true })
+      .notNull()
+      .defaultNow()
+      .$onUpdate(() => new Date()),
+  },
+  (table) => [uniqueIndex("admin_roles_name_lower").on(sql`lower(${table.name})`)],
+);
+
+/**
  * People who can open the back office. Emails are stored lowercase, so sign-in can match on them.
  * Deactivating keeps the row for the record of who added whom; there's no hard delete.
  */
@@ -187,7 +262,9 @@ export const adminUsers = pgTable(
     id: serial().primaryKey(),
     email: text().notNull().unique(),
     name: text().notNull(),
-    role: adminRole().notNull(),
+    roleId: integer()
+      .notNull()
+      .references((): AnyPgColumn => adminRoles.id, { onDelete: "restrict" }),
     isActive: boolean().notNull().default(true),
     /** scrypt hash; null until they follow their invite link and choose a password. */
     passwordHash: text(),
@@ -196,6 +273,18 @@ export const adminUsers = pgTable(
     totpSecret: text(),
     /** Last accepted TOTP time step, so a code can't be used twice. */
     totpLastStep: integer(),
+    /** Null means no second step; required for anyone with an `identity:` or `auth:` permission. */
+    twoFactorMethod: adminTwoFactorMethod(),
+    /**
+     * Set when someone with `auth:lock` locks the account, e.g. if its password may be known to
+     * someone else. Sessions end and sign-in is refused until it's unlocked. Separate from
+     * `lockedUntil`, which is the automatic 15-minute lock after wrong passwords.
+     */
+    suspendedAt: timestamp({ withTimezone: true }),
+    suspendedById: integer().references((): AnyPgColumn => adminUsers.id, {
+      onDelete: "set null",
+    }),
+    suspendReason: text(),
     failedSignInCount: integer().notNull().default(0),
     lockedUntil: timestamp({ withTimezone: true }),
     createdById: integer().references((): AnyPgColumn => adminUsers.id, { onDelete: "set null" }),
@@ -204,9 +293,9 @@ export const adminUsers = pgTable(
     timeZone: text(),
     /** Rows per page in back-office tables. */
     pageSize: integer().notNull().default(10),
-    /** Email this person about new volunteer sign-ups (needs `volunteers:view`). */
+    /** Email this person about new volunteer sign-ups (needs `volunteers:read`). */
     notifyVolunteers: boolean().notNull().default(false),
-    /** Email this person about new contact messages (needs `messages:view`). */
+    /** Email this person about new contact messages (needs `messages:read`). */
     notifyMessages: boolean().notNull().default(false),
     /** Email this person about sign-ins and security changes on their own account. */
     notifySecurity: boolean().notNull().default(true),
@@ -238,6 +327,10 @@ export const adminSessions = pgTable(
     stage: adminSessionStage().notNull(),
     /** Encrypted secret shown during two-factor setup, saved to the user once confirmed. */
     pendingTotpSecret: text(),
+    /** HMAC of the code last emailed for this session, for email two-step verification. */
+    emailCodeHash: text(),
+    emailCodeExpiresAt: timestamp({ withTimezone: true }),
+    emailCodeSentAt: timestamp({ withTimezone: true }),
     failedAttempts: integer().notNull().default(0),
     ip: text(),
     userAgent: text(),

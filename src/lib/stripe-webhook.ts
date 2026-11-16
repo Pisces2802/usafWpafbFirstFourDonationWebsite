@@ -1,6 +1,6 @@
 import "server-only";
 
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { hasLocale } from "next-intl";
 import type Stripe from "stripe";
 
@@ -256,7 +256,8 @@ const findCampaignId = async (tx: Tx, slug: string | null) => {
   const [campaign] = await tx
     .select({ id: campaigns.id })
     .from(campaigns)
-    .where(eq(campaigns.slug, slug));
+    // A campaign still waiting for approval doesn't collect gifts.
+    .where(and(eq(campaigns.slug, slug), eq(campaigns.approval, "approved")));
   return campaign?.id ?? null;
 };
 

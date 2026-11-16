@@ -83,7 +83,8 @@ export const regenerateRecoveryCodes = async (): Promise<
   AuthResult<{ recoveryCodes: string[] }>
 > => {
   const current = await activeSession();
-  if (!current) return { ok: false, error: "expired" };
+  // Recovery codes stand in for a second step, so there are none without one.
+  if (!current?.user.twoFactorMethod) return { ok: false, error: "expired" };
 
   const recoveryCodes = generateRecoveryCodes();
   await replaceRecoveryCodes(

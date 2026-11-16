@@ -17,18 +17,27 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useAddAdminUserForm } from "@/hooks/use-add-admin-user-form";
-import { ADMIN_ROLES } from "@/lib/admin/permissions";
-import type { AddedPerson } from "@/hooks/use-add-admin-user-form";
+import { type AddedPerson, useAddAdminUserForm } from "@/hooks/use-add-admin-user-form";
+import { DEFAULT_ROLE_SLUG } from "@/lib/admin/permissions";
+import type { AdminRoleRow } from "@/lib/admin/role-queries";
+
+type AddAdminUserDialogProps = {
+  /** The roles this person may give out. */
+  roles: AdminRoleRow[];
+  onAdded: (added: AddedPerson & { roleName: string }) => void;
+};
 
 /** "Add person" button that opens the add-person form in a dialog. */
-export const AddAdminUserDialog = ({ onAdded }: { onAdded: (added: AddedPerson) => void }) => {
+export const AddAdminUserDialog = ({ roles, onAdded }: AddAdminUserDialogProps) => {
   const t = useTranslations("Admin");
   const [open, setOpen] = useState(false);
   const { register, submit, clear, isSubmitting, fieldError, error } = useAddAdminUserForm({
+    defaultRoleId:
+      (roles.find((role) => role.slug === DEFAULT_ROLE_SLUG) ?? roles.at(-1))?.id ?? null,
     onAdded: (added) => {
       setOpen(false);
-      onAdded(added);
+      const role = roles.find((item) => item.id === added.roleId);
+      onAdded({ ...added, roleName: role?.name ?? "" });
     },
   });
 
@@ -75,12 +84,13 @@ export const AddAdminUserDialog = ({ onAdded }: { onAdded: (added: AddedPerson) 
           <SelectField
             id="team-role"
             label={t("team.role")}
-            error={message("role")}
-            options={ADMIN_ROLES.map((role) => ({
-              value: role,
-              label: `${t(`roles.${role}.name`)} – ${t(`roles.${role}.description`)}`,
+            hint={t("team.roleHint")}
+            error={message("roleId")}
+            options={roles.map((role) => ({
+              value: String(role.id),
+              label: role.description ? `${role.name} – ${role.description}` : role.name,
             }))}
-            {...register("role")}
+            {...register("roleId")}
           />
           {error && (
             <p role="alert" className="text-destructive text-sm">

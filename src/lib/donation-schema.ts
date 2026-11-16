@@ -8,6 +8,21 @@ const optionalEmail = z
   .optional()
   .transform((value) => value || undefined);
 
+/**
+ * Names go into emails sent from the group's address (receipts and tribute notices, which can go
+ * to anyone), so they can't carry web addresses, email addresses or markup. Otherwise a $5 gift
+ * would buy a spam or phishing email from our domain.
+ */
+const LINK_LIKE = /:\/\/|www\.|[@<>]|[\p{L}\p{N}]\.\p{L}{2,}/iu;
+
+const personName = (max: number) =>
+  z
+    .string()
+    .trim()
+    .min(1)
+    .max(max)
+    .refine((value) => !LINK_LIKE.test(value));
+
 export const campaignSlugSchema = z.string().regex(/^[a-z0-9-]{1,64}$/);
 
 /** Shared by the /donate form and `POST /api/checkout`; the server re-validates and recomputes fees. */
@@ -19,13 +34,13 @@ export const donationSchema = z.object({
   tribute: z
     .object({
       type: z.enum(["honour", "memory"]),
-      honoreeName: z.string().trim().min(1).max(100),
+      honoreeName: personName(100),
       notifyEmail: optionalEmail,
     })
     .nullable(),
   donor: z.object({
-    firstName: z.string().trim().min(1).max(60),
-    lastName: z.string().trim().min(1).max(60),
+    firstName: personName(60),
+    lastName: personName(60),
     email: z.email(),
   }),
   campaign: campaignSlugSchema.nullable().optional(),

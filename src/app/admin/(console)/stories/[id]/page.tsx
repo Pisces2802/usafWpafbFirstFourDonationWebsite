@@ -4,7 +4,9 @@ import { Suspense } from "react";
 
 import { AdminPage, NoDatabase, TableSkeleton } from "@/components/admin/admin-page";
 import { StoryForm } from "@/components/admin/story-form";
+import { requireAdmin } from "@/lib/admin/access";
 import { loadStory } from "@/lib/admin/data";
+import { can } from "@/lib/admin/permissions";
 import { adminMetadata } from "@/lib/admin/metadata";
 import { cloudinaryConfigured } from "@/lib/stories/cloudinary";
 
@@ -19,7 +21,14 @@ const EditStory = async ({ params }: Pick<EditStoryProps, "params">) => {
   const story = await loadStory(Number(id));
   if (story === null) return <NoDatabase />;
   if (story === undefined) notFound();
-  return <StoryForm story={story} canUploadImages={cloudinaryConfigured()} />;
+  const user = await requireAdmin();
+  return (
+    <StoryForm
+      story={story}
+      canUploadImages={cloudinaryConfigured()}
+      canPublish={can(user, "stories:publish")}
+    />
+  );
 };
 
 const EditStoryPage = async ({ params }: EditStoryProps) => {

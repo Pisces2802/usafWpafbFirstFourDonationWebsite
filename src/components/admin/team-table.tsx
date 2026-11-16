@@ -7,12 +7,17 @@ import { DataTable } from "@/components/admin/data-table";
 import { InviteNotice } from "@/components/admin/invite-notice";
 import {
   ChangeRoleDialog,
+  HandOverSuperAdminDialog,
+  LockDialog,
   RemoveAccessDialog,
   ResetTwoFactorDialog,
+  SignOutDialog,
+  UnlockDialog,
 } from "@/components/admin/team-dialogs";
-import { createTeamColumns } from "@/config/columns/team";
+import { createTeamColumns, type TeamAbilities } from "@/config/columns/team";
 import { useColumnTools } from "@/hooks/use-column-tools";
 import { type TeamNotice, useTeamActions } from "@/hooks/use-team-actions";
+import type { AdminRoleRow } from "@/lib/admin/role-queries";
 import type { AdminTeamRow } from "@/lib/admin/team-queries";
 
 const Notice = ({ notice }: { notice: TeamNotice }) => {
@@ -37,11 +42,8 @@ const Notice = ({ notice }: { notice: TeamNotice }) => {
   }
 
   const message =
-    notice.kind === "roleChanged"
-      ? t("team.notices.roleChanged", {
-          name: notice.name,
-          role: t(`roles.${notice.role}.name`),
-        })
+    notice.kind === "roleChanged" || notice.kind === "superAdminTransferred"
+      ? t(`team.notices.${notice.kind}`, { name: notice.name, role: notice.role })
       : t(`team.notices.${notice.kind}`, { name: notice.name });
 
   return (
@@ -52,21 +54,45 @@ const Notice = ({ notice }: { notice: TeamNotice }) => {
   );
 };
 
-type TeamTableProps = { members: AdminTeamRow[]; currentUserId: number };
+type TeamTableProps = {
+  members: AdminTeamRow[];
+  currentUserId: number;
+  abilities: TeamAbilities;
+  /** Roles the signed-in person may give out. */
+  assignableRoles: AdminRoleRow[];
+  /** Every role but SuperAdmin, for the SuperAdmin to pick their own when handing it over. */
+  handOverRoles: AdminRoleRow[];
+  canActOn: (member: AdminTeamRow) => boolean;
+};
 
-/** Everyone with back-office access. Role and access changes live in each row's actions. */
-export const TeamTable = ({ members, currentUserId }: TeamTableProps) => {
+/** Everyone with back-office access. Role, access and security changes live in each row's actions. */
+export const TeamTable = ({
+  members,
+  currentUserId,
+  abilities,
+  assignableRoles,
+  handOverRoles,
+  canActOn,
+}: TeamTableProps) => {
   const tools = useColumnTools();
   const team = useTeamActions();
+  const memberIn = (kind: NonNullable<typeof team.dialog>["kind"]) =>
+    team.dialog?.kind === kind ? team.dialog.member : null;
 
   const columns = createTeamColumns(tools, {
     currentUserId,
+    abilities,
+    canActOn,
     pendingId: team.pendingId,
     onChangeRole: (member) => team.openDialog("role", member),
     onResendInvite: team.resendInvite,
     onRemoveAccess: (member) => team.openDialog("removeAccess", member),
     onResetTwoFactor: (member) => team.openDialog("resetTwoFactor", member),
     onRestoreAccess: team.restoreAccess,
+    onLock: (member) => team.openDialog("lock", member),
+    onUnlock: (member) => team.openDialog("unlock", member),
+    onSignOut: (member) => team.openDialog("signOut", member),
+    onHandOverSuperAdmin: (member) => team.openDialog("handOver", member),
   });
 
   return (
@@ -84,19 +110,37 @@ export const TeamTable = ({ members, currentUserId }: TeamTableProps) => {
         empty={tools.t("team.empty")}
       />
       <ChangeRoleDialog
-        member={team.dialog?.kind === "role" ? team.dialog.member : null}
+        member={memberIn("role")}
+        roles={assignableRoles}
         onClose={team.closeDialog}
         onSave={team.changeRole}
       />
       <RemoveAccessDialog
-        member={team.dialog?.kind === "removeAccess" ? team.dialog.member : null}
+        member={memberIn("removeAccess")}
         onClose={team.closeDialog}
         onConfirm={team.removeAccess}
       />
       <ResetTwoFactorDialog
-        member={team.dialog?.kind === "resetTwoFactor" ? team.dialog.member : null}
+        member={memberIn("resetTwoFactor")}
         onClose={team.closeDialog}
         onConfirm={team.resetTwoFactor}
+      />
+      <LockDialog member={memberIn("lock")} onClose={team.closeDialog} onConfirm={team.lock} />
+      <UnlockDialog
+        member={memberIn("unlock")}
+        onClose={team.closeDialog}
+        onConfirm={team.unlock}
+      />
+      <SignOutDialog
+        member={memberIn("signOut")}
+        onClose={team.closeDialog}
+        onConfirm={team.signOut}
+      />
+      <HandOverSuperAdminDialog
+        member={memberIn("handOver")}
+        roles={handOverRoles}
+        onClose={team.closeDialog}
+        onDone={team.handedOver}
       />
     </div>
   );

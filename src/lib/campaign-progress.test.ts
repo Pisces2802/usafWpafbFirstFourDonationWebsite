@@ -28,10 +28,11 @@ beforeEach(async () => {
 const addCampaign = async (
   slug: string,
   dates: { startsAt?: Date | null; endsAt?: Date | null } = {},
+  approval: "approved" | "pending" | "rejected" = "approved",
 ) => {
   const [row] = await db
     .insert(schema.campaigns)
-    .values({ slug, goalCents: 100_000, startsAt: null, endsAt: null, ...dates })
+    .values({ slug, goalCents: 100_000, startsAt: null, endsAt: null, approval, ...dates })
     .returning();
   return row!;
 };
@@ -99,6 +100,10 @@ describe("loadCampaignProgress", () => {
     await addCampaign("quiet");
 
     expect(await loadCampaignProgress(db, "missing")).toBeNull();
+    await addCampaign("waiting", {}, "pending");
+    await addCampaign("turned-down", {}, "rejected");
+    expect(await loadCampaignProgress(db, "waiting")).toBeNull();
+    expect(await loadCampaignProgress(db, "turned-down")).toBeNull();
     expect(await loadCampaignProgress(db, "quiet")).toEqual({
       raisedCents: 0,
       goalCents: 100_000,
@@ -111,6 +116,7 @@ describe("loadActiveCampaignProgress", () => {
   it("ignores campaigns that haven't started or have ended", async () => {
     await addCampaign("past", { startsAt: daysFromNow(-30), endsAt: daysFromNow(-1) });
     await addCampaign("future", { startsAt: daysFromNow(1) });
+    await addCampaign("waiting", { startsAt: daysFromNow(-1) }, "pending");
 
     expect(await loadActiveCampaignProgress(db, NOW)).toBeNull();
   });

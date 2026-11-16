@@ -5,7 +5,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { Db } from "@/db";
 import * as schema from "@/db/schema";
-import { isRateLimitedInMemory, recordHit } from "@/lib/rate-limit";
+import { clearHits, countHits, isRateLimitedInMemory, recordHit } from "@/lib/rate-limit";
 
 const MINUTE = 60_000;
 const NOW = new Date("2026-11-15T12:00:30Z");
@@ -24,6 +24,19 @@ describe("recordHit", () => {
     expect(await recordHit(db, "form:1.2.3.4", MINUTE, NOW)).toBe(1);
     expect(await recordHit(db, "form:1.2.3.4", MINUTE, later(10_000))).toBe(2);
     expect(await recordHit(db, "form:5.6.7.8", MINUTE, later(10_000))).toBe(1);
+  });
+
+  it("reads a count without adding to it, and clears one key only", async () => {
+    expect(await countHits(db, "fail:1:1.2.3.4", MINUTE, NOW)).toBe(0);
+    await recordHit(db, "fail:1:1.2.3.4", MINUTE, NOW);
+    await recordHit(db, "fail:1:1.2.3.4", MINUTE, NOW);
+    await recordHit(db, "fail:1:5.6.7.8", MINUTE, NOW);
+    expect(await countHits(db, "fail:1:1.2.3.4", MINUTE, later(10_000))).toBe(2);
+    expect(await countHits(db, "fail:1:1.2.3.4", MINUTE, later(MINUTE))).toBe(0);
+
+    await clearHits(db, "fail:1:1.2.3.4");
+    expect(await countHits(db, "fail:1:1.2.3.4", MINUTE, NOW)).toBe(0);
+    expect(await countHits(db, "fail:1:5.6.7.8", MINUTE, NOW)).toBe(1);
   });
 
   it("starts again in the next window", async () => {

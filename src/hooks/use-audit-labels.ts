@@ -4,11 +4,16 @@ import { useTranslations } from "next-intl";
 
 import { isAuditAction } from "@/lib/admin/audit-actions";
 import type { AuditEventRow } from "@/lib/admin/audit";
-import { isAdminRole } from "@/lib/admin/permissions";
 
 type DetailValue = string | number | boolean | null;
 
-const METHODS = ["authenticator", "recovery_code"] as const;
+const METHODS = ["authenticator", "recovery_code", "email", "password"] as const;
+
+/** Role names from before roles could be edited, kept so old entries still read well. */
+const LEGACY_ROLES = ["owner", "treasurer", "coordinator", "viewer"] as const;
+type LegacyRole = (typeof LEGACY_ROLES)[number];
+const isLegacyRole = (value: unknown): value is LegacyRole =>
+  LEGACY_ROLES.includes(value as LegacyRole);
 
 /**
  * Turns stored audit entries into readable text: action names, categories, who did it when no
@@ -33,8 +38,8 @@ export const useAuditLabels = () => {
   const value = (key: string, detail: DetailValue) => {
     if (detail === null || detail === "") return t("none");
     if (typeof detail === "boolean") return t(detail ? "yes" : "no");
-    if (isAdminRole(detail) && ["from", "to", "role"].includes(key)) {
-      return tAdmin(`roles.${detail}.name`);
+    if (isLegacyRole(detail) && ["from", "to", "role"].includes(key)) {
+      return tAdmin(`legacyRoles.${detail}`);
     }
     if (key === "method" && METHODS.includes(detail as (typeof METHODS)[number])) {
       return t(`methods.${detail as (typeof METHODS)[number]}`);

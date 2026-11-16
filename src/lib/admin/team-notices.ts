@@ -1,11 +1,11 @@
 import "server-only";
 
-import { and, eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 
 import { type Db, getDb } from "@/db";
-import { adminUsers } from "@/db/schema";
+import { adminRoles, adminUsers } from "@/db/schema";
 import { env } from "@/env";
-import { can } from "@/lib/admin/permissions";
+import { grantedPermissions } from "@/lib/admin/permissions";
 import { readPlatformSettings } from "@/lib/admin/platform-settings";
 import { type OrgNotice, sendOrgNotice } from "@/lib/emails";
 
@@ -16,10 +16,17 @@ const OPT_IN = { volunteers: adminUsers.notifyVolunteers, messages: adminUsers.n
 /** Active team members who asked for this kind of email and whose role can see it. */
 const subscribers = async (db: Db, topic: NoticeTopic) => {
   const rows = await db
-    .select({ email: adminUsers.email, role: adminUsers.role })
+    .select({
+      email: adminUsers.email,
+      isSuper: adminRoles.isSuper,
+      permissions: adminRoles.permissions,
+    })
     .from(adminUsers)
-    .where(and(eq(adminUsers.isActive, true), eq(OPT_IN[topic], true)));
-  return rows.filter((row) => can(row.role, `${topic}:view`)).map((row) => row.email);
+    .innerJoin(adminRoles, eq(adminUsers.roleId, adminRoles.id))
+    .where(
+      and(eq(adminUsers.isActive, true), isNull(adminUsers.suspendedAt), eq(OPT_IN[topic], true)),
+    );
+  return rows.filter((row) => grantedPermissions(row).has(`${topic}:read`)).map((row) => row.email);
 };
 
 /**

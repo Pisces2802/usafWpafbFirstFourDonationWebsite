@@ -52,6 +52,9 @@ export const endOfDay = (date: string) => (date ? new Date(`${date}T23:59:59.999
 export const toDateInput = (date: Date | null) => (date ? date.toISOString().slice(0, 10) : "");
 
 /** The full fund order, as the Funds page saves it. Every fund appears exactly once. */
+/** Why a campaign was turned down; optional, shown to whoever asked. */
+export const reviewNoteSchema = z.string().trim().max(300);
+
 export const fundOrderSchema = z
   .array(z.enum(FUND_IDS))
   .length(FUND_IDS.length)
@@ -65,6 +68,12 @@ export const CATALOG_ERRORS = [
   "hasGifts",
   "lastFund",
   "noDatabase",
+  /** Whoever created a campaign, or last changed it while it waited, can't approve it. */
+  "ownCampaign",
+  /** It's already been approved or turned down. */
+  "notPending",
+  /** Someone changed it after the reviewer opened it, so they need to look again. */
+  "reviewOutdated",
 ] as const;
 export type CatalogError = (typeof CATALOG_ERRORS)[number];
 

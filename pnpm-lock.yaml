@@ -363,9 +363,6 @@ importers:
       sanitize-html:
         specifier: ^2.18.1
         version: 2.18.1
-      shadcn:
-        specifier: ^4.23.0
-        version: 4.23.0(supports-color@7.2.0)
       sonner:
         specifier: ^2.0.8
         version: 2.0.8(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -424,6 +421,9 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.8.1
         version: 0.8.1(prettier@3.9.10)
+      shadcn:
+        specifier: ^4.23.0
+        version: 4.23.0(supports-color@7.2.0)
       tailwindcss:
         specifier: ^4
         version: 4.3.4

@@ -30,11 +30,6 @@ export const TextField = ({
       <label htmlFor={id} className="text-sm font-medium">
         {label}
       </label>
-      {hint && (
-        <p id={hintId} className="text-muted-foreground -mt-1 text-sm">
-          {hint}
-        </p>
-      )}
       <div className="relative">
         <Input
           id={id}
@@ -47,6 +42,11 @@ export const TextField = ({
           <div className="absolute inset-y-0 right-0 flex items-center pr-0.5">{endSlot}</div>
         )}
       </div>
+      {hint && (
+        <p id={hintId} className="text-muted-foreground text-xs">
+          {hint}
+        </p>
+      )}
       {error && (
         <p id={errorId} className="text-destructive text-sm">
           {error}

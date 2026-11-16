@@ -208,12 +208,15 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   html {
     @apply font-sans;
   }
+
   body {
     @apply bg-background text-foreground antialiased;
   }
+
   h1,
   h2,
   h3,
@@ -222,15 +225,18 @@
   h6 {
     font-family: var(--font-heading);
   }
+
   :focus-visible {
     outline: 3px solid var(--ring);
     outline-offset: 2px;
   }
+
   @media (prefers-reduced-motion: no-preference) {
     html {
       scroll-behavior: smooth;
     }
   }
+
   @media (prefers-reduced-motion: reduce) {
     *,
     ::before,
@@ -241,8 +247,17 @@
       transition-duration: 0.01ms !important;
     }
   }
+
   p {
     max-width: 75ch;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
   }
 }
 

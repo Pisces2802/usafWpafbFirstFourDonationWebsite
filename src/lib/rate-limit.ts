@@ -2,7 +2,7 @@ import "server-only";
 
 import { createHash } from "node:crypto";
 
-import { lt, sql } from "drizzle-orm";
+import { and, eq, lt, sql } from "drizzle-orm";
 
 import { type Db, getDb } from "@/db";
 import { rateLimits } from "@/db/schema";
@@ -44,9 +44,14 @@ const PRUNE_EVERY = 100;
  * Windows are fixed (they start on multiples of `windowMs`), which lets a burst straddling two
  * windows reach up to twice the limit; that's fine for slowing down form abuse.
  */
+const hashKey = (key: string) => createHash("sha256").update(key).digest("hex");
+
+const windowStartOf = (now: Date, windowMs: number) =>
+  new Date(Math.floor(now.getTime() / windowMs) * windowMs);
+
 export const recordHit = async (db: Db, key: string, windowMs: number, now = new Date()) => {
-  const windowStart = new Date(Math.floor(now.getTime() / windowMs) * windowMs);
-  const keyHash = createHash("sha256").update(key).digest("hex");
+  const windowStart = windowStartOf(now, windowMs);
+  const keyHash = hashKey(key);
 
   const [row] = await db
     .insert(rateLimits)
@@ -63,6 +68,24 @@ export const recordHit = async (db: Db, key: string, windowMs: number, now = new
 
   return row.hits;
 };
+
+/** The count `recordHit` has kept for `key` in the current window, without adding to it. */
+export const countHits = async (db: Db, key: string, windowMs: number, now = new Date()) => {
+  const [row] = await db
+    .select({ hits: rateLimits.hits })
+    .from(rateLimits)
+    .where(
+      and(
+        eq(rateLimits.keyHash, hashKey(key)),
+        eq(rateLimits.windowStart, windowStartOf(now, windowMs)),
+      ),
+    );
+  return row?.hits ?? 0;
+};
+
+/** Forgets every count kept for `key`. */
+export const clearHits = (db: Db, key: string) =>
+  db.delete(rateLimits).where(eq(rateLimits.keyHash, hashKey(key)));
 
 /**
  * Whether `key` has had more than `limit` requests in the current window. Counts are kept in

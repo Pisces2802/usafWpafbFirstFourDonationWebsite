@@ -11,6 +11,7 @@ import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { buildPageMetadata } from "@/lib/metadata";
 import { getPublishedStories, getPublishedStory } from "@/lib/stories/queries";
+import { sanitizeStoryHtml } from "@/lib/stories/sanitize";
 import { cn } from "@/lib/utils";
 
 type StoryPageProps = PageProps<"/[locale]/stories/[slug]">;
@@ -94,8 +95,11 @@ const StoryPage = async ({ params }: StoryPageProps) => {
 
         <div className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)]">
           <div className="max-w-[65ch] min-w-0">
-            {/* Sanitised when it was saved; see `sanitizeStoryHtml`. */}
-            <div className="story-body" dangerouslySetInnerHTML={{ __html: story.body }} />
+            {/* Sanitised when saved and again here, in case a row was written another way. */}
+            <div
+              className="story-body"
+              dangerouslySetInnerHTML={{ __html: sanitizeStoryHtml(story.body) }}
+            />
           </div>
           <aside className="lg:pt-2">
             <div className="bg-card ring-foreground/10 rounded-xl p-6 ring-1 lg:sticky lg:top-28">

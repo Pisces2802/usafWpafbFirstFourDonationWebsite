@@ -2,58 +2,40 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import QRCode from "qrcode";
 
-import { siteConfig } from "@/config/site";
 import { getDb } from "@/db";
 import { env } from "@/env";
 import { recordAudit } from "@/lib/admin/audit";
 import { safeNextPath } from "@/lib/admin/auth/cookie";
 import {
-  decryptSecret,
-  encryptSecret,
-  generateRecoveryCodes,
   getDummyHash,
   hashPassword,
   isAuthConfigured,
-  normalizeRecoveryCode,
   sha256,
   verifyPassword,
 } from "@/lib/admin/auth/crypto";
+import { sendEmailCode } from "@/lib/admin/auth/email-code";
 import { createAuthLink, sendPasswordResetEmail } from "@/lib/admin/auth/links";
 import { sendSecurityNotice } from "@/lib/admin/auth/security-email";
 import {
-  claimTotpStep,
   clearFailedSignIns,
-  enableTwoFactor,
   findAdminByEmail,
   findAdminById,
-  MAX_TWO_FACTOR_ATTEMPTS,
+  LOCKOUT_MS,
+  MAX_FAILED_SIGN_INS_PER_ADDRESS,
   recordFailedSignIn,
-  recordSignIn,
-  recordTwoFactorFailure,
   setPasswordWithToken,
-  setPendingTotpSecret,
-  consumeRecoveryCode,
 } from "@/lib/admin/auth/queries";
 import {
   type AuthResult,
   forgotPasswordSchema,
-  recoveryCodeSchema,
   signInSchema,
   tokenPasswordSchema,
-  totpCodeSchema,
 } from "@/lib/admin/auth/schema";
-import {
-  type CurrentSession,
-  endSession,
-  promoteCurrentSession,
-  readSession,
-  replaceSession,
-  startSession,
-} from "@/lib/admin/auth/session";
-import { generateTotpSecret, totpUri, verifyTotp } from "@/lib/admin/auth/totp";
-import { getClientIp, isRateLimited } from "@/lib/rate-limit";
+import { endSession, readSession, startSession } from "@/lib/admin/auth/session";
+import { recordCompletedSignIn, roleNeedsTwoFactor } from "@/lib/admin/auth/sign-in";
+import { findRole } from "@/lib/admin/role-queries";
+import { clearHits, countHits, getClientIp, isRateLimited, recordHit } from "@/lib/rate-limit";
 import { verifyTurnstile } from "@/lib/turnstile";
 
 const FIFTEEN_MINUTES = 15 * 60_000;
@@ -73,6 +55,31 @@ const passesTurnstile = async (token: unknown) => {
   return (await verifyTurnstile(typeof token === "string" ? token : undefined, ip)) === "ok";
 };
 
+type AuthDb = NonNullable<ReturnType<typeof authDb>>;
+
+/** Wrong passwords for one account from one network address; see `MAX_FAILED_SIGN_INS_PER_ADDRESS`. */
+const addressFailures = (db: AuthDb, userId: number, ip: string | null) => {
+  const key = `admin-sign-in-fail:${userId}:${ip ?? "unknown"}`;
+  // A failed count must not block signing in, so errors are logged and treated as no failures.
+  const attempt = async <T>(run: () => Promise<T>, fallback: T) => {
+    try {
+      return await run();
+    } catch (error) {
+      console.error("Sign-in failure count unavailable", error);
+      return fallback;
+    }
+  };
+  return {
+    isLocked: () =>
+      attempt(
+        async () => (await countHits(db, key, LOCKOUT_MS)) >= MAX_FAILED_SIGN_INS_PER_ADDRESS,
+        false,
+      ),
+    record: () => attempt(() => recordHit(db, key, LOCKOUT_MS), 0),
+    clear: () => attempt(() => clearHits(db, key), undefined),
+  };
+};
+
 /** Checks email and password, then starts the two-factor step. */
 export const signIn = async (
   input: unknown,
@@ -90,8 +97,10 @@ export const signIn = async (
 
   const { email, password } = parsed.data;
   const user = await findAdminByEmail(db, email);
+  const failures = user && addressFailures(db, user.id, getClientIp(await headers()));
 
-  if (user?.lockedUntil && user.lockedUntil > new Date()) {
+  const accountLocked = Boolean(user?.lockedUntil && user.lockedUntil > new Date());
+  if (user && failures && (accountLocked || (await failures.isLocked()))) {
     await verifyPassword(password, await getDummyHash());
     await recordAudit(db, { actor: user, action: "auth.sign_in_locked" });
     return { ok: false, error: "locked" };
@@ -99,7 +108,10 @@ export const signIn = async (
 
   const matches = await verifyPassword(password, user?.passwordHash ?? (await getDummyHash()));
   if (!user || !user.isActive || !user.passwordHash || !matches) {
-    if (user?.passwordHash) await recordFailedSignIn(db, user.id);
+    if (user?.passwordHash) {
+      await recordFailedSignIn(db, user.id);
+      await failures?.record();
+    }
     await recordAudit(db, {
       actor: user ?? null,
       action: "auth.sign_in_failed",
@@ -108,134 +120,34 @@ export const signIn = async (
     return { ok: false, error: "invalid" };
   }
 
+  // A locked account only says so once the password is right, so the message can't be used to
+  // find out who's on the team.
+  if (user.suspendedAt) {
+    await recordAudit(db, { actor: user, action: "auth.sign_in_while_locked" });
+    return { ok: false, error: "suspended" };
+  }
+
   await clearFailedSignIns(db, user.id);
-  await startSession(db, user.id, "two_factor");
+  await failures?.clear();
   const target = safeNextPath(next);
+
+  // No second step, allowed for their role and already chosen: the first sign-in offers one.
+  if (
+    !user.twoFactorMethod &&
+    user.lastSignInAt &&
+    !roleNeedsTwoFactor(await findRole(db, user.roleId))
+  ) {
+    await startSession(db, user.id, "active");
+    await recordCompletedSignIn(db, user, "password");
+    return { ok: true, next: target };
+  }
+
+  const session = await startSession(db, user.id, "two_factor");
+  if (user.twoFactorMethod === "email") await sendEmailCode(db, session, user);
   return {
     ok: true,
     next: `/admin/two-factor${target === "/admin" ? "" : `?next=${encodeURIComponent(target)}`}`,
   };
-};
-
-const twoFactorSession = async () => {
-  const current = await readSession();
-  return current?.session.stage === "two_factor" ? current : null;
-};
-
-/** A wrong code counts against the session; after five, it ends and they sign in again. */
-const failCode = async (current: CurrentSession): Promise<AuthResult> => {
-  const attempts = await recordTwoFactorFailure(current.db, current.session.id);
-  if (attempts >= MAX_TWO_FACTOR_ATTEMPTS) {
-    await recordAudit(current.db, { actor: current.user, action: "auth.two_factor_failed" });
-    await endSession();
-    return { ok: false, error: "expired" };
-  }
-  return { ok: false, error: "wrongCode" };
-};
-
-const finishSignIn = async (
-  current: CurrentSession,
-  next: unknown,
-  method: "authenticator" | "recovery_code",
-) => {
-  await replaceSession(current, "active");
-  await recordSignIn(current.db, current.user.id);
-  await recordAudit(current.db, {
-    actor: current.user,
-    action: "auth.signed_in",
-    details: { method },
-  });
-  await sendSecurityNotice(
-    current.user,
-    method === "recovery_code" ? "recoveryCodeUsed" : "signedIn",
-  );
-  return safeNextPath(next);
-};
-
-/** Accepts an authenticator code for someone who has two-factor set up. */
-export const verifyTotpCode = async (input: unknown, next?: unknown): Promise<AuthResult> => {
-  const parsed = totpCodeSchema.safeParse(input);
-  if (!parsed.success) return { ok: false, error: "wrongCode" };
-  const current = await twoFactorSession();
-  if (!current?.user.totpSecret) return { ok: false, error: "expired" };
-
-  const step = verifyTotp(decryptSecret(current.user.totpSecret), parsed.data.code, {
-    lastStep: current.user.totpLastStep,
-  });
-  if (step === null || !(await claimTotpStep(current.db, current.user.id, step))) {
-    return failCode(current);
-  }
-  return { ok: true, next: await finishSignIn(current, next, "authenticator") };
-};
-
-/** Accepts a single-use recovery code instead of an authenticator code. */
-export const verifyRecoveryCode = async (input: unknown, next?: unknown): Promise<AuthResult> => {
-  const parsed = recoveryCodeSchema.safeParse(input);
-  if (!parsed.success) return { ok: false, error: "wrongCode" };
-  const current = await twoFactorSession();
-  if (!current?.user.totpSecret) return { ok: false, error: "expired" };
-
-  const codeHash = sha256(normalizeRecoveryCode(parsed.data.code));
-  if (!(await consumeRecoveryCode(current.db, current.user.id, codeHash))) return failCode(current);
-  return { ok: true, next: await finishSignIn(current, next, "recovery_code") };
-};
-
-/**
- * Starts two-factor setup for someone who hasn't done it: makes a secret, keeps it (encrypted)
- * on the session until it's confirmed, and returns it with a QR code for their app.
- */
-export const beginTwoFactorSetup = async (): Promise<
-  AuthResult<{ secret: string; qrCode: string }>
-> => {
-  const current = await twoFactorSession();
-  if (!current || current.user.totpSecret) return { ok: false, error: "expired" };
-
-  const secret = generateTotpSecret();
-  await setPendingTotpSecret(current.db, current.session.id, encryptSecret(secret));
-  const uri = totpUri({ secret, account: current.user.email, issuer: siteConfig.orgName });
-  const qrCode = await QRCode.toDataURL(uri, { margin: 1, width: 240, errorCorrectionLevel: "M" });
-
-  return { ok: true, secret: secret.match(/.{1,4}/g)!.join(" "), qrCode };
-};
-
-/**
- * Confirms setup with a code from the app, saves the secret, signs them in and returns their
- * recovery codes. This is the only time the codes are shown in full.
- */
-export const confirmTwoFactorSetup = async (
-  input: unknown,
-  next?: unknown,
-): Promise<AuthResult<{ recoveryCodes: string[] }>> => {
-  const parsed = totpCodeSchema.safeParse(input);
-  if (!parsed.success) return { ok: false, error: "wrongCode" };
-  const current = await twoFactorSession();
-  if (!current?.session.pendingTotpSecret || current.user.totpSecret) {
-    return { ok: false, error: "expired" };
-  }
-
-  const step = verifyTotp(decryptSecret(current.session.pendingTotpSecret), parsed.data.code);
-  if (step === null) {
-    const failed = await failCode(current);
-    return failed.ok ? { ok: false, error: "wrongCode" } : failed;
-  }
-
-  const recoveryCodes = generateRecoveryCodes();
-  await enableTwoFactor(current.db, {
-    adminUserId: current.user.id,
-    encryptedSecret: current.session.pendingTotpSecret,
-    step,
-    recoveryCodeHashes: recoveryCodes.map((code) => sha256(normalizeRecoveryCode(code))),
-  });
-  await promoteCurrentSession(current);
-  await recordSignIn(current.db, current.user.id);
-  await recordAudit(current.db, { actor: current.user, action: "auth.two_factor_enabled" });
-  await recordAudit(current.db, {
-    actor: current.user,
-    action: "auth.signed_in",
-    details: { method: "authenticator" },
-  });
-  await sendSecurityNotice(current.user, "twoFactorEnabled");
-  return { ok: true, recoveryCodes, next: safeNextPath(next) };
 };
 
 /**
@@ -290,8 +202,9 @@ export const resetPassword = async (input: unknown): Promise<AuthResult> => {
 };
 
 /**
- * Finishes an invite: confirms the email, sets the password and goes straight on to two-factor
- * setup, since following the link already proved they own the address.
+ * Finishes an invite: confirms the email, sets the password and goes straight on to choosing a
+ * second step (or skipping it, where their role allows), since following the link already proved
+ * they own the address.
  */
 export const acceptInvite = async (input: unknown): Promise<AuthResult> => {
   const result = await setPasswordFromLink(input, "verify_email");

@@ -1,6 +1,7 @@
 import { PGlite } from "@electric-sql/pglite";
 import { drizzle } from "drizzle-orm/pglite";
 import { migrate } from "drizzle-orm/pglite/migrator";
+import { eq } from "drizzle-orm";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import type { Db } from "@/db";
@@ -98,7 +99,8 @@ describe("crypto", () => {
     expect(stored).not.toContain("JBSWY3DPEHPK3PXP");
     expect(decryptSecret(stored)).toBe("JBSWY3DPEHPK3PXP");
     const [version, iv, tag, ciphertext] = stored.split(".");
-    const tampered = [version, iv, tag, `A${ciphertext!.slice(1)}`].join(".");
+    const flipped = ciphertext![0] === "A" ? "B" : "A";
+    const tampered = [version, iv, tag, `${flipped}${ciphertext!.slice(1)}`].join(".");
     expect(() => decryptSecret(tampered)).toThrow();
   });
 
@@ -159,6 +161,14 @@ describe("auth schemas", () => {
   });
 });
 
+const superAdminId = async (db: Db) => {
+  const [role] = await db
+    .select({ id: schema.adminRoles.id })
+    .from(schema.adminRoles)
+    .where(eq(schema.adminRoles.slug, "super-admin"));
+  return role!.id;
+};
+
 describe("auth queries", () => {
   let db: Db;
   let userId: number;
@@ -169,7 +179,7 @@ describe("auth queries", () => {
     db = testDb as unknown as Db;
     const [user] = await db
       .insert(schema.adminUsers)
-      .values({ name: "Sam", email: "sam@example.com", role: "owner" })
+      .values({ name: "Sam", email: "sam@example.com", roleId: await superAdminId(db) })
       .returning();
     userId = user!.id;
   });
@@ -267,6 +277,7 @@ describe("auth queries", () => {
   it("accepts each recovery code once and each time step once", async () => {
     await enableTwoFactor(db, {
       adminUserId: userId,
+      method: "authenticator",
       encryptedSecret: "secret",
       step: 100,
       recoveryCodeHashes: ["a", "b"],

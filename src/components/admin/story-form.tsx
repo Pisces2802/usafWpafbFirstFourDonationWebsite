@@ -91,11 +91,6 @@ const TextAreaField = ({ id, label, hint, error, ...props }: TextAreaFieldProps)
     <label htmlFor={id} className="text-sm font-medium">
       {label}
     </label>
-    {hint && (
-      <p id={`${id}-hint`} className="text-muted-foreground -mt-1 text-sm">
-        {hint}
-      </p>
-    )}
     <Textarea
       id={id}
       aria-invalid={error ? true : undefined}
@@ -105,6 +100,11 @@ const TextAreaField = ({ id, label, hint, error, ...props }: TextAreaFieldProps)
       className="bg-background min-h-20 px-3 py-2.5 md:text-base"
       {...props}
     />
+    {hint && (
+      <p id={`${id}-hint`} className="text-muted-foreground text-xs">
+        {hint}
+      </p>
+    )}
     {error && (
       <p id={`${id}-error`} className="text-destructive text-sm">
         {error}
@@ -119,15 +119,16 @@ type SwitchFieldProps = {
   hint: ReactNode;
   checked: boolean;
   onCheckedChange: (checked: boolean) => void;
+  disabled?: boolean;
 };
 
-const SwitchField = ({ id, label, hint, checked, onCheckedChange }: SwitchFieldProps) => (
+const SwitchField = ({ id, label, hint, checked, onCheckedChange, disabled }: SwitchFieldProps) => (
   <div className="flex items-start justify-between gap-4">
     <div className="flex flex-col gap-1">
       <span id={`${id}-label`} className="text-sm font-medium">
         {label}
       </span>
-      <span id={`${id}-hint`} className="text-muted-foreground text-sm">
+      <span id={`${id}-hint`} className="text-muted-foreground text-xs">
         {hint}
       </span>
     </div>
@@ -135,6 +136,7 @@ const SwitchField = ({ id, label, hint, checked, onCheckedChange }: SwitchFieldP
       id={id}
       checked={checked}
       onCheckedChange={onCheckedChange}
+      disabled={disabled}
       aria-labelledby={`${id}-label`}
       aria-describedby={`${id}-hint`}
       className="mt-1"
@@ -146,10 +148,13 @@ const SwitchField = ({ id, label, hint, checked, onCheckedChange }: SwitchFieldP
 export const StoryForm = ({
   story,
   canUploadImages,
+  canPublish,
 }: {
   story: AdminStory | null;
   /** False until Cloudinary is set up; the editor then has no image button. */
   canUploadImages: boolean;
+  /** Whether they hold `stories:publish`; without it they can only save drafts. */
+  canPublish: boolean;
 }) => {
   const t = useTranslations("Admin.stories");
   const tFunds = useTranslations("Funds");
@@ -271,12 +276,6 @@ export const StoryForm = ({
                   <span id={`story-${value}-body-label`} className="text-sm font-medium">
                     {t("form.body")}
                   </span>
-                  <p
-                    id={`story-${value}-body-hint`}
-                    className="text-muted-foreground -mt-1 text-sm"
-                  >
-                    {t(canUploadImages ? "form.bodyHint" : "form.bodyHintNoImages")}
-                  </p>
                   <Controller
                     control={form.control}
                     name={`content.${value}.body`}
@@ -296,6 +295,12 @@ export const StoryForm = ({
                           aria-invalid={fieldState.error ? true : undefined}
                           editorClassName="min-h-96"
                         />
+                        <p
+                          id={`story-${value}-body-hint`}
+                          className="text-muted-foreground text-xs"
+                        >
+                          {t(canUploadImages ? "form.bodyHint" : "form.bodyHintNoImages")}
+                        </p>
                         {fieldState.error && (
                           <p id={`story-${value}-body-error`} className="text-destructive text-sm">
                             {fieldMessage(fieldState.error, "body")}
@@ -331,9 +336,6 @@ export const StoryForm = ({
                 <label id="story-fund-label" htmlFor="story-fund" className="text-sm font-medium">
                   {t("form.fund")}
                 </label>
-                <p id="story-fund-hint" className="text-muted-foreground -mt-1 text-sm">
-                  {t("form.fundHint")}
-                </p>
                 <Select
                   items={fundItems}
                   value={field.value}
@@ -357,6 +359,9 @@ export const StoryForm = ({
                     ))}
                   </SelectContent>
                 </Select>
+                <p id="story-fund-hint" className="text-muted-foreground text-xs">
+                  {t("form.fundHint")}
+                </p>
               </div>
             )}
           />
@@ -373,7 +378,7 @@ export const StoryForm = ({
               }
               error={!!errors.publishedOn}
             />
-            <p className="text-muted-foreground text-sm">{t("form.publishedOnHint")}</p>
+            <p className="text-muted-foreground text-xs">{t("form.publishedOnHint")}</p>
             {errors.publishedOn && (
               <p className="text-destructive text-sm">
                 {fieldMessage(errors.publishedOn, "publishedOn")}
@@ -389,7 +394,8 @@ export const StoryForm = ({
                 <SwitchField
                   id="story-published"
                   label={t("form.published")}
-                  hint={t("form.publishedHint")}
+                  hint={t(canPublish ? "form.publishedHint" : "form.publishNotAllowedHint")}
+                  disabled={!canPublish}
                   checked={field.value === "published"}
                   onCheckedChange={(checked) => field.onChange(checked ? "published" : "draft")}
                 />
